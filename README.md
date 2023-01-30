@@ -10,4 +10,4 @@ For now, we are simply collecting requirements in a `requirements.txt` file. To 
 pip install -r requirements.txt
 ```
 
-For setup on a cluster managed by the [Alliance](https://alliancecan.ca/en/services/advanced-research-computing), please see [`./scripts/setup_on_arc.sh`](./scripts/setup_on_arc.sh).
+For setup on a cluster managed by the [Alliance](https://alliancecan.ca/en/services/advanced-research-computing), please see [`./scripts/slurm/setup_on_arc.sh`](./scripts/setup_on_arc.sh).
