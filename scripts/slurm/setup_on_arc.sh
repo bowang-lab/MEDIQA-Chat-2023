@@ -22,7 +22,7 @@ pip install --no-index --upgrade pip
 # cd "$PROJECT/$USER" || exit
 cd "$PROJECT/$USER" || exit
 git clone "https://github.com/bowang-lab/mediqa-chat-tasks-acl-2023.git"
-cd "$PROJECT_NAME" || exit
+cd "mediqa-chat-tasks-acl-2023" || exit
 # Outputs from jobs (like model checkpoints) should be stored in the scratch directory
 # See: https://docs.alliancecan.ca/wiki/Storage_and_file_management
 mkdir -p "$SCRATCH/$PROJECT_NAME"
