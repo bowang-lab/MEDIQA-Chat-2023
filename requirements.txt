@@ -1,7 +1,6 @@
 # Temporary fix for loading Meqsum
 git+https://github.com/huggingface/datasets.git
-lightning-flash[text]
-# Install from source to address https://github.com/Lightning-AI/metrics/issues/1455
-git+https://github.com/Lightning-AI/metrics.git
-# Necessary to solve strange bug with huggingface hub
-sentence_transformers>=2.2.2
+# run_summarization.py expects us to have installed from source
+git+https://github.com/huggingface/transformers.git
+rouge-score
+evaluate
