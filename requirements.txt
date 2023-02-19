@@ -2,5 +2,8 @@
 git+https://github.com/huggingface/datasets.git
 # run_summarization.py expects us to have installed from source
 git+https://github.com/huggingface/transformers.git
-rouge-score
+# peft is being updated rapidly, so install from source
+# git+https://github.com/huggingface/peft.git
 evaluate
+rouge-score
+omegaconf
