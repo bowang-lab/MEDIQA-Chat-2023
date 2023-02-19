@@ -129,5 +129,6 @@ dmypy.json
 .pyre/
 
 # Added by us
+slurm-*.out
 datasets/
 output/
