@@ -1,0 +1,6 @@
+# Seq2SeqTrainingArguments
+seed: 42
+dataloader_num_workers: 1
+group_by_length: true
+sortish_sampler: true
+predict_with_generate: true

@@ -1,0 +1,36 @@
+# ModelArguments
+model_name_or_path: "google/flan-t5-large"
+
+# DataTrainingArguments
+text_column: "dialogue"
+summary_column: "section_text"
+train_file: "/home/johnmg/projects/def-wanglab-ab/johnmg/mediqa-chat-tasks-acl-2023/datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-TrainingSet.csv"
+validation_file: "/home/johnmg/projects/def-wanglab-ab/johnmg/mediqa-chat-tasks-acl-2023/datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-ValidationSet.csv"
+test_file: "/home/johnmg/projects/def-wanglab-ab/johnmg/mediqa-chat-tasks-acl-2023/datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-ValidationSet.csv"
+max_source_length: 1024
+max_target_length: 256
+num_beams: 5
+source_prefix: "Summarize the following patient-doctor dialogue. Include all medically relevant information, including family history, diagnosis, past medical (and surgical) history, immunizations, lab results and known allergies. You should first predict the most relevant section header and then summarize the dialogue: "
+
+# Seq2SeqTrainingArguments
+do_train: true
+do_eval: true
+do_predict: true
+per_device_train_batch_size: 2
+per_device_eval_batch_size: 8
+learning_rate: 1e-4
+weight_decay: 0.01
+num_train_epochs: 10
+warmup_ratio: 0.1
+label_smoothing_factor: 0.1
+bf16: true
+# Controls the evaluation strategy
+evaluation_strategy: "steps"
+eval_steps: 1000
+eval_delay: 3000
+# Controls the checkpointing strategy
+save_strategy: "steps"
+save_steps: 1000
+save_total_limit: 1
+load_best_model_at_end: true
+metric_for_best_model: "rougeL"
