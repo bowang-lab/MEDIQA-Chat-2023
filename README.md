@@ -30,3 +30,11 @@ python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_a.yml" outp
 
 We also provide a SLURM submission script for ARC clusters, which can be found at [`./scripts/slurm/train_task_a.sh`](./scripts/slurm/train_task_a.sh).
 
+### Task B
+
+TODO
+
+### Task C
+
+TODO
+
