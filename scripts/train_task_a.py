@@ -640,8 +640,8 @@ def main():
     )
 
     # Metric
-    metric = evaluate.load("./scripts/rouge.py")
-    exact_match = evaluate.load("./scripts/exact_match.py")
+    metric = evaluate.load("./scripts/metrics/rouge.py")
+    exact_match = evaluate.load("./scripts/metrics/exact_match.py")
 
     def postprocess_text(preds, labels):
         preds = [pred.strip() for pred in preds]
