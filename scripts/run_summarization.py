@@ -20,18 +20,19 @@ Fine-tuning the library models for sequence to sequence.
 
 import logging
 import os
+import re
 import sys
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Any, Dict, Optional
 
 import datasets
 import evaluate
 import nltk  # Here to have a nice missing dependency error message early on
 import numpy as np
+import transformers
 from datasets import load_dataset
 from filelock import FileLock
-
-import transformers
+from omegaconf import OmegaConf
 from transformers import (
     AutoConfig,
     AutoModelForSeq2SeqLM,
@@ -291,6 +292,27 @@ summarization_name_mapping = {
 }
 
 
+def parse_omega_conf() -> Dict[str, Any]:
+    """A helper function to parse the command line arguments and YAML config files.
+
+    This allows you to call the script with one or more YAML config files and CLI args.
+
+    Example:
+
+    python train.py config1.yml config2.yml --learning_rate=0.0001 --train_batch_size=32
+
+    Arguments in config1.yml will overridden arguments in config2.yml, which will be overridden by any CLI args.
+    """
+    # Assume anything that ends in ".yml" is a YAML file to be parsed, and everything else is cli args
+    cli_args = [arg for arg in sys.argv[1:][:] if not arg.endswith(".yml")]
+    yml_confs = [OmegaConf.load(arg) for arg in sys.argv[1:][:] if arg.endswith(".yml")]
+    cli_conf = OmegaConf.from_dotlist(cli_args)
+    # Merge the YAML configs in the order they were given, with the cli args taking precedence
+    conf = OmegaConf.merge(*yml_confs, cli_conf)
+    # HuggingFace expects a vanilla python dict, so perform the conversion here
+    return OmegaConf.to_object(conf)
+
+
 def main():
     # See all possible arguments in src/transformers/training_args.py
     # or by passing the --help flag to this script.
@@ -301,6 +323,10 @@ def main():
         # If we pass only one argument to the script and it's the path to a json file,
         # let's parse it to get our arguments.
         model_args, data_args, training_args = parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))
+    # Our unique parsing strategy (which depends on OmegaConf) exists here
+    elif any(argv.endswith(".yml") for argv in sys.argv[1:]):
+        conf = parse_omega_conf()
+        model_args, data_args, training_args = parser.parse_dict(conf)
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
@@ -422,6 +448,14 @@ def main():
         use_auth_token=True if model_args.use_auth_token else None,
     )
 
+    # from peft import get_peft_model, LoraConfig, TaskType
+    # peft_config = LoraConfig(
+    #     task_type=TaskType.SEQ_2_SEQ_LM, inference_mode=False, r=8, lora_alpha=32, lora_dropout=0.1
+    # )
+    # model = get_peft_model(model, peft_config)
+    # logger.info(f"Using LoraConfig: {peft_config}")
+    # model.print_trainable_parameters()
+
     # We resize the embeddings only when necessary to avoid index errors. If you are creating a model from scratch
     # on a small vocab and want a smaller embedding size, remove this test.
     embedding_size = model.get_input_embeddings().weight.shape[0]
@@ -522,7 +556,10 @@ def main():
         for i in range(len(examples[text_column])):
             if examples[text_column][i] and examples[summary_column][i]:
                 inputs.append(examples[text_column][i])
-                targets.append(examples[summary_column][i])
+                # Preprocess the targets, so the model must generate the section header before the section text
+                targets.append(
+                    f'Section header: {examples["section_header"][i]} Section text: {examples[summary_column][i]}'
+                )
 
         inputs = [prefix + inp for inp in inputs]
         model_inputs = tokenizer(inputs, max_length=data_args.max_source_length, padding=padding, truncation=True)
@@ -604,6 +641,7 @@ def main():
 
     # Metric
     metric = evaluate.load("./scripts/rouge.py")
+    exact_match = evaluate.load("./scripts/exact_match.py")
 
     def postprocess_text(preds, labels):
         preds = [pred.strip() for pred in preds]
@@ -614,6 +652,16 @@ def main():
         labels = ["\n".join(nltk.sent_tokenize(label)) for label in labels]
 
         return preds, labels
+
+    def extract_header_and_text(texts):
+        section_headers, section_texts = [], []
+        for text in texts:
+            # Extract from the model predictions and the labels the section headers and the section texts
+            section_header = re.findall(r"(?:Section header:)(.*)(?:Section text)", text, re.DOTALL)[0].strip()
+            section_text = re.findall(r"(?:Section text:)(.*)", text, re.DOTALL)[0].strip()
+            section_headers.append(section_header)
+            section_texts.append(section_text)
+        return section_texts, section_headers
 
     def compute_metrics(eval_preds):
         preds, labels = eval_preds
@@ -628,10 +676,20 @@ def main():
         # Some simple post-processing
         decoded_preds, decoded_labels = postprocess_text(decoded_preds, decoded_labels)
 
-        result = metric.compute(predictions=decoded_preds, references=decoded_labels, use_stemmer=True)
+        # For TaskA, we need to extract the header and text from the predictions and labels
+        decoded_preds, header_preds = extract_header_and_text(decoded_preds)
+        decoded_labels, header_labels = extract_header_and_text(decoded_labels)
+
+        # Compute section header metrics
+        result = exact_match.compute(predictions=header_preds, references=header_labels)
+
+        # Compute section text metrics
+        result.update(metric.compute(predictions=decoded_preds, references=decoded_labels, use_stemmer=True))
+
         result = {k: round(v * 100, 4) for k, v in result.items()}
         prediction_lens = [np.count_nonzero(pred != tokenizer.pad_token_id) for pred in preds]
         result["gen_len"] = np.mean(prediction_lens)
+
         return result
 
     # Initialize our Trainer
