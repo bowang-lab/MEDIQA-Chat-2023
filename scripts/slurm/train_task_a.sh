@@ -4,17 +4,17 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --gres=gpu:a100:1
 # Wall time and job details
-#SBATCH --time=3:00:00
+#SBATCH --time=1:00:00
 #SBATCH --job-name=baseline
-#SBATCH --account=def-wanglab-ab
+#SBATCH --account=def-gbader
 # Emails me when job starts, ends or fails
 #SBATCH --mail-user=johnmgiorgi@gmail.com
 #SBATCH --mail-type=FAIL
 # Use this command to run the same job interactively
-# salloc --mem=8G --cpus-per-task=1 --gres=gpu:a100:1 --time=3:00:00 --account=def-wanglab-ab
+# salloc --mem=8G --cpus-per-task=1 --gres=gpu:a100:1 --time=3:00:00 --account=def-gbader
 
 ### Example usage ###
-# sbatch "./scripts/slurm/train_taskA.sh" "./conf/TaskA.json"
+# sbatch "./scripts/slurm/train_task_a.sh" "./conf/task_a.yml"
 
 ### Usage notes ###
 # The amount of time needed will depend on the batch size, model and number of GPUs requested.
@@ -34,6 +34,7 @@ cd "$HOME/projects/$ACCOUNT_NAME/$USER/$PROJECT_NAME-chat-tasks-acl-2023" || exi
 ### Script arguments ###
 # Required arguments
 CONFIG_FILEPATH="$1"  # The path on disk to the JSON config file
+OUTPUT_DIR="$2"       # The path on disk to save the output to
 
 ### Job ###
 # This calls a modified version of the example summarization script from HF (with Trainer). For details,
@@ -41,6 +42,7 @@ CONFIG_FILEPATH="$1"  # The path on disk to the JSON config file
 WANDB_MODE=offline \
 TRANSFORMERS_OFFLINE=1 \
 HF_DATASETS_OFFLINE=1 \
-python ./scripts/run_summarization.py "$CONFIG_FILEPATH"
+python ./scripts/run_summarization.py "./conf/base.yml" "$CONFIG_FILEPATH" \
+    output_dir="$OUTPUT_DIR"
 
 exit
