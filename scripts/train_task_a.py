@@ -292,6 +292,13 @@ summarization_name_mapping = {
 }
 
 
+def sanitize_text(text: str, lowercase: bool = False) -> str:
+    """Cleans text by removing whitespace, newlines and tabs and (optionally) lowercasing."""
+    sanitized_text = " ".join(text.strip().split())
+    sanitized_text = sanitized_text.lower() if lowercase else sanitized_text
+    return sanitized_text
+
+
 def parse_omega_conf() -> Dict[str, Any]:
     """A helper function to parse the command line arguments and YAML config files.
 
@@ -561,7 +568,12 @@ def main():
                     f'Section header: {examples["section_header"][i]} Section text: {examples[summary_column][i]}'
                 )
 
-        inputs = [prefix + inp for inp in inputs]
+        inputs = [f"{prefix} {inp}" for inp in inputs]
+
+        # Do some basic cleanup on the source and target texts
+        inputs = [sanitize_text(inp) for inp in inputs]
+        targets = [sanitize_text(tgt) for tgt in targets]
+
         model_inputs = tokenizer(inputs, max_length=data_args.max_source_length, padding=padding, truncation=True)
 
         # Tokenize targets with the `text_target` keyword argument
@@ -644,8 +656,8 @@ def main():
     exact_match = evaluate.load("./scripts/metrics/exact_match.py")
 
     def postprocess_text(preds, labels):
-        preds = [pred.strip() for pred in preds]
-        labels = [label.strip() for label in labels]
+        preds = [sanitize_text(pred) for pred in preds]
+        labels = [sanitize_text(label) for label in labels]
 
         # rougeLSum expects newline after each sentence
         preds = ["\n".join(nltk.sent_tokenize(pred)) for pred in preds]
@@ -760,7 +772,10 @@ def main():
                 predictions = tokenizer.batch_decode(
                     predict_results.predictions, skip_special_tokens=True, clean_up_tokenization_spaces=True
                 )
-                predictions = [pred.strip() for pred in predictions]
+                # Predictions may contain "\n", which causes this file to contain an incorrect number of lines.
+                # Pointed this out to HF maintainers here: https://github.com/huggingface/transformers/issues/18992
+                # but they weren't interested in fixing it.
+                predictions = [sanitize_text(pred) for pred in predictions]
                 output_prediction_file = os.path.join(training_args.output_dir, "generated_predictions.txt")
                 with open(output_prediction_file, "w") as writer:
                     writer.write("\n".join(predictions))
