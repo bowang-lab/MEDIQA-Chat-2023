@@ -42,7 +42,7 @@ OUTPUT_DIR="$2"       # The path on disk to save the output to
 WANDB_MODE=offline \
 TRANSFORMERS_OFFLINE=1 \
 HF_DATASETS_OFFLINE=1 \
-python ./scripts/run_summarization.py "./conf/base.yml" "$CONFIG_FILEPATH" \
+python ./scripts/train_task_a.py "./conf/base.yml" "$CONFIG_FILEPATH" \
     output_dir="$OUTPUT_DIR"
 
 exit
