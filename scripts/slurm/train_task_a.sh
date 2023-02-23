@@ -14,7 +14,7 @@
 # salloc --mem=8G --cpus-per-task=1 --gres=gpu:a100:1 --time=3:00:00 --account=def-wanglab-ab_gpu
 
 ### Example usage ###
-# sbatch "./scripts/slurm/train_task_a.sh" "./conf/task_a.yml"
+# sbatch "./scripts/slurm/run_summarization.sh" "./conf/task_a.yml"
 
 ### Usage notes ###
 # The amount of time needed will depend on the batch size, model and number of GPUs requested.
@@ -42,7 +42,7 @@ OUTPUT_DIR="$2"       # The path on disk to save the output to
 WANDB_MODE=offline \
 TRANSFORMERS_OFFLINE=1 \
 HF_DATASETS_OFFLINE=1 \
-python ./scripts/train_task_a.py "./conf/base.yml" "$CONFIG_FILEPATH" \
+python ./scripts/run_summarization.py "./conf/base.yml" "$CONFIG_FILEPATH" \
     output_dir="$OUTPUT_DIR"
 
 exit
