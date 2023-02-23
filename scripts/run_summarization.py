@@ -23,7 +23,7 @@ import os
 import re
 import sys
 from dataclasses import dataclass, field
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, List
 
 import datasets
 import evaluate
@@ -71,6 +71,12 @@ except (LookupError, OSError):
 
 # A list of all multilingual tokenizer which require lang attribute.
 MULTILINGUAL_TOKENIZERS = [MBartTokenizer, MBartTokenizerFast, MBart50Tokenizer, MBart50TokenizerFast]
+
+# A list of valid task names for the MEDIQA-Chat @ ACL-ClinicalNLP
+TASK_A = "A"
+TASK_B = "B"
+TASK_C = "C"
+TASKS = [TASK_A, TASK_B, TASK_C]
 
 
 @dataclass
@@ -261,6 +267,9 @@ class DataTrainingArguments:
             )
         },
     )
+    task: str = field(
+        default="A", metadata={"help": "Which challenge task to train or evaluate on. Should be one of A, B, or C."}
+    )
 
     def __post_init__(self):
         if self.dataset_name is None and self.train_file is None and self.validation_file is None:
@@ -274,6 +283,8 @@ class DataTrainingArguments:
                 assert extension in ["csv", "json"], "`validation_file` should be a csv or a json file."
         if self.val_max_target_length is None:
             self.val_max_target_length = self.max_target_length
+        if self.task not in TASKS:
+            raise ValueError(f"Task should be one of {TASKS}. Got: {self.task}.")
 
 
 summarization_name_mapping = {
@@ -318,6 +329,23 @@ def parse_omega_conf() -> Dict[str, Any]:
     conf = OmegaConf.merge(*yml_confs, cli_conf)
     # HuggingFace expects a vanilla python dict, so perform the conversion here
     return OmegaConf.to_object(conf)
+
+
+def get_global_attention_mask(input_ids: List[List[int]], token_ids: List[int]) -> List[List[int]]:
+    """Returns a corresponding global attention mask for `input_ids`, which is 1 for any tokens in
+    `token_ids` (indicating the model should attend to those tokens) and 0 elsewhere (indicating the
+    model should not attend to those tokens).
+
+    # Parameters
+
+    input_ids : `List[List[str]]`
+        The input ids that will be provided to a model during the forward pass.
+    token_ids : `List[List[str]]`
+        The token ids that should be globally attended to.
+    """
+    # TODO (John): Ideally this would be vectorized
+    global_attention_mask = [[1 if token_id in token_ids else 0 for token_id in batch] for batch in input_ids]
+    return global_attention_mask
 
 
 def main():
@@ -563,10 +591,19 @@ def main():
         for i in range(len(examples[text_column])):
             if examples[text_column][i] and examples[summary_column][i]:
                 inputs.append(examples[text_column][i])
-                # Preprocess the targets, so the model must generate the section header before the section text
-                targets.append(
-                    f'Section header: {examples["section_header"][i]} Section text: {examples[summary_column][i]}'
-                )
+
+                if data_args.task == TASK_A:
+                    # Preprocess the targets, so the model must generate the section header before the section text
+                    target = (
+                        f'Section header: {examples["section_header"][i]} Section text: {examples[summary_column][i]}'
+                    )
+                elif data_args.task == TASK_B:
+                    target = target.replace("CC:", "CHIEF COMPLAINT")
+                    target = target.replace("HPI:", "HISTORY OF PRESENT ILLNESS")
+                else:
+                    target = examples[summary_column][i]
+
+                targets.append(target)
 
         inputs = [f"{prefix} {inp}" for inp in inputs]
 
@@ -575,6 +612,9 @@ def main():
         targets = [sanitize_text(tgt) for tgt in targets]
 
         model_inputs = tokenizer(inputs, max_length=data_args.max_source_length, padding=padding, truncation=True)
+
+        # Add global attention to start tokens (for models that use it)
+        model_inputs["global_attention_mask"] = get_global_attention_mask(model_inputs["input_ids"], token_ids=[0])
 
         # Tokenize targets with the `text_target` keyword argument
         labels = tokenizer(text_target=targets, max_length=max_target_length, padding=padding, truncation=True)
@@ -688,12 +728,15 @@ def main():
         # Some simple post-processing
         decoded_preds, decoded_labels = postprocess_text(decoded_preds, decoded_labels)
 
-        # For TaskA, we need to extract the header and text from the predictions and labels
-        decoded_preds, header_preds = extract_header_and_text(decoded_preds)
-        decoded_labels, header_labels = extract_header_and_text(decoded_labels)
+        result = {}
 
-        # Compute section header metrics
-        result = exact_match.compute(predictions=header_preds, references=header_labels)
+        # For TaskA, we need to extract the header and text from the predictions and labels
+        if data_args.task == TASK_A:
+            decoded_preds, header_preds = extract_header_and_text(decoded_preds)
+            decoded_labels, header_labels = extract_header_and_text(decoded_labels)
+
+            # Compute section header metrics
+            result.update(exact_match.compute(predictions=header_preds, references=header_labels))
 
         # Compute section text metrics
         result.update(metric.compute(predictions=decoded_preds, references=decoded_labels, use_stemmer=True))
