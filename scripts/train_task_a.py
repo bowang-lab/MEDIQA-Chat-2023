@@ -699,8 +699,11 @@ def main():
         result.update(metric.compute(predictions=decoded_preds, references=decoded_labels, use_stemmer=True))
 
         result = {k: round(v * 100, 4) for k, v in result.items()}
-        prediction_lens = [np.count_nonzero(pred != tokenizer.pad_token_id) for pred in preds]
-        result["gen_len"] = np.mean(prediction_lens)
+        # Add length of generated and reference summaries
+        generated_lens = [np.count_nonzero(pred != tokenizer.pad_token_id) for pred in preds]
+        reference_lens = [np.count_nonzero(label != tokenizer.pad_token_id) for label in labels]
+        result["mean_generated_len"] = np.mean(generated_lens)
+        result["mean_reference_len"] = np.mean(reference_lens)
 
         return result
 
