@@ -14,6 +14,7 @@ max_target_length: 256
 val_max_target_length: 512
 num_beams: 1
 source_prefix: "Summarize the following patient-doctor dialogue. Include all medically relevant information, including family history, diagnosis, past medical (and surgical) history, immunizations, lab results and known allergies. You should first predict the most relevant clinical note section header and then summarize the dialogue. Dialogue:"
+task: "A"
 
 # Seq2SeqTrainingArguments
 do_train: true
