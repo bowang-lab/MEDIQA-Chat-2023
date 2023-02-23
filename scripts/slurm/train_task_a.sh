@@ -6,12 +6,12 @@
 # Wall time and job details
 #SBATCH --time=1:00:00
 #SBATCH --job-name=baseline
-#SBATCH --account=def-gbader
+#SBATCH --account=def-wanglab-ab_gpu
 # Emails me when job starts, ends or fails
 #SBATCH --mail-user=johnmgiorgi@gmail.com
 #SBATCH --mail-type=FAIL
 # Use this command to run the same job interactively
-# salloc --mem=8G --cpus-per-task=1 --gres=gpu:a100:1 --time=3:00:00 --account=def-gbader
+# salloc --mem=8G --cpus-per-task=1 --gres=gpu:a100:1 --time=3:00:00 --account=def-wanglab-ab_gpu
 
 ### Example usage ###
 # sbatch "./scripts/slurm/train_task_a.sh" "./conf/task_a.yml"
