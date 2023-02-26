@@ -12,7 +12,7 @@ max_target_length: 864
 # This is the maximum length of the target sequence for evaluation. It should be set to the maximum observed length
 # in the validation set (or as large as the model supports, whichever is smaller) so we get an accurate evaluation.
 val_max_target_length: 1024
-num_beams: 1
+num_beams: 3
 source_prefix: "Summarize the following patient-doctor dialogue. Include all medically relevant information, including family history, diagnosis, past medical (and surgical) history, immunizations, lab results and known allergies. Dialogue:"
 # Specify which challenge task to run, which changes some of the pre and post processing
 task: "B"
@@ -33,7 +33,7 @@ fp16: true
 # Controls the evaluation strategy
 evaluation_strategy: "steps"
 eval_steps: 25
-eval_delay: 150
+eval_delay: 300
 # Controls the checkpointing strategy
 save_strategy: "steps"
 save_steps: 25
