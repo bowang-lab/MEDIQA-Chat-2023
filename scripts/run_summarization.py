@@ -598,7 +598,7 @@ def main():
                         f'Section header: {examples["section_header"][i]} Section text: {examples[summary_column][i]}'
                     )
                 elif data_args.task == TASK_B:
-                    target = target.replace("CC:", "CHIEF COMPLAINT")
+                    target = examples[summary_column][i].replace("CC:", "CHIEF COMPLAINT")
                     target = target.replace("HPI:", "HISTORY OF PRESENT ILLNESS")
                 else:
                     target = examples[summary_column][i]
@@ -709,8 +709,12 @@ def main():
         section_headers, section_texts = [], []
         for text in texts:
             # Extract from the model predictions and the labels the section headers and the section texts
-            section_header = re.findall(r"(?:Section header:)(.*)(?:Section text)", text, re.DOTALL)[0].strip()
-            section_text = re.findall(r"(?:Section text:)(.*)", text, re.DOTALL)[0].strip()
+            section_header = re.findall(r"(?:Section header:)(.*)(?:Section text)", text, re.DOTALL)
+            section_text = re.findall(r"(?:Section text:)(.*)", text, re.DOTALL)
+            # It is possible the mdoel does not format its outputs as expected. In this case, take the section
+            # header to be empty and the section text to be the whole text.
+            section_header = section_header[0].strip() if section_header else ""
+            section_text = section_text[0].strip() if section_text else text.strip()
             section_headers.append(section_header)
             section_texts.append(section_text)
         return section_texts, section_headers
