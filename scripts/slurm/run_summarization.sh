@@ -12,6 +12,7 @@
 #SBATCH --mail-type=FAIL
 # Use this command to run the same job interactively
 # salloc --mem=8G --cpus-per-task=1 --gres=gpu:a100:1 --time=3:00:00 --account=def-wanglab-ab_gpu
+# salloc --mem=8G --cpus-per-task=1 --gres=gpu:a100:1 --time=3:00:00 --account=def-gbader
 
 ### Example usage ###
 # sbatch "./scripts/slurm/run_summarization.sh" "./conf/task_a.yml"
@@ -46,3 +47,5 @@ python ./scripts/run_summarization.py "./conf/base.yml" "$CONFIG_FILEPATH" \
     output_dir="$OUTPUT_DIR"
 
 exit
+
+# WANDB_MODE=offline TRANSFORMERS_OFFLINE=1 HF_DATASETS_OFFLINE=1 python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_b.yml" output_dir="./output/a_first" overwrite_output_dir=true summary_column="section_text" train_file="./datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-TrainingSet.csv" validation_file="./datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-ValidationSet.csv" test_file="./datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-ValidationSet.csv" per_device_train_batch_size=8 gradient_accumulation_steps=1 eval_steps=250 save_steps=250 eval_delay=6000 max_train_samples=250
