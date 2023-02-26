@@ -4,9 +4,9 @@ model_name_or_path: "google/flan-t5-large"
 # DataTrainingArguments
 text_column: "dialogue"
 summary_column: "section_text"
-train_file: "/home/johnmg/projects/def-wanglab-ab/johnmg/mediqa-chat-tasks-acl-2023/datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-TrainingSet.csv"
-validation_file: "/home/johnmg/projects/def-wanglab-ab/johnmg/mediqa-chat-tasks-acl-2023/datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-ValidationSet.csv"
-test_file: "/home/johnmg/projects/def-wanglab-ab/johnmg/mediqa-chat-tasks-acl-2023/datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-ValidationSet.csv"
+train_file: "./datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-TrainingSet.csv"
+validation_file: "./datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-ValidationSet.csv"
+test_file: "./datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-ValidationSet.csv"
 max_source_length: 1024
 max_target_length: 256
 # This is the maximum length of the target sequence for evaluation. It should be set to the maximum observed length
