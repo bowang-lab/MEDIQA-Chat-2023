@@ -8,15 +8,19 @@ train_file: "./datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/Ta
 validation_file: "./datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-ValidationSet.csv"
 test_file: "./datasets/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskA/TaskA-ValidationSet.csv"
 max_source_length: 1024
-max_target_length: 256
-# This is the maximum length of the target sequence for evaluation. It should be set to the maximum observed length
-# in the validation set (or as large as the model supports, whichever is smaller) so we get an accurate evaluation.
+# This is the maximum length of the target sequences for training. You can save compute during training with little
+# impact on performance by setting this to a lower value, e.g. the 95th percentile of the observed lengths.
+max_target_length: 512
+# These are the maximum lengths of the target sequence for evaluation (during training and after training
+# respectively). It should be set to the maximum observed length in the validation set (or as large as the model
+# supports, whichever is smaller) so we get an accurate evaluation.
 val_max_target_length: 512
-num_beams: 1
+generation_max_length: 512
 source_prefix: "Summarize the following patient-doctor dialogue. Include all medically relevant information, including family history, diagnosis, past medical (and surgical) history, immunizations, lab results and known allergies. You should first predict the most relevant clinical note section header and then summarize the dialogue. Dialogue:"
 task: "A"
 
 # Seq2SeqTrainingArguments
+# See: https://huggingface.co/docs/transformers/main_classes/trainer#transformers.Seq2SeqTrainingArguments
 do_train: true
 do_eval: true
 do_predict: true
@@ -25,14 +29,16 @@ per_device_eval_batch_size: 16
 gradient_accumulation_steps: 4
 learning_rate: 1e-4
 weight_decay: 0.01
-num_train_epochs: 10
+num_train_epochs: 20
 warmup_ratio: 0.1
 label_smoothing_factor: 0.1
 bf16: true
+num_beams: 2
+generation_num_beams: 2
 # Controls the evaluation strategy
 evaluation_strategy: "steps"
-eval_steps: 250
-eval_delay: 750
+logging_steps: 250
+eval_delay: 1000
 # Controls the checkpointing strategy
 save_strategy: "steps"
 save_steps: 250
