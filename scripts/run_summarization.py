@@ -781,7 +781,7 @@ def main():
         result.update({"bleurt": np.mean(bleurt_result["scores"]).item()})
 
         # Compute an ensemble score for the generations
-        result["ensemble_gen_score"] = np.mean(result["rouge_avg"], result["bertscore_f1"], result["bleurt"]).item()
+        result["ensemble_gen_score"] = np.mean([result["rouge_avg"], result["bertscore_f1"], result["bleurt"]]).item()
         result = {k: round(v * 100, 4) for k, v in result.items()}
 
         # Add length of generated and reference summaries
