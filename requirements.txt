@@ -1,9 +1,11 @@
 # Temporary fix for loading Meqsum
-git+https://github.com/huggingface/datasets.git
+datasets<3.0.0
 # run_summarization.py expects us to have installed from source
 git+https://github.com/huggingface/transformers.git
 # peft is being updated rapidly, so install from source
 # git+https://github.com/huggingface/peft.git
-evaluate
 rouge-score
+bertscore
+git+https://github.com/google-research/bleurt.git
 omegaconf
+wandb
