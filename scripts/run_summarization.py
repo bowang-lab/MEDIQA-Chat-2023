@@ -22,15 +22,15 @@ import logging
 import os
 import re
 import sys
+import warnings
 from dataclasses import dataclass, field
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict, List, Optional
 
 import datasets
-import evaluate
 import nltk  # Here to have a nice missing dependency error message early on
 import numpy as np
 import transformers
-from datasets import load_dataset
+from datasets import load_dataset, load_metric
 from filelock import FileLock
 from omegaconf import OmegaConf
 from transformers import (
@@ -692,8 +692,10 @@ def main():
     )
 
     # Metric
-    metric = evaluate.load("./scripts/metrics/rouge.py")
-    exact_match = evaluate.load("./scripts/metrics/exact_match.py")
+    exact_match = load_metric("exact_match", cache_dir=model_args.cache_dir)
+    rouge = load_metric("rouge", cache_dir=model_args.cache_dir)
+    bertscore = load_metric("bertscore", cache_dir=model_args.cache_dir)
+    bleurt = load_metric("bleurt", "BLEURT-20", cache_dir=model_args.cache_dir)
 
     def postprocess_text(preds, labels):
         preds = [sanitize_text(pred) for pred in preds]
@@ -742,10 +744,46 @@ def main():
             # Compute section header metrics
             result.update(exact_match.compute(predictions=header_preds, references=header_labels))
 
-        # Compute section text metrics
-        result.update(metric.compute(predictions=decoded_preds, references=decoded_labels, use_stemmer=True))
+        # Compute section text metrics...
 
+        # ROUGE
+        result.update(rouge.compute(predictions=decoded_preds, references=decoded_labels, use_stemmer=True))
+        # Compute the arithmetic mean of ROUGE-1, ROUGE-2 and ROUGE-L following: https://arxiv.org/abs/2110.08499
+        if all(rouge_type in result for rouge_type in ["rouge1", "rouge2", "rougeL"]):
+            result["rouge_avg"] = np.mean([result["rouge1"], result["rouge2"], result["rougeL"]]).item()
+        else:
+            warnings.warn(
+                "ROUGE-1, ROUGE-2 and ROUGE-L are not all present in the results. Skipping the computation of ROUGE-AVG."
+            )
+
+        # BERTScore
+        bertscore_result = bertscore.compute(
+            predictions=decoded_preds,
+            references=decoded_labels,
+            batch_size=training_args.per_device_eval_batch_size * 4,
+            device=training_args.device,
+            # These are mostly based on the recommendations in https://github.com/Tiiiger/bert_score
+            model_type="microsoft/deberta-xlarge-mnli",
+            lang="en",
+            rescale_with_baseline=True,
+            use_fast_tokenizer=True,
+        )
+        result.update(
+            {
+                "bertscore_p": np.mean(bertscore_result["precision"]).item(),
+                "bertscore_r": np.mean(bertscore_result["recall"]).item(),
+                "bertscore_f1": np.mean(bertscore_result["f1"]).item(),
+            }
+        )
+
+        # BLEURT
+        bleurt_result = bleurt.score(predictions=decoded_preds, references=decoded_labels)
+        result.update({"bleurt": np.mean(bleurt_result["scores"]).item()})
+
+        # Compute an ensemble score for the generations
+        result["ensemble_gen_score"] = np.mean(result["rouge_avg"], result["bertscore_f1"], result["bleurt"]).item()
         result = {k: round(v * 100, 4) for k, v in result.items()}
+
         # Add length of generated and reference summaries
         generated_lens = [np.count_nonzero(pred != tokenizer.pad_token_id) for pred in preds]
         reference_lens = [np.count_nonzero(label != tokenizer.pad_token_id) for label in labels]
