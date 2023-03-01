@@ -695,7 +695,7 @@ def main():
     exact_match = load_metric("exact_match", cache_dir=model_args.cache_dir)
     rouge = load_metric("rouge", cache_dir=model_args.cache_dir)
     bertscore = load_metric("bertscore", cache_dir=model_args.cache_dir)
-    bleurt = load_metric("bleurt", "BLEURT-20", cache_dir=model_args.cache_dir)
+    # bleurt = load_metric("bleurt", "BLEURT-20", cache_dir=model_args.cache_dir)
 
     def postprocess_text(preds, labels):
         preds = [sanitize_text(pred) for pred in preds]
@@ -747,7 +747,12 @@ def main():
         # Compute section text metrics...
 
         # ROUGE
-        result.update(rouge.compute(predictions=decoded_preds, references=decoded_labels, use_stemmer=True))
+        rouge_results = rouge.compute(
+            predictions=decoded_preds, references=decoded_labels, use_stemmer=True, use_aggregator=False
+        )
+        rouge_results = {key: np.mean(value).item() for key, value in rouge_results.items()}
+        result.update(rouge_results)
+
         # Compute the arithmetic mean of ROUGE-1, ROUGE-2 and ROUGE-L following: https://arxiv.org/abs/2110.08499
         if all(rouge_type in result for rouge_type in ["rouge1", "rouge2", "rougeL"]):
             result["rouge_avg"] = np.mean([result["rouge1"], result["rouge2"], result["rougeL"]]).item()
@@ -781,6 +786,7 @@ def main():
         result.update({"bleurt": np.mean(bleurt_result["scores"]).item()})
 
         # Compute an ensemble score for the generations
+        result["ensemble_gen_score"] = np.mean(result["rouge_avg"], result["bertscore_f1"], result["bleurt"]).item()
         result["ensemble_gen_score"] = np.mean([result["rouge_avg"], result["bertscore_f1"], result["bleurt"]]).item()
         result = {k: round(v * 100, 4) for k, v in result.items()}
 
