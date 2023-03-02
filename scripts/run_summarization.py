@@ -24,9 +24,11 @@ import re
 import sys
 import warnings
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import datasets
+import evaluate
 import nltk  # Here to have a nice missing dependency error message early on
 import numpy as np
 import transformers
@@ -691,11 +693,24 @@ def main():
         pad_to_multiple_of=8 if training_args.fp16 else None,
     )
 
-    # Metric
-    exact_match = load_metric("exact_match", cache_dir=model_args.cache_dir)
-    rouge = load_metric("rouge", cache_dir=model_args.cache_dir)
-    bertscore = load_metric("bertscore", cache_dir=model_args.cache_dir)
-    bleurt = load_metric("bleurt", "BLEURT-20", cache_dir=model_args.cache_dir)
+    # If we are offline, we can't download the evaluation script, so we need to provide the path to a local copy.
+    # Assume these live at "./metrics"
+    metrics_dir = Path(__file__).parent.absolute() / "metrics"
+    if os.environ["TRANSFORMERS_OFFLINE"] == "1" or os.environ["HF_DATASETS_OFFLINE"] == "1":
+        exact_match_path = str(metrics_dir / "exact_match.py")
+        rouge_path = str(metrics_dir / "rouge.py")
+        bertscore_path = str(metrics_dir / "bertscore.py")
+        bleurt_path = str(metrics_dir / "bleurt.py")
+    else:
+        exact_match_path = "exact_match"
+        rouge_path = "rouge"
+        bertscore_path = "bertscore"
+        bleurt_path = "bleurt"
+
+    exact_match = evaluate.load(exact_match_path, cache_dir=model_args.cache_dir)
+    rouge = evaluate.load(rouge_path, cache_dir=model_args.cache_dir)
+    bertscore = evaluate.load(bertscore_path, cache_dir=model_args.cache_dir)
+    bleurt = load_metric(bleurt_path, "BLEURT-20", cache_dir=model_args.cache_dir)
 
     def postprocess_text(preds, labels):
         preds = [sanitize_text(pred) for pred in preds]
@@ -747,10 +762,7 @@ def main():
         # Compute section text metrics...
 
         # ROUGE
-        rouge_results = rouge.compute(
-            predictions=decoded_preds, references=decoded_labels, use_stemmer=True, use_aggregator=False
-        )
-        rouge_results = {key: np.mean(value).item() for key, value in rouge_results.items()}
+        rouge_results = rouge.compute(predictions=decoded_preds, references=decoded_labels, use_stemmer=True)
         result.update(rouge_results)
 
         # Compute the arithmetic mean of ROUGE-1, ROUGE-2 and ROUGE-L following: https://arxiv.org/abs/2110.08499
