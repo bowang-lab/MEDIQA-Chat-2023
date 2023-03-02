@@ -377,6 +377,11 @@ def main():
         datefmt="%m/%d/%Y %H:%M:%S",
         handlers=[logging.StreamHandler(sys.stdout)],
     )
+
+    if training_args.should_log:
+        # The default of training_args.log_level is passive, so we set log level at info here to have that default.
+        transformers.utils.logging.set_verbosity_info()
+
     log_level = training_args.get_process_log_level()
     logger.setLevel(log_level)
     datasets.utils.logging.set_verbosity(log_level)
@@ -693,13 +698,36 @@ def main():
         pad_to_multiple_of=8 if training_args.fp16 else None,
     )
 
-    # Necessary to load certain metrics offline. See: https://github.com/huggingface/evaluate/issues/428
-    download_config = datasets.DownloadConfig(use_etag=False) if is_offline_mode() else None
-
-    exact_match = evaluate.load("exact_match", download_config=download_config, cache_dir=model_args.cache_dir)
-    rouge = evaluate.load("rouge", download_config=download_config, cache_dir=model_args.cache_dir)
-    bertscore = evaluate.load("bertscore", download_config=download_config, cache_dir=model_args.cache_dir)
-    bleurt = evaluate.load("bleurt", "BLEURT-20", download_config=download_config, cache_dir=model_args.cache_dir)
+    # download_configs are necessary to load certain metrics offline.
+    # See: https://github.com/huggingface/evaluate/issues/428
+    exact_match = evaluate.load(
+        "exact_match",
+        download_config=datasets.DownloadConfig(cache_dir=model_args.cache_dir, local_files_only=True, use_etag=False)
+        if is_offline_mode()
+        else None,
+        cache_dir=model_args.cache_dir,
+    )
+    rouge = evaluate.load(
+        "rouge",
+        download_config=datasets.DownloadConfig(cache_dir=model_args.cache_dir, local_files_only=True, use_etag=False)
+        if is_offline_mode()
+        else None,
+        cache_dir=model_args.cache_dir,
+    )
+    bertscore = evaluate.load(
+        "bertscore",
+        download_config=datasets.DownloadConfig(cache_dir=model_args.cache_dir, local_files_only=True, use_etag=False)
+        if is_offline_mode()
+        else None,
+        cache_dir=model_args.cache_dir,
+    )
+    bleurt = evaluate.load(
+        "bleurt",
+        "BLEURT-20",
+        # Don't ask me why, but BLEURT needs a different download_config than the other metrics
+        download_config=datasets.DownloadConfig(use_etag=False) if is_offline_mode() else None,
+        cache_dir=model_args.cache_dir,
+    )
 
     def postprocess_text(preds, labels):
         preds = [sanitize_text(pred) for pred in preds]
