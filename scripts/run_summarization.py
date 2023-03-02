@@ -693,24 +693,13 @@ def main():
         pad_to_multiple_of=8 if training_args.fp16 else None,
     )
 
-    # If we are offline, we can't download the evaluation script, so we need to provide the path to a local copy.
-    # Assume these live at "./metrics"
-    metrics_dir = Path(__file__).parent.absolute() / "metrics"
-    if os.environ["TRANSFORMERS_OFFLINE"] == "1" or os.environ["HF_DATASETS_OFFLINE"] == "1":
-        exact_match_path = str(metrics_dir / "exact_match.py")
-        rouge_path = str(metrics_dir / "rouge.py")
-        bertscore_path = str(metrics_dir / "bertscore.py")
-        bleurt_path = str(metrics_dir / "bleurt.py")
-    else:
-        exact_match_path = "exact_match"
-        rouge_path = "rouge"
-        bertscore_path = "bertscore"
-        bleurt_path = "bleurt"
+    # Necessary to load certain metrics offline. See: https://github.com/huggingface/evaluate/issues/428
+    download_config = datasets.DownloadConfig(use_etag=False) if is_offline_mode() else None
 
-    exact_match = evaluate.load(exact_match_path, cache_dir=model_args.cache_dir)
-    rouge = evaluate.load(rouge_path, cache_dir=model_args.cache_dir)
-    bertscore = evaluate.load(bertscore_path, cache_dir=model_args.cache_dir)
-    bleurt = load_metric(bleurt_path, "BLEURT-20", cache_dir=model_args.cache_dir)
+    exact_match = evaluate.load("exact_match", download_config=download_config, cache_dir=model_args.cache_dir)
+    rouge = evaluate.load("rouge", download_config=download_config, cache_dir=model_args.cache_dir)
+    bertscore = evaluate.load("bertscore", download_config=download_config, cache_dir=model_args.cache_dir)
+    bleurt = evaluate.load("bleurt", "BLEURT-20", download_config=download_config, cache_dir=model_args.cache_dir)
 
     def postprocess_text(preds, labels):
         preds = [sanitize_text(pred) for pred in preds]
@@ -766,12 +755,7 @@ def main():
         result.update(rouge_results)
 
         # Compute the arithmetic mean of ROUGE-1, ROUGE-2 and ROUGE-L following: https://arxiv.org/abs/2110.08499
-        if all(rouge_type in result for rouge_type in ["rouge1", "rouge2", "rougeL"]):
-            result["rouge_avg"] = np.mean([result["rouge1"], result["rouge2"], result["rougeL"]]).item()
-        else:
-            warnings.warn(
-                "ROUGE-1, ROUGE-2 and ROUGE-L are not all present in the results. Skipping the computation of ROUGE-AVG."
-            )
+        result["rouge_avg"] = np.mean([result["rouge1"], result["rouge2"], result["rougeL"]]).item()
 
         # BERTScore
         bertscore_result = bertscore.compute(
@@ -794,7 +778,7 @@ def main():
         )
 
         # BLEURT
-        bleurt_result = bleurt.score(predictions=decoded_preds, references=decoded_labels)
+        bleurt_result = bleurt.compute(predictions=decoded_preds, references=decoded_labels)
         result.update({"bleurt": np.mean(bleurt_result["scores"]).item()})
 
         # Compute an ensemble score for the generations
