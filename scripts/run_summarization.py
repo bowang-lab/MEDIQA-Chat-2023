@@ -272,6 +272,26 @@ class DataTrainingArguments:
     task: str = field(
         default="A", metadata={"help": "Which challenge task to train or evaluate on. Should be one of A, B, or C."}
     )
+    bertscore_model_type: str = field(
+        default="microsoft/deberta-large-mnli",
+        metadata={
+            "help": (
+                "Which model to use for BERTScore. This is a good default that balances metric performance and model"
+                " size. For options, see:"
+                " https://docs.google.com/spreadsheets/d/1RKOVpselB98Nnh_EOC4A2BYn8_201tmPODpNWu4w7xI/edit?usp=sharing"
+            )
+        },
+    )
+    bleurt_checkpoint: str = field(
+        default="BLEURT-20-D12",
+        metadata={
+            "help": (
+                "Which checkpoint to use for BLEURT. This is a good default that balances metric performance and"
+                " model size. For options, see:"
+                " https://github.com/google-research/bleurt/blob/master/checkpoints.md"
+            )
+        },
+    )
 
     def __post_init__(self):
         if self.dataset_name is None and self.train_file is None and self.validation_file is None:
@@ -723,7 +743,7 @@ def main():
     )
     bleurt = evaluate.load(
         "bleurt",
-        "BLEURT-20",
+        data_args.bleurt_checkpoint,
         # Don't ask me why, but BLEURT needs a different download_config than the other metrics
         download_config=datasets.DownloadConfig(use_etag=False) if is_offline_mode() else None,
         cache_dir=model_args.cache_dir,
@@ -792,7 +812,7 @@ def main():
             batch_size=training_args.per_device_eval_batch_size * 4,
             device=training_args.device,
             # These are mostly based on the recommendations in https://github.com/Tiiiger/bert_score
-            model_type="microsoft/deberta-xlarge-mnli",
+            model_type=data_args.bertscore_model_type,
             lang="en",
             rescale_with_baseline=True,
             use_fast_tokenizer=True,
@@ -811,6 +831,10 @@ def main():
 
         # Compute an ensemble score for the generations
         result["ensemble_gen_score"] = np.mean([result["rouge_avg"], result["bertscore_f1"], result["bleurt"]]).item()
+        # If this is Task A, also compute an ensemble score that includes the exact match score
+        if data_args.task == TASK_A and "exact_match" in result:
+            result["ensemble_score"] = np.mean([result["ensemble_gen_score"], result["exact_match"]]).item()
+
         result = {k: round(v * 100, 4) for k, v in result.items()}
 
         # Add length of generated and reference summaries
