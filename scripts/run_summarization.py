@@ -288,7 +288,7 @@ class DataTrainingArguments:
             "help": (
                 "Which checkpoint to use for BLEURT. This is a good default that balances metric performance and"
                 " model size. For options, see:"
-                " https://github.com/huggingface/evaluate/blob/d22d8ee5a815a11a7dea7985bdc7c1728fc9d5e6/metrics/bleurt/bleurt.py#L65-L76"
+                " https://github.com/google-research/bleurt/blob/master/checkpoints.md"
             )
         },
     )
