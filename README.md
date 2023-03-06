@@ -62,6 +62,6 @@ python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_b.yml" \
 
 By default, the model will be evaluated by ROUGE, BERTScore and BLEURT. You can change the underlying models for BERTScore and BLEURT by modifying the `bertscore_model_type` and `bleurt_checkpoint` arguments. We choose reasonable defaults here, which balance model size and evaluation time with automatic metric performance. For more information on possible models and metric performance, see [here](https://docs.google.com/spreadsheets/d/1RKOVpselB98Nnh_EOC4A2BYn8_201tmPODpNWu4w7xI/edit?usp=sharing) for BERTScore and [here](https://github.com/google-research/bleurt/blob/master/checkpoints.md) for BLEURT.
 
-Results will be automatically logged to any integrations that are _installed_ and _supported_ by the [HuggingFace trainer](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.TrainingArguments.report_to). 
+Results will be automatically logged to any integrations that are _installed_ and _supported_ by the [HuggingFace trainer](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.TrainingArguments.report_to). A file which contains the model's predictions formatted for submission to the challenge task will be saved to `output_dir / "taskX_wanglab.csv"`.
 
 > We also provide a SLURM submission script for ARC clusters, which can be found at [`./scripts/slurm/run_summarization.sh`](./scripts/slurm/run_summarization.sh).

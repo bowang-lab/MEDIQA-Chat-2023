@@ -22,17 +22,16 @@ import logging
 import os
 import re
 import sys
-import warnings
 from dataclasses import dataclass, field
-from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import datasets
 import evaluate
 import nltk  # Here to have a nice missing dependency error message early on
 import numpy as np
+import pandas as pd
 import transformers
-from datasets import load_dataset, load_metric
+from datasets import load_dataset
 from filelock import FileLock
 from omegaconf import OmegaConf
 from transformers import (
@@ -74,11 +73,20 @@ except (LookupError, OSError):
 # A list of all multilingual tokenizer which require lang attribute.
 MULTILINGUAL_TOKENIZERS = [MBartTokenizer, MBartTokenizerFast, MBart50Tokenizer, MBart50TokenizerFast]
 
+# Constants for the MEDIQA-Chat @ ACL-ClinicalNLP challenge task
+GENHX = "GENHX"
 # A list of valid task names for the MEDIQA-Chat @ ACL-ClinicalNLP
 TASK_A = "A"
 TASK_B = "B"
 TASK_C = "C"
 TASKS = [TASK_A, TASK_B, TASK_C]
+# These are all related to the output files
+ID_COL = "ID"
+TEST_ID = "TestID"
+SYSTEM_OUTPUT_1 = "SystemOutput1"
+SYSTEM_OUTPUT_2 = "SystemOutput2"
+SYSTEM_OUTPUT = "SystemOutput"
+TEAM_NAME = "wanglab"
 
 
 @dataclass
@@ -766,8 +774,8 @@ def main():
             section_header = re.findall(r"(?:Section header:)(.*)(?:Section text)", text, re.DOTALL)
             section_text = re.findall(r"(?:Section text:)(.*)", text, re.DOTALL)
             # It is possible the mdoel does not format its outputs as expected. In this case, take the section
-            # header to be empty and the section text to be the whole text.
-            section_header = section_header[0].strip() if section_header else ""
+            # header to be GENHX (the most likely section header) and the section text to be the whole text.
+            section_header = section_header[0].strip() if section_header else GENHX
             section_text = section_text[0].strip() if section_text else text.strip()
             section_headers.append(section_header)
             section_texts.append(section_text)
@@ -920,6 +928,20 @@ def main():
                 output_prediction_file = os.path.join(training_args.output_dir, "generated_predictions.txt")
                 with open(output_prediction_file, "w") as writer:
                     writer.write("\n".join(predictions))
+
+                # Output predictions to a file expected by the challenge task
+                # See: https://github.com/abachaa/MEDIQA-Chat-2023#submission-instructions for details on format
+                if data_args.task == TASK_A:
+                    text_preds, header_preds = extract_header_and_text(predictions)
+                    ct_output = {
+                        TEST_ID: raw_datasets["test"][ID_COL],
+                        SYSTEM_OUTPUT_1: header_preds,
+                        SYSTEM_OUTPUT_2: text_preds,
+                    }
+                else:
+                    ct_output = {TEST_ID: raw_datasets["test"][ID_COL], SYSTEM_OUTPUT: predictions}
+                ct_fp = os.path.join(training_args.output_dir, f"task{data_args.task.upper()}_{TEAM_NAME}.csv")
+                pd.DataFrame.from_dict(ct_output).to_csv(ct_fp, index=False)
 
     kwargs = {"finetuned_from": model_args.model_name_or_path, "tasks": "summarization"}
     if data_args.dataset_name is not None:
