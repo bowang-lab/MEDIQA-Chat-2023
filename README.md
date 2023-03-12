@@ -65,3 +65,8 @@ By default, the model will be evaluated by ROUGE, BERTScore and BLEURT. You can 
 Results will be automatically logged to any integrations that are _installed_ and _supported_ by the [HuggingFace trainer](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.TrainingArguments.report_to). If `do_predict=True`, a file which contains the model's predictions formatted for submission to the challenge task will be saved to `output_dir / "taskX_wanglab.csv"`.
 
 > We also provide a SLURM submission script for ARC clusters, which can be found at [`./scripts/slurm/run_summarization.sh`](./scripts/slurm/run_summarization.sh).
+
+
+### Submission
+
+TODO
