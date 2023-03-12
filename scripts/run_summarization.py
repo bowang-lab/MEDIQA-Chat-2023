@@ -82,6 +82,7 @@ TASK_C = "C"
 TASKS = [TASK_A, TASK_B, TASK_C]
 # These are all related to the output files
 ID_COL = "ID"
+ENCOUNTER_ID_COL = "encounter_id"
 TEST_ID = "TestID"
 SYSTEM_OUTPUT_1 = "SystemOutput1"
 SYSTEM_OUTPUT_2 = "SystemOutput2"
@@ -939,7 +940,7 @@ def main():
                         SYSTEM_OUTPUT_2: text_preds,
                     }
                 else:
-                    ct_output = {TEST_ID: raw_datasets["test"][ID_COL], SYSTEM_OUTPUT: predictions}
+                    ct_output = {TEST_ID: raw_datasets["test"][ENCOUNTER_ID_COL], SYSTEM_OUTPUT: predictions}
                 ct_fp = os.path.join(training_args.output_dir, f"task{data_args.task.upper()}_{TEAM_NAME}.csv")
                 pd.DataFrame.from_dict(ct_output).to_csv(ct_fp, index=False)
 
