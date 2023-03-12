@@ -29,6 +29,7 @@ mkdir -p "$SCRATCH/$PROJECT_NAME"
 
 # Install the package
 pip install -r requirements.txt
+pip install -r dev-requirements.txt
 
 # Check that all tests are passing
 pytest tests
