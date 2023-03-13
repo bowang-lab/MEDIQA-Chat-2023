@@ -1,3 +1,5 @@
+[![ci](https://github.com/bowang-lab/mediqa-chat-tasks-acl-2023/actions/workflows/ci.yml/badge.svg)](https://github.com/bowang-lab/mediqa-chat-tasks-acl-2023/actions/workflows/ci.yml)
+
 # mediqa-chat-tasks-acl-2023
 
 A repository organizing our submission to the MEDIQA-Chat Tasks @ ACL-ClinicalNLP 2023
