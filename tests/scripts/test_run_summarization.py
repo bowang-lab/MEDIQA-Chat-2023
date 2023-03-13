@@ -28,7 +28,6 @@ def test_run_summarization(tmp_path, task: str) -> None:
     )
     test_file = validation_file
 
-    print("here")
     _ = subprocess.run(
         [
             "python",
