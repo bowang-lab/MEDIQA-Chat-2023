@@ -1,0 +1,48 @@
+ID,section_header,section_text,dialogue
+0,GENHX,"The patient is a 26-year-old female, referred to Physical Therapy for low back pain.  The patient has a history of traumatic injury to low back.  The patient stated initial injury occurred eight years ago, when she fell at a ABC Store.  The patient stated she received physical therapy, one to two visits and received modality treatment only, specifically electrical stimulation and heat pack per patient recollection.  The patient stated that she has had continuous low-back pain at varying degrees for the past eight years since that fall.  The patient gave birth in August 2008 and since the childbirth, has experienced low back pain.  The patient also states that she fell four to five days ago, while mopping her floor.  The patient stated that she landed on her tailbone and symptoms have increased since that fall.  The patient stated that her initial physician examination with Dr. X was on 01/10/09, and has a followup appointment on 02/10/09.","Doctor: When did your pain begin? 
+Patient: I've had low back pain for about eight years now.
+Doctor: Is there any injury? 
+ Patient: Yeah, it started when I fell in an A B C store.
+Doctor: How old are you now?
+Patient: I'm twenty six.  
+Doctor: What kind of treatments have you had for this low back pain? 
+Patient: Yeah, I got referred to P T, and I went, but only once or twice, um, and if I remember right, they only did the electrical stimulation, and heat. 
+Doctor: I see, how has your pain progressed over the last eight years? 
+Patient: It's been pretty continuous, but it's been at varying degrees, sometimes are better than others. 
+Doctor: Do you have any children? 
+Patient: Yes, I had my son in August of two thousand eight, and I've had back pain since giving birth. 
+Doctor: Have you had any falls since the initial one? 
+Patient: Yes, I fell four or five days ago while I was mopping the floor. 
+Doctor: Did you land on your lower back again?
+Patient: Yes, right onto my tailbone. 
+Doctor: Did that make the low back pain worse? 
+Patient: Yes. 
+Doctor: Have you seen any other doctors for this issue? 
+Patient: Yes, I saw Doctor X on January tenth two thousand nine, and I have a follow up appointment scheduled for February tenth two thousand nine."
+1,ROS,"As mentioned denies any oropharyngeal swelling.  No lip or tongue swelling.  No wheezing or shortness of breath.  No headache.  No nausea.  Notes itchy rash, especially on his torso and upper arms.","Doctor: Hey, bud. What brings you in today? 
+Patient: A rash on my upper arms and torso. 
+Doctor: When did it start? 
+Patient: Bout a day or two ago. 
+Doctor: Any itchiness to the area? 
+Patient: Yes, a lot actually. 
+Doctor: Have you had episodes of shortness of breath or wheezing? 
+Patient: No. 
+Doctor: How about swelling to your lips, tongue, or throat? 
+Patient: No. 
+Doctor: And no nausea or headaches? 
+Patient: No. 
+Doctor: Have you applied anything to the rash? 
+Patient: No, I thought it'd go away on its own."
+2,PASTMEDICALHX,Essentially unchanged from her visit of 04/15/2005.,"Doctor: Has anything changed in your medical history since you last visit on April fifteenth two thousand five?
+Patient: What do you mean by that?
+Doctor: Have you been diagnosed with any new medical conditions, or are you experiencing any new symptoms?
+Patient: Oh, no, nothing like that."
+3,MEDICATIONS,Accutane.,"Doctor: How've you been treating your acne? 
+Patient: The dermatologist started me on Accutane.  
+Doctor: How long have you been on Accutane? 
+Patient: About three months now. 
+Doctor: Have you noticed any improvements since starting it? 
+Patient: Yeah, kinda."
+4,CC,Confusion and hallucinations.,"Doctor: Have you been experiencing any mental difficulties or confusion? 
+Patient: No. Doctor: Any hallucinations? Are you seeing hearing thing that is not real? 
+Patient: No."
