@@ -17,9 +17,11 @@ def test_run_summarization(tmp_path, task_conf: str) -> None:
             "python",
             script_filepath,
             config_filepath,
+            # Write all output and cache files to a temporary directory
             f"output_dir={tmp_path}",
-            "overwrite_output_dir=True",
+            f"cache_dir={tmp_path}" "overwrite_output_dir=True",
             # Overide defaults to make test run in a reasonable amount of time
+            "model_name_or_path=google/flan-t5-small",
             "max_source_length=4",
             "max_target_length=4",
             "do_train=True",
