@@ -1,0 +1,49 @@
+ID,section_header,section_text,dialogue
+0,GENHX,"The patient is a 76-year-old white female who presents to the clinic today originally for hypertension and a med check.  She has a history of hypertension, osteoarthritis, osteoporosis, hypothyroidism, allergic rhinitis and kidney stones.  Since her last visit she has been followed by Dr. Kumar.  Those issues are stable.  She has had no fever or chills, cough, congestion, nausea, vomiting, chest pain, chest pressure.","Doctor: What brings you back into the clinic today, miss? 
+Patient: I came in for a refill of my blood pressure medicine. 
+Doctor: It looks like Doctor Kumar followed up with you last time regarding your hypertension, osteoarthritis, osteoporosis, hypothyroidism, allergic rhinitis and kidney stones.  Have you noticed any changes or do you have any concerns regarding these issues?  
+Patient: No. 
+Doctor: Have you had any fever or chills, cough, congestion, nausea, vomiting, chest pain, chest pressure?
+Patient: No.  
+Doctor: Great. Also, for our records, how old are you and what race do you identify yourself as?
+Patient: I am seventy six years old and identify as a white female."
+1,GENHX,"The patient is a 25-year-old right-handed Caucasian female who presented to the emergency department with sudden onset of headache occurring at approximately 11 a.m. on the morning of the July 31, 2008.  She described the headache as worse in her life and it was also accompanied by blurry vision and scotoma.  The patient also perceived some swelling in her face.  Once in the Emergency Department, the patient underwent a very thorough evaluation and examination.  She was given the migraine cocktail.  Also was given morphine a total of 8 mg while in the Emergency Department.  For full details on the history of present illness, please see the previous history and physical.","Doctor: How're you feeling today?  
+Patient: Terrible. I'm having the worst headache of my life. 
+Doctor: I'm so sorry. Well you are only twenty five, so let's hope this is the last of the worst. Let's see how we can best help you. When did it start? 
+Patient: Around eleven in the morning. 
+Doctor: Today? 
+Patient: Um no yesterday. July thirty first. 
+Doctor: July thirty first O eight. Got it. Did it come on suddenly? 
+Patient: Yeah. 
+Doctor: Are you having any symptoms with it, such as blurry vision, light sensitivity, dizziness, lightheadedness, or nausea? 
+Patient: I'm having blurry vision and lightheadedness.  I also can't seem to write well. It looks so messy. I am naturally right handed but my writing looks like I am trying with my left. 
+Doctor: How would you describe the lightheadedness? 
+Patient: Like there are blind spots. 
+Doctor: Okay. How about any vomiting? 
+Patient: Um no. I feel like my face is pretty swollen though. I don't know if it's related to the headache but it started around the same time. 
+Doctor: Here in the E R, we'll do a thorough exam and eval to make sure nothing serious is going on. While we're waiting for your C T results, I'm going to order a migraine cocktail and some Morphine. 
+Patient: Thank. Will the nurse be in soon? 
+Doctor: Yes, she'll be right in as soon as the order is placed. It shouldn't be more than a few minutes. If it takes longer, then please ring the call bell."
+2,GENHX,"This is a 22-year-old female, who presented to the office complaining of condylomas she had noted in her anal region.  She has noticed approximately three to four weeks ago.  She denies any pain but does state that there is some itching.  No other symptoms associated.","Doctor: Hello, miss. What is the reason for your visit today? 
+Patient: I think I have some warts on my back end where the poop comes out. 
+Doctor: I see. When did you start noticing them? 
+Patient: I think like three to four weeks ago. 
+Doctor: Do you feel any pain or discomfort? 
+Patient: It itches a little, but I haven't felt any pain yet. Is this normal for a twenty two year old? 
+Doctor: I'll have to take a look, but you'll be fine. Are there any other symptoms that you are aware of?
+Patient: Nope. Just the warts and itchiness."
+3,MEDICATIONS,"Prescribed medications were Salmeterol inhaler, prn; and Fluticasone nasal inhaler. The patient was taking no over the counter or alternative medicines.","Doctor: Are you taking any over the counter medicines? 
+Patient: No, only the ones which were prescribed.
+Doctor: No alternative medicine, naturopathy or anything?
+Patient: No, only whatever is here in this prescription. 
+Doctor: Okay let me take a look...so you were prescribed Salmeterol inhaler-
+Patient: On as needed basis.
+Doctor: Okay and the other one is Fluticasone inhaler, which is-
+Patient: Which is a nasal inhaler.
+Doctor: Right."
+4,CC,"Burn, right arm.","Doctor: Hi, how are you? 
+Patient: I burned my hand.
+Doctor: Oh, I am sorry. Wow!
+Patient: Yeah.
+Doctor: Is it only right arm?
+Patient: Yes."

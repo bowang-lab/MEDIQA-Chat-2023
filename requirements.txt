@@ -5,6 +5,7 @@ git+https://github.com/huggingface/transformers.git
 # git+https://github.com/huggingface/peft.git
 omegaconf
 # Metrics
+evaluate
 rouge-score
 bert-score
 git+https://github.com/google-research/bleurt.git

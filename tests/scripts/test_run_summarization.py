@@ -4,14 +4,30 @@ from pathlib import Path
 import pytest
 
 
-@pytest.mark.parametrize("task_conf", ["task_a.yml", "task_b.yml"])
-def test_run_summarization(tmp_path, task_conf: str) -> None:
+@pytest.mark.parametrize("task", ["A", "B"])
+def test_run_summarization(tmp_path, task: str) -> None:
     """
     A simple tests that fails if the run_summarization.py script returns non-zero exit code.
     """
     cwd = Path(__file__).parent
     script_filepath = cwd / ".." / ".." / "scripts" / "run_summarization.py"
-    config_filepath = cwd / ".." / ".." / "conf" / task_conf
+    config_filepath = cwd / ".." / ".." / "conf" / f"task_{task.lower()}.yml"
+    train_file = (
+        cwd
+        / ".."
+        / ".."
+        / "test_fixtures"
+        / f"MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/Task{task}/Task{task}-TrainingSet.csv"
+    )
+    validation_file = (
+        cwd
+        / ".."
+        / ".."
+        / "test_fixtures"
+        / f"MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/Task{task}/Task{task}-ValidationSet.csv"
+    )
+    test_file = validation_file
+
     _ = subprocess.run(
         [
             "python",
@@ -20,6 +36,10 @@ def test_run_summarization(tmp_path, task_conf: str) -> None:
             # Write all output and cache files to a temporary directory
             f"output_dir={tmp_path}",
             f"cache_dir={tmp_path}" "overwrite_output_dir=True",
+            # Use dummy data
+            f"train_file={train_file}",
+            f"validation_file={validation_file}",
+            f"test_file={test_file}",
             # Overide defaults to make test run in a reasonable amount of time
             "model_name_or_path=google/flan-t5-small",
             "max_source_length=4",
