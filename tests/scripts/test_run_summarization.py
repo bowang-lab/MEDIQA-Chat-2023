@@ -1,3 +1,4 @@
+import os
 import subprocess
 from pathlib import Path
 
@@ -34,8 +35,9 @@ def test_run_summarization(tmp_path, task: str) -> None:
             script_filepath,
             config_filepath,
             # Write all output and cache files to a temporary directory
-            f"output_dir={tmp_path}",
-            f"cache_dir={tmp_path}" "overwrite_output_dir=True",
+            f"output_dir={os.path.join(tmp_path, task)}",
+            f"cache_dir={tmp_path}",
+            "overwrite_output_dir=True",
             # Use dummy data
             f"train_file={train_file}",
             f"validation_file={validation_file}",
