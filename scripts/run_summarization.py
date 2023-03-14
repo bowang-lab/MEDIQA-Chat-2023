@@ -18,11 +18,13 @@ Fine-tuning the library models for sequence to sequence.
 """
 # You can also adapt this script on your own sequence to sequence task. Pointers for this are left as comments.
 
+import json
 import logging
 import os
 import re
 import sys
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import datasets
@@ -267,6 +269,7 @@ class DataTrainingArguments:
     source_prefix: Optional[str] = field(
         default="", metadata={"help": "A prefix to add before every source text (useful for T5 models)."}
     )
+    source_suffix: Optional[str] = field(default="", metadata={"help": "A suffix to add after every source text."})
 
     forced_bos_token: Optional[str] = field(
         default=None,
@@ -393,6 +396,9 @@ def main():
     elif any(argv.endswith(".yml") for argv in sys.argv[1:]):
         conf = parse_omega_conf()
         model_args, data_args, training_args = parser.parse_dict(conf)
+        output_dir = Path(training_args.output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        (output_dir / "omega_conf.json").write_text(json.dumps(conf, indent=2))
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
@@ -563,6 +569,7 @@ def main():
             )
 
     prefix = data_args.source_prefix if data_args.source_prefix is not None else ""
+    suffix = data_args.source_suffix if data_args.source_suffix is not None else ""
 
     # Preprocessing the datasets.
     # We need to tokenize inputs and targets.
@@ -641,7 +648,7 @@ def main():
 
                 targets.append(target)
 
-        inputs = [f"{prefix} {inp}" for inp in inputs]
+        inputs = [f"{prefix} {inp} {suffix}".strip() for inp in inputs]
 
         # Do some basic cleanup on the source and target texts
         inputs = [sanitize_text(inp) for inp in inputs]
@@ -839,7 +846,8 @@ def main():
         result.update({"bleurt": np.mean(bleurt_result["scores"]).item()})
 
         # Compute an ensemble score for the generations
-        result["ensemble_gen_score"] = np.mean([result["rouge_avg"], result["bertscore_f1"], result["bleurt"]]).item()
+        # Use ROUGE-1, following the challenge task evaluation
+        result["ensemble_gen_score"] = np.mean([result["rouge1"], result["bertscore_f1"], result["bleurt"]]).item()
         # If this is Task A, also compute an ensemble score that includes the exact match score
         if data_args.task == TASK_A and "exact_match" in result:
             result["ensemble_score"] = np.mean([result["ensemble_gen_score"], result["exact_match"]]).item()
