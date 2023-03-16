@@ -42,7 +42,7 @@ def main(
     """Generates predictions using LangChain for the given task and run on the given test set.
 
     Example usage:
-    OPENAI_API_KEY="..." python scripts/llm.py "./taskB_testset4participants_inputConversations.csv" "./outputs/wanglab/taskB/run1" --task B --run 1
+    OPENAI_API_KEY="..." python scripts/run_langchain.py "./taskB_testset4participants_inputConversations.csv" "./outputs/wanglab/taskB/run1" --task B --run 1
     """
 
     if task not in TASKS:
