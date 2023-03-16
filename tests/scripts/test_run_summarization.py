@@ -32,8 +32,8 @@ def test_run_summarization(tmp_path, task: str) -> None:
     _ = subprocess.run(
         [
             "python",
-            script_filepath,
-            config_filepath,
+            str(script_filepath),
+            str(config_filepath),
             # Write all output and cache files to a temporary directory
             f"output_dir={os.path.join(tmp_path, task)}",
             f"cache_dir={tmp_path}",
