@@ -62,9 +62,9 @@ def main(
             f"Number of predictions ({len(predictions)}) does not match number of references ({len(references)})."
         )
 
-    rouge = evaluate.load("rouge")
-    bertscore = evaluate.load("bertscore")
-    bleurt = evaluate.load("bleurt", "BLEURT-20-D12")
+    rouge = evaluate.load("rouge", cache_dir=cache_dir)
+    bertscore = evaluate.load("bertscore", cache_dir=cache_dir)
+    bleurt = evaluate.load("bleurt", "BLEURT-20-D12", cache_dir=cache_dir)
 
     result = {}
 
