@@ -14,12 +14,12 @@ TASK_B = "B"
 TASK_C = "C"
 TASKS = [TASK_A, TASK_B, TASK_C]
 
-# These are all related to the output files
 RUN_1 = "1"
 RUN_2 = "2"
 RUN_3 = "3"
 RUNS = [RUN_1, RUN_2, RUN_3]
 
+# These are all related to the output files
 ENCOUNTER_ID_COL = "encounter_id"
 TEST_ID = "TestID"
 SYSTEM_OUTPUT = "SystemOutput"

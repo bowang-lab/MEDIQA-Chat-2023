@@ -70,8 +70,31 @@ Results will be automatically logged to any integrations that are _installed_ an
 
 > We also provide a SLURM submission script for ARC clusters, which can be found at [`./scripts/slurm/run_summarization.sh`](./scripts/slurm/run_summarization.sh).
 
+### Generate notes with an LLM
 
-### Submission
+To generate notes with a large language model (LLM) (via LangChain), run the following:
+
+```bash
+# Task A
+OPENAI_API_KEY="..." python scripts/llm.py \
+    "./taskA_testset4participants_inputConversations.csv" \
+    "./outputs/wanglab/taskA/run1" \
+    --task A \
+    --run 1
+```
+
+```bash
+# Task B
+OPENAI_API_KEY="..." python scripts/llm.py \
+    "./taskB_testset4participants_inputConversations.csv" \
+    "./outputs/wanglab/taskB/run1" \
+    --task B \
+    --run 1
+```
+
+You will need to provide your own `OPENAI_API_KEY`.
+
+## Submission
 
 To submit, run the following
 
