@@ -25,6 +25,7 @@ TEST_ID = "TestID"
 SYSTEM_OUTPUT = "SystemOutput"
 TEAM_NAME = "wanglab"
 
+
 def sanitize_text(text: str, lowercase: bool = False) -> str:
     """Cleans text by removing whitespace, newlines and tabs and (optionally) lowercasing."""
     sanitized_text = " ".join(text.strip().split())
