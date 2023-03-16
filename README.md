@@ -71,4 +71,11 @@ Results will be automatically logged to any integrations that are _installed_ an
 
 ### Submission
 
-TODO
+To submit, run the following
+
+```bash
+./scripts/submission/install.sh
+./scripts/submission/activate.sh
+# Then, choose one of the decode scripts, e.g.
+./scripts/submission/decode_taskA_run1.sh
+```
