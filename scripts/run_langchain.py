@@ -92,7 +92,6 @@ def main(
     predictions = []
     for dialogue in dataset["test"]["dialogue"]:
         prediction = chain.run(dialogue=dialogue)
-        prediction = sanitize_text(prediction)
         predictions.append(prediction)
 
     if task == TASK_A:
@@ -106,7 +105,7 @@ def main(
 
     # Write the predictions to a simple text file
     preds_text_fn = f"task{task}_{TEAM_NAME}_run{run}.txt"
-    (output_dir / preds_text_fn).write_text("\n".join(predictions))
+    (output_dir / preds_text_fn).write_text("\n".join([sanitize_text(pred) for pred in predictions]))
 
     # Write the predictions to a CSV file that conforms to the challenge format
     ct_fn = f"task{task}_{TEAM_NAME}_run{run}.csv"
