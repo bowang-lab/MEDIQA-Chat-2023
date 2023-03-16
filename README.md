@@ -93,6 +93,28 @@ OPENAI_API_KEY="..." python scripts/run_langchain.py \
 
 You will need to provide your own `OPENAI_API_KEY`.
 
+### Generate notes with OpenAI API
+
+To generate notes with a large language model (LLM) (via OpenAI API), run the following:
+
+```bash
+# Task A
+OPENAI_API_KEY="..." python scripts/run_openai.py \
+    "./taskA_testset4participants_inputConversations.csv" \
+    "./output/taskA/llm" \
+    --task A
+```
+
+```bash
+# Task B
+OPENAI_API_KEY="..." python scripts/run_openai.py \
+    "./taskB_testset4participants_inputConversations.csv" \
+    "./outputs/taskB/llm" \
+    --task B
+```
+
+You will need to provide your own `OPENAI_API_KEY`.
+
 ## Submission
 
 To submit, run the following
