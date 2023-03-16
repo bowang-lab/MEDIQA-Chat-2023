@@ -58,6 +58,8 @@ def test_run_summarization(tmp_path, task: str) -> None:
             # Use smaller BERTScore/BELURT models to reduce test time
             "bertscore_model_type=microsoft/deberta-base-mnli",
             "bleurt_checkpoint=BLEURT-20-D3",
+            # Disable logging
+            "report_to=none"
         ],
         capture_output=True,
         check=True,
