@@ -47,7 +47,7 @@ To evaluate a trained model, run one of the following:
 ```bash
 # Task A
 python ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskA.yml" \
-    output_dir="./output/taskA" \
+    output_dir="./output/taskA/fine_tune" \
     model_name_or_path="./path/to/model/checkpoint" \
     do_train=False \
     do_eval=True \
@@ -57,7 +57,7 @@ python ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskA.yml" \
 ```
 # Task B
 python ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskB.yml" \
-    output_dir="./output/taskB" \
+    output_dir="./output/taskB/fine_tune" \
     model_name_or_path="./path/to/model/checkpoint" \
     do_train=False \
     do_eval=True \
@@ -78,18 +78,16 @@ To generate notes with a large language model (LLM) (via LangChain), run the fol
 # Task A
 OPENAI_API_KEY="..." python scripts/llm.py \
     "./taskA_testset4participants_inputConversations.csv" \
-    "./outputs/wanglab/taskA/run1" \
-    --task A \
-    --run 1
+    "./output/taskA/llm" \
+    --task A
 ```
 
 ```bash
 # Task B
 OPENAI_API_KEY="..." python scripts/llm.py \
     "./taskB_testset4participants_inputConversations.csv" \
-    "./outputs/wanglab/taskB/run1" \
-    --task B \
-    --run 1
+    "./outputs/taskB/llm" \
+    --task B
 ```
 
 You will need to provide your own `OPENAI_API_KEY`.
