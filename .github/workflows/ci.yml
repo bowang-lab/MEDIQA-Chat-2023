@@ -10,8 +10,8 @@ on:
     branches: [ main ]
 
 jobs:
+  # Check that the project builds and runs without error
   build:
-
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -24,13 +24,13 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-        cache: 'pip'
+        cache: "pip"
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         if [ -f dev-requirements.txt ]; then pip install -r dev-requirements.txt; fi
-    - name: Download required NLTK data 
+    - name: Download required NLTK data
       run: |
         python -m nltk.downloader punkt
     - name: Format code with black
@@ -45,3 +45,26 @@ jobs:
     - name: Test with pytest
       run: |
         pytest . -vvv
+
+  # Check that the submission scripts run without error
+  submission:
+    # Challenge task will be run on Python 3.8 on a Linux machine
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8"]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: "pip"
+    - name: Check install.sh script
+      run: |
+        ./scripts/submission/install.sh
+    - name: Check activate.sh script
+      run: |
+        ./scripts/submission/activate.sh

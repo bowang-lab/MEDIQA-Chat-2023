@@ -2,4 +2,4 @@
 
 # Activate the virtual environment
 VENV="wanglab_venv"
-source "$VENV"
+source "$VENV/bin/activate"
