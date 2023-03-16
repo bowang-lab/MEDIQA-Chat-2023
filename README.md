@@ -26,13 +26,15 @@ python ./scripts/run_summarization.py --help
 
 Arguments can be modified in the [config files](./conf/) or passed as command-line arguments. Valid arguments are anything from the HuggingFace [`TrainingArguments`](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.TrainingArguments), [`Seq2SeqTrainingArguments`](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.Seq2SeqTrainingArguments) or arguments specified in the script itself. At a minimum, you must provide a path to the dataset partitions with `train_file`, `validation_file` and `test_file`.
 
-To train the model, run the following:
+To train the model, run one of the following:
 
 ```bash
 # Task A (train)
 python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_a.yml" \
     output_dir="./output/task_a"
+```
 
+```
 # Task B (train)
 python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_b.yml" \
     output_dir="./output/task_b"
@@ -40,7 +42,7 @@ python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_b.yml" \
 
 > __Note__: `base.yml` contains good default arguments that should be used for all experiments. `task_a.yml`/`task_b.yml` contain arguments specific to Task A/B. Arguments passed via the command line arguments will override those in the config files.
 
-To evaluate a trained model, run the following:
+To evaluate a trained model, run one of the following:
 
 ```bash
 # Task A
@@ -50,7 +52,9 @@ python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_a.yml" \
     do_train=False \
     do_eval=True \
     do_predict=True
+```
 
+```
 # Task B
 python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_b.yml" \
     output_dir="./output/task_b" \
@@ -62,7 +66,7 @@ python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_b.yml" \
 
 By default, the model will be evaluated by ROUGE, BERTScore and BLEURT. You can change the underlying models for BERTScore and BLEURT by modifying the `bertscore_model_type` and `bleurt_checkpoint` arguments. We choose reasonable defaults here, which balance model size and evaluation time with automatic metric performance. For more information on possible models and metric performance, see [here](https://docs.google.com/spreadsheets/d/1RKOVpselB98Nnh_EOC4A2BYn8_201tmPODpNWu4w7xI/edit?usp=sharing) for BERTScore and [here](https://github.com/google-research/bleurt/blob/master/checkpoints.md) for BLEURT.
 
-Results will be automatically logged to any integrations that are _installed_ and _supported_ by the [HuggingFace trainer](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.TrainingArguments.report_to). If `do_predict=True`, a file which contains the model's predictions formatted for submission to the challenge task will be saved to `output_dir / "taskX_wanglab.csv"`.
+Results will be automatically logged to any integrations that are _installed_ and _supported_ by the [HuggingFace trainer](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.TrainingArguments.report_to). If `do_predict=True`, a file which contains the model's predictions formatted for submission to the challenge task will be saved to `output_dir / "taskX_wanglab_runY.csv"`. `X` corresponds to the script argument `task` and `Y` to the script argument `run`.
 
 > We also provide a SLURM submission script for ARC clusters, which can be found at [`./scripts/slurm/run_summarization.sh`](./scripts/slurm/run_summarization.sh).
 
