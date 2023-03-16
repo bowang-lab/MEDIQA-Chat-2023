@@ -1,11 +1,23 @@
-datasets
 # run_summarization.py expects us to have installed from source
 git+https://github.com/huggingface/transformers.git
-# peft is being updated rapidly, so install from source
-# git+https://github.com/huggingface/peft.git
-omegaconf
-# Metrics
+
+# Taken straight from: https://github.com/huggingface/transformers/blob/main/examples/pytorch/summarization/requirements.txt
+accelerate >= 0.12.0
+datasets >= 1.8.0
+sentencepiece != 0.1.92
+protobuf
+rouge-score
+nltk
+py7zr
+torch >= 1.3
 evaluate
+
+# Metrics
 rouge-score
 bert-score
 git+https://github.com/google-research/bleurt.git
+
+# Needed by us
+# peft is being updated rapidly, so install from source
+# git+https://github.com/huggingface/peft.git
+omegaconf
