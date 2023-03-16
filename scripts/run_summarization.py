@@ -736,13 +736,16 @@ def main():
 
     # download_configs are necessary to load certain metrics offline.
     # See: https://github.com/huggingface/evaluate/issues/428
-    exact_match = evaluate.load(
-        "exact_match",
-        download_config=datasets.DownloadConfig(cache_dir=model_args.cache_dir, local_files_only=True, use_etag=False)
-        if is_offline_mode()
-        else None,
-        cache_dir=model_args.cache_dir,
-    )
+    if data_args.task == TASK_A:
+        exact_match = evaluate.load(
+            "exact_match",
+            download_config=datasets.DownloadConfig(
+                cache_dir=model_args.cache_dir, local_files_only=True, use_etag=False
+            )
+            if is_offline_mode()
+            else None,
+            cache_dir=model_args.cache_dir,
+        )
     rouge = evaluate.load(
         "rouge",
         download_config=datasets.DownloadConfig(cache_dir=model_args.cache_dir, local_files_only=True, use_etag=False)
@@ -776,6 +779,7 @@ def main():
         return preds, labels
 
     def extract_header_and_text(texts):
+        """Extracts section header and section text predictions from model outputs and targets."""
         section_headers, section_texts = [], []
         for text in texts:
             # Extract from the model predictions and the labels the section headers and the section texts
@@ -949,7 +953,8 @@ def main():
                     }
                 else:
                     ct_output = {TEST_ID: raw_datasets["test"][ENCOUNTER_ID_COL], SYSTEM_OUTPUT: predictions}
-                ct_fp = os.path.join(training_args.output_dir, f"task{data_args.task.upper()}_{TEAM_NAME}.csv")
+                ct_fn = f"task{data_args.task.upper().strip()}_{TEAM_NAME}_run1.csv"
+                ct_fp = os.path.join(training_args.output_dir, ct_fn)
                 pd.DataFrame.from_dict(ct_output).to_csv(ct_fp, index=False)
 
     kwargs = {"finetuned_from": model_args.model_name_or_path, "tasks": "summarization"}
