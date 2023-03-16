@@ -12,7 +12,7 @@ def test_run_summarization(tmp_path, task: str) -> None:
     """
     cwd = Path(__file__).parent
     script_filepath = cwd / ".." / ".." / "scripts" / "run_summarization.py"
-    config_filepath = cwd / ".." / ".." / "conf" / f"task_{task.lower()}.yml"
+    config_filepath = cwd / ".." / ".." / "conf" / f"task{task.upper()}.yml"
     train_file = (
         cwd
         / ".."

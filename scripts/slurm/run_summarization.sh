@@ -15,7 +15,7 @@
 # salloc --mem=16G --cpus-per-task=1 --gres=gpu:a100:1 --time=3:00:00 --account=def-gbader
 
 ### Example usage ###
-# sbatch "./scripts/slurm/run_summarization.sh" "./conf/task_a.yml" "./output/task_a"
+# sbatch "./scripts/slurm/run_summarization.sh" "./conf/taskA.yml" "./output/taskA"
 
 ### Usage notes ###
 # The amount of time needed will depend on the batch size, model and number of GPUs requested.

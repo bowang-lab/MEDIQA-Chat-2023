@@ -30,24 +30,24 @@ To train the model, run one of the following:
 
 ```bash
 # Task A (train)
-python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_a.yml" \
-    output_dir="./output/task_a"
+python ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskA.yml" \
+    output_dir="./output/taskA"
 ```
 
 ```
 # Task B (train)
-python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_b.yml" \
-    output_dir="./output/task_b"
+python ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskB.yml" \
+    output_dir="./output/taskB"
 ```
 
-> __Note__: `base.yml` contains good default arguments that should be used for all experiments. `task_a.yml`/`task_b.yml` contain arguments specific to Task A/B. Arguments passed via the command line arguments will override those in the config files.
+> __Note__: `base.yml` contains good default arguments that should be used for all experiments. `taskA.yml`/`taskB.yml` contain arguments specific to Task A/B. Arguments passed via the command line arguments will override those in the config files.
 
 To evaluate a trained model, run one of the following:
 
 ```bash
 # Task A
-python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_a.yml" \
-    output_dir="./output/task_a" \
+python ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskA.yml" \
+    output_dir="./output/taskA/fine_tune" \
     model_name_or_path="./path/to/model/checkpoint" \
     do_train=False \
     do_eval=True \
@@ -56,8 +56,8 @@ python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_a.yml" \
 
 ```
 # Task B
-python ./scripts/run_summarization.py "./conf/base.yml" "./conf/task_b.yml" \
-    output_dir="./output/task_b" \
+python ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskB.yml" \
+    output_dir="./output/taskB/fine_tune" \
     model_name_or_path="./path/to/model/checkpoint" \
     do_train=False \
     do_eval=True \
@@ -78,18 +78,16 @@ To generate notes with a large language model (LLM) (via LangChain), run the fol
 # Task A
 OPENAI_API_KEY="..." python scripts/llm.py \
     "./taskA_testset4participants_inputConversations.csv" \
-    "./outputs/wanglab/taskA/run1" \
-    --task A \
-    --run 1
+    "./output/taskA/llm" \
+    --task A
 ```
 
 ```bash
 # Task B
 OPENAI_API_KEY="..." python scripts/llm.py \
     "./taskB_testset4participants_inputConversations.csv" \
-    "./outputs/wanglab/taskB/run1" \
-    --task B \
-    --run 1
+    "./outputs/taskB/llm" \
+    --task B
 ```
 
 You will need to provide your own `OPENAI_API_KEY`.
