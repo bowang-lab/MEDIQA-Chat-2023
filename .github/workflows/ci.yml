@@ -28,8 +28,14 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f dev-requirements.txt ]; then pip install -r dev-requirements.txt; fi
+      - name: Download required NLTK data 
+        run: |
+          python -m nltk.downloader punkt
+      - name: Format code with black
+        run: |
+          black .
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names

@@ -8,5 +8,8 @@ source "$VENV"
 # Clone the repo and install any dependencies
 pip install -r requirements.txt
 
+# Required by our run_summarization.py script
+python -m nltk.downloader punkt
+
 # Finally, deactivate the virtual environment
 deactivate
