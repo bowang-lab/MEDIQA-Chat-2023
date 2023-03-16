@@ -284,6 +284,9 @@ class DataTrainingArguments:
     task: str = field(
         default="A", metadata={"help": "Which challenge task to train or evaluate on. Should be one of A, B, or C."}
     )
+    run: str = field(
+        default="1", metadata={"help": "Which challenge run to produce predictions for. Should be one of 1, 2, or 3."}
+    )
     bertscore_model_type: str = field(
         default="microsoft/deberta-large-mnli",
         metadata={
@@ -953,7 +956,7 @@ def main():
                     }
                 else:
                     ct_output = {TEST_ID: raw_datasets["test"][ENCOUNTER_ID_COL], SYSTEM_OUTPUT: predictions}
-                ct_fn = f"task{data_args.task.upper().strip()}_{TEAM_NAME}_run1.csv"
+                ct_fn = f"task{data_args.task.upper().strip()}_{TEAM_NAME}_run{data_args.run}.csv"
                 ct_fp = os.path.join(training_args.output_dir, ct_fn)
                 pd.DataFrame.from_dict(ct_output).to_csv(ct_fp, index=False)
 
