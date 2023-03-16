@@ -1,10 +1,10 @@
 import re
-from pathlib import Path
 
 import evaluate
 import nltk
 import numpy as np
 import typer
+from datasets import load_dataset
 
 
 GENHX = "GENHX"
@@ -12,6 +12,11 @@ TASK_A = "A"
 TASK_B = "B"
 TASK_C = "C"
 TASKS = [TASK_A, TASK_B, TASK_C]
+
+# These are all related to the output files
+ENCOUNTER_ID_COL = "encounter_id"
+TEST_ID = "TestID"
+SYSTEM_OUTPUT = "SystemOutput"
 
 
 def sanitize_text(text: str, lowercase: bool = False) -> str:
@@ -49,18 +54,39 @@ def extract_header_and_text(texts):
 
 
 def main(
-    predictions_fp: str = typer.Argument("Filepath to the predictions, one per line."),
-    references_fp: str = typer.Argument("Filepath to the references, one per line."),
-    task: str = typer.Argument(f"Task name. Should be one of {TASKS}"),
+    predictions_fp: str = typer.Argument(
+        "Filepath to the predictions, should be a CSV file that follows this format: https://github.com/abachaa/MEDIQA-Chat-2023#submission-instructions"
+    ),
+    references_fp: str = typer.Argument(
+        "Filepath to the references, should be a CSV file in the same format as the challenge data."
+    ),
+    task: str = typer.Option(TASK_A, help=f"Task name. Should be one of {TASKS}."),
     cache_dir: str = typer.Option("Path to the directory where metrics will be cached."),
 ):
-    predictions = Path(predictions_fp).read_text().strip().splitlines()
-    references = Path(references_fp).read_text().strip().splitlines()
+    """Evaluates the predictions against the references.
 
-    if len(predictions) != len(references):
-        raise ValueError(
-            f"Number of predictions ({len(predictions)}) does not match number of references ({len(references)})."
-        )
+    Example usage:
+    python ./scripts/evaluate_notes.py "./taskB_wanglab_run1.csv" "./TaskB-ValidationSet.csv" --task "B"
+    """
+    if task not in TASKS:
+        raise ValueError(f"Task should be one of {TASKS}.")
+
+    predictions = load_dataset(
+        "csv",
+        data_files={
+            "train": predictions_fp,
+        },
+    )["train"]
+
+    references = load_dataset(
+        "csv",
+        data_files={
+            "train": references_fp,
+        },
+    )["train"]
+
+    if predictions[TEST_ID] != references[ENCOUNTER_ID_COL]:
+        raise ValueError(f"Prediction IDs do not match reference IDs.")
 
     rouge = evaluate.load("rouge", cache_dir=cache_dir)
     bertscore = evaluate.load("bertscore", cache_dir=cache_dir)
@@ -69,7 +95,9 @@ def main(
     result = {}
 
     # Lightly postprocess the text
-    predictions, references = postprocess_text(predictions, references)
+    predictions, references = postprocess_text(
+        predictions[SYSTEM_OUTPUT], references["section_text" if task == TASK_A else "note"]
+    )
 
     # If this is task A, we also have to include section header prediction
     if task == TASK_A:
