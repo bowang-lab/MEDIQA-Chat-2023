@@ -1,12 +1,10 @@
 import os
 from pathlib import Path
 
+import openai
 import pandas as pd
 import typer
 from datasets import load_dataset
-from langchain.chains import LLMChain
-from langchain.chat_models import ChatOpenAI
-from langchain.prompts import PromptTemplate
 
 
 TASK_A = "A"
@@ -39,10 +37,10 @@ def main(
     task: str = typer.Option(TASK_A, help=f"Task name. Should be one of {TASKS}."),
     run: str = typer.Option(RUN_1, help=f"Which challenge run to produce predictions for. Should be one of {RUNS}"),
 ):
-    """Generates predictions using LangChain for the given task and run on the given test set.
+    """Generates predictions using OpenAI API for the given task and run on the given test set.
 
     Example usage:
-    OPENAI_API_KEY="..." python scripts/run_langchain.py "./taskB_testset4participants_inputConversations.csv" "./outputs/wanglab/taskB/run1" --task B --run 1
+    OPENAI_API_KEY="..." python scripts/run_openai.py "./taskB_testset4participants_inputConversations.csv" "./outputs/wanglab/taskB/run1" --task B --run 1
     """
 
     if task not in TASKS:
@@ -57,29 +55,21 @@ def main(
             "test": test_fp,
         },
     )
-    ############################################# DO NOT CHANGE ABOVE #############################################
 
-    # Setup the LLM
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.1)
+    # Load your API key from an environment variable or secret management service
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+    ############################################# DO NOT CHANGE ABOVE #############################################
 
     if task == TASK_A:
         raise NotImplementedError("Task A is not implemented yet.")
     else:
-        prompt = PromptTemplate(
-            input_variables=["dialogue"],
-            template="""Summarize the following patient-doctor dialogue. Include all medically relevant information, including family history, diagnosis, past medical (and surgical) history, immunizations, lab results and known allergies:
-
-            Dialogue: {dialogue}
-            Note:
-            """,
-        )
-
-    # Setup the chain
-    chain = LLMChain(llm=llm, prompt=prompt)
+        # TODO: Do any Task B/C-specific preprocessing here, like creating the prompt
+        pass
 
     predictions = []
     for dialogue in dataset["test"]["dialogue"]:
-        prediction = chain.run(dialogue=dialogue)
+        # TODO: Generate a prediction for each dialogue
+        prediction = ...
         predictions.append(prediction)
 
     ############################################# DO NOT CHANGE BELOW #############################################
