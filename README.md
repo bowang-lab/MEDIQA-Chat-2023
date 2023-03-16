@@ -6,15 +6,13 @@ A repository organizing our submission to the MEDIQA-Chat Tasks @ ACL-ClinicalNL
 
 ## Installation
 
-Requires python>=3.7. First, create and activate a virtual environment, then install the requirements:
+Requires python>=3.8. First, create and activate a virtual environment, then install the requirements:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-For setup on a cluster managed by the [Alliance](https://alliancecan.ca/en/services/advanced-research-computing), please see [`./scripts/slurm/setup_on_arc.sh`](./scripts/slurm/setup_on_arc.sh).
-
-> __Note__: If you want to use `torch.compile()` for faster training and inference, you will need a nightly install of PyTorch. See [here](https://pytorch.org/get-started/pytorch-2.0/#faqs) for instructions.
+> __Note__: For setup on a cluster managed by the [Alliance](https://alliancecan.ca/en/services/advanced-research-computing), please see [`./scripts/slurm/setup_on_arc.sh`](./scripts/slurm/setup_on_arc.sh).
 
 ## Usage
 
