@@ -23,3 +23,6 @@ python3 ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskB.yml" \
 
 # Postprocess the output file to clean up section headers
 python3 ./scripts/postprocess_taskB.py "./outputs/taskB_wanglab_run1.csv"
+
+# Validate submission
+python3 ./scripts/submission_checker.py "./outputs/taskB_wanglab_run1.csv"

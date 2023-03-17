@@ -20,3 +20,5 @@ python3 ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskA.yml" \
     do_train=false \
     do_eval=false \
     do_predict=true
+
+python3 ./scripts/submission_checker.py "./outputs/taskA_wanglab_run1.csv"
