@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
+from typing import List
 
+import numpy as np
 import pandas as pd
 import torch
 import typer
@@ -14,6 +16,7 @@ from rich.progress import track
 from sentence_transformers import util
 
 
+# These are all related to the submission
 TASK_A = "A"
 TASK_B = "B"
 TASK_C = "C"
@@ -25,10 +28,18 @@ RUN_3 = "3"
 RUNS = [RUN_1, RUN_2, RUN_3]
 
 # These are all related to the output files
+ID_COL = "ID"
 ENCOUNTER_ID_COL = "encounter_id"
 TEST_ID = "TestID"
+SYSTEM_OUTPUT_1 = "SystemOutput1"
+SYSTEM_OUTPUT_2 = "SystemOutput2"
 SYSTEM_OUTPUT = "SystemOutput"
 TEAM_NAME = "wanglab"
+
+# The maximum number of tokens in the input and output
+MAX_INPUT_TOKENS = 6000
+MAX_OUTPUT_TOKENS = 2000
+MAX_IN_CONTEXT_EXAMPLES = 3
 
 
 def sanitize_text(text: str, lowercase: bool = False) -> str:
@@ -36,6 +47,38 @@ def sanitize_text(text: str, lowercase: bool = False) -> str:
     sanitized_text = " ".join(text.strip().split())
     sanitized_text = sanitized_text.lower() if lowercase else sanitized_text
     return sanitized_text
+
+
+def fetch_in_context_examples(train, test, k: int = 3) -> List[int]:
+    """Returns the indices of the top-k most similar dialogues in the train set for each dialogue in the test
+    set. The notes for these examples will be used as the in-context examples.
+    """
+    embedder = INSTRUCTOR("hkunlp/instructor-large")
+    embedding_instructions = "Represent the Medicine dialogue for clustering:"
+    test_dialogues = embedder.encode(
+        [
+            [embedding_instructions, f"dataset: {dataset} dialogue: {dialogue}"]
+            for dataset, dialogue in zip(test["dataset"], test["dialogue"])
+        ],
+        show_progress_bar=True,
+    )
+    train_dialogues = embedder.encode(
+        [
+            [embedding_instructions, f"dataset: {dataset} dialogue: {dialogue}"]
+            for dataset, dialogue in zip(train["dataset"], train["dialogue"])
+        ],
+        show_progress_bar=True,
+    )
+    top_k_indices = []
+    for test_dataset, test_dialogue in zip(test["dataset"], test_dialogues):
+        # Get the top-k dataset matched indices
+        ds_matched_indices = [j for j, train_ds in enumerate(train["dataset"]) if train_ds == test_dataset]
+        scores = util.cos_sim(np.expand_dims(test_dialogue, 0), train_dialogues[ds_matched_indices])
+        top_k_indices_ds = torch.topk(scores, k=min(k, len(scores))).indices.flatten().tolist()
+        # Map these back to the original indices
+        top_k_indices_org = [ds_matched_indices[idx] for idx in top_k_indices_ds]
+        top_k_indices.append(top_k_indices_org)
+    return top_k_indices
 
 
 def main(
@@ -77,23 +120,21 @@ def main(
     ############################################# DO NOT CHANGE ABOVE #############################################
 
     # Setup the LLM
-    llm = ChatOpenAI(model_name="gpt-4", temperature=0.2, presence_penalty=0.5, max_tokens=2_500)
+    llm = ChatOpenAI(
+        model_name="gpt-4",
+        temperature=0.2,
+        max_tokens=MAX_OUTPUT_TOKENS,
+    )
 
     if task == TASK_B:
         prompt = PromptTemplate(
-            input_variables=[
-                "example_dialogue",
-                "example_note",
-                "dialogue",
-            ],
-            template="""Summarize the following patient-doctor dialogue. Include all medically relevant information, including family history, diagnosis, past medical (and surgical) history, immunizations, lab results and known allergies. Follow the format of the examples below.
+            input_variables=["examples", "dialogue"],
+            template="""Write a clinical note reflecting this doctor-patient dialogue. Use the example notes below to decide the structure of the clinical note. Do not make up information:        
+{examples}
 
-Example Dialogue: {example_dialogue}
-Example Note: {example_note}
-
-Dialogue: {dialogue}
-Note:
-            """,
+DIALOGUE: {dialogue}
+CLINICAL NOTE:
+        """,
         )
     else:
         raise NotImplementedError(f"Task {task} is not implemented yet.")
@@ -102,30 +143,13 @@ Note:
     chain = LLMChain(llm=llm, prompt=prompt)
 
     # Retrieve the top-k most similar dialogues as the in-context examples
-    print("Retrieving the most similar dialogues as the in-context examples...")
-    embedder = INSTRUCTOR("hkunlp/instructor-large")
-    queries = embedder.encode(
-        [
-            ["Represent the Medicine dialogue for clustering:", f"dataset: {dataset} dialogue: {dialogue}"]
-            for dataset, dialogue in zip(test["dataset"], test["dialogue"])
-        ],
-        show_progress_bar=True,
-    )
-    dialogues = embedder.encode(
-        [
-            ["Represent the Medicine dialogue for clustering:", f"dataset: {dataset} dialogue: {dialogue}"]
-            for dataset, dialogue in zip(train["dataset"], train["dialogue"])
-        ],
-        show_progress_bar=True,
-    )
-    scores = util.cos_sim(queries, dialogues)
-    _, top_k_indices = torch.topk(scores, k=1, dim=1, sorted=True)
+    print(f"Retrieving the top-{MAX_IN_CONTEXT_EXAMPLES} most similar dialogues as the in-context examples...")
+    top_k_indices = fetch_in_context_examples(train, test, k=MAX_IN_CONTEXT_EXAMPLES)
 
     print("Example prompt:")
     print(
         prompt.format(
-            example_dialogue=train["dialogue"][top_k_indices[0][0]],
-            example_note=train["note"][top_k_indices[0][0]],
+            examples=train["note"][top_k_indices[0][0]],
             dialogue=test["dialogue"][0],
         )
     )
@@ -136,22 +160,28 @@ Note:
         description="Generating predictions with LangChain",
         total=len(test["dialogue"]),
     ):
-        # Grab the in-context examples
-        example_dialogue, example_note = train["dialogue"][indices[0]], train["note"][indices[0]]
+
+        # Collect as many in-context examples as we can fit within the max input tokens
+        examples = ""
+        prompt_length = llm.get_num_tokens(prompt.format(dialogue=dialogue, examples=""))
+        for top_k_idx in indices:
+            if (prompt_length + llm.get_num_tokens(train["note"][top_k_idx])) < MAX_INPUT_TOKENS:
+                examples += f'\nEXAMPLE NOTE:\n{train["note"][top_k_idx]}'
+                prompt_length += llm.get_num_tokens(train["note"][top_k_idx])
 
         # Run the chain
-        prediction = chain.run(
-            dialogue=dialogue,
-            example_dialogue=example_dialogue,
-            example_note=example_note,
-        )
+        prediction = chain.run(dialogue=dialogue, examples=examples)
         predictions.append(prediction)
 
     ############################################# DO NOT CHANGE BELOW #############################################
     if task == TASK_B:
         ct_output = {TEST_ID: test[ENCOUNTER_ID_COL], SYSTEM_OUTPUT: predictions}
     else:
-        raise NotImplementedError(f"Task {task} is not implemented yet.")
+        ct_output = {
+            TEST_ID: test[ID_COL],
+            SYSTEM_OUTPUT_1: ...,
+            SYSTEM_OUTPUT_2: ...,
+        }
 
     # Save outputs to disk
     output_dir = Path(output_dir)
