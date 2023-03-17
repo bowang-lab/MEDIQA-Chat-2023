@@ -25,3 +25,4 @@ omegaconf
 InstructorEmbedding
 openai
 langchain
+tiktoken
