@@ -77,24 +77,19 @@ def main(
     ############################################# DO NOT CHANGE ABOVE #############################################
 
     # Setup the LLM
-    llm = ChatOpenAI(model_name="gpt-4", temperature=0.2, presence_penalty=0.5)
+    llm = ChatOpenAI(model_name="gpt-4", temperature=0.2, presence_penalty=0.5, max_tokens=2_500)
 
     if task == TASK_B:
         prompt = PromptTemplate(
             input_variables=[
-                "example_dialogue_1",
-                "example_note_1",
-                "example_dialogue_2",
-                "example_note_2",
+                "example_dialogue",
+                "example_note",
                 "dialogue",
             ],
             template="""Summarize the following patient-doctor dialogue. Include all medically relevant information, including family history, diagnosis, past medical (and surgical) history, immunizations, lab results and known allergies. Follow the format of the examples below.
 
-Example Dialogue 1: {example_dialogue_1}
-Example Note 1: {example_note_1}
-
-Example Dialogue 2: {example_dialogue_2}
-Example Note 2: {example_note_2}
+Example Dialogue: {example_dialogue}
+Example Note: {example_note}
 
 Dialogue: {dialogue}
 Note:
@@ -107,7 +102,7 @@ Note:
     chain = LLMChain(llm=llm, prompt=prompt)
 
     # Retrieve the top-k most similar dialogues as the in-context examples
-    print("Retrieving the top-2 most similar dialogues as the in-context examples...")
+    print("Retrieving the most similar dialogues as the in-context examples...")
     embedder = INSTRUCTOR("hkunlp/instructor-large")
     queries = embedder.encode(
         [
@@ -124,15 +119,13 @@ Note:
         show_progress_bar=True,
     )
     scores = util.cos_sim(queries, dialogues)
-    _, top_k_indices = torch.topk(scores, k=2, dim=1, sorted=True)
+    _, top_k_indices = torch.topk(scores, k=1, dim=1, sorted=True)
 
     print("Example prompt:")
     print(
         prompt.format(
-            example_dialogue_1=train["dialogue"][top_k_indices[0][0]],
-            example_note_1=train["note"][top_k_indices[0][0]],
-            example_dialogue_2=train["dialogue"][top_k_indices[0][1]],
-            example_note_2=train["note"][top_k_indices[0][1]],
+            example_dialogue=train["dialogue"][top_k_indices[0][0]],
+            example_note=train["note"][top_k_indices[0][0]],
             dialogue=test["dialogue"][0],
         )
     )
@@ -144,16 +137,13 @@ Note:
         total=len(test["dialogue"]),
     ):
         # Grab the in-context examples
-        example_dialogue_1, example_note_1 = train["dialogue"][indices[0]], train["note"][indices[0]]
-        example_dialogue_2, example_note_2 = train["dialogue"][indices[1]], train["note"][indices[1]]
+        example_dialogue, example_note = train["dialogue"][indices[0]], train["note"][indices[0]]
 
         # Run the chain
         prediction = chain.run(
             dialogue=dialogue,
-            example_dialogue_1=example_dialogue_1,
-            example_note_1=example_note_1,
-            example_dialogue_2=example_dialogue_2,
-            example_note_2=example_note_2,
+            example_dialogue=example_dialogue,
+            example_note=example_note,
         )
         predictions.append(prediction)
 
