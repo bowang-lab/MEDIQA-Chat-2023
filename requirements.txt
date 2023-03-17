@@ -22,5 +22,6 @@ git+https://github.com/google-research/bleurt.git
 # git+https://github.com/huggingface/peft.git
 typer[all]
 omegaconf
-langchain
 InstructorEmbedding
+openai
+langchain
