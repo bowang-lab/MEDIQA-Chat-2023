@@ -42,15 +42,15 @@ def main(
     train_fp: str = typer.Argument("Filepath (or URL) to the train set (should be a CSV file)."),
     test_fp: str = typer.Argument("Filepath (or URL) to the test set (should be a CSV file)."),
     output_dir: str = typer.Argument("Path to the directory where predictions will be written."),
-    task: str = typer.Option(TASK_A, help=f"Task name. Should be one of {TASKS}."),
+    task: str = typer.Option(TASK_B, help=f"Task name. Should be one of {TASKS}."),
     run: str = typer.Option(RUN_1, help=f"Which challenge run to produce predictions for. Should be one of {RUNS}"),
 ):
     """Generates predictions using LangChain for the given task and run on the given test set.
 
     Example usage:
     OPENAI_API_KEY="..." \
-        python scripts/run_langchain.py "./MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskB/TaskB-TrainingSet.csv" \
-        "./MEDIQA-Chat-TestSets-March-15-2023/TaskB/taskB_testset4participants_inputConversations.csv" \
+        python scripts/run_langchain.py "./data/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskB/TaskB-TrainingSet.csv" \
+        "./data/MEDIQA-Chat-TestSets-March-15-2023/TaskB/taskB_testset4participants_inputConversations.csv" \
         "./outputs/wanglab/taskB/run1" \
         --task B \
         --run 1
@@ -79,9 +79,7 @@ def main(
     # Setup the LLM
     llm = ChatOpenAI(model_name="gpt-4", temperature=0.1)
 
-    if task == TASK_A:
-        raise NotImplementedError("Task A is not implemented yet.")
-    else:
+    if task == TASK_B:
         prompt = PromptTemplate(
             input_variables=[
                 "example_dialogue_1",
@@ -101,6 +99,8 @@ def main(
             Note:
             """,
         )
+    else:
+        raise NotImplementedError(f"Task {task} is not implemented yet.")
 
     # Setup the chain
     chain = LLMChain(llm=llm, prompt=prompt)
@@ -109,11 +109,17 @@ def main(
     print("Retrieving the top-2 most similar dialogues as the in-context examples...")
     embedder = INSTRUCTOR("hkunlp/instructor-large")
     queries = embedder.encode(
-        [["Represent the Medicine dialogue for clustering:", dialogue] for dialogue in test["dialogue"]],
+        [
+            ["Represent the Medicine dialogue for clustering:", f"dataset: {dataset} dialogue: {dialogue}"]
+            for dataset, dialogue in zip(test["dataset"], test["dialogue"])
+        ],
         show_progress_bar=True,
     )
     dialogues = embedder.encode(
-        [["Represent the Medicine dialogue for clustering:", dialogue] for dialogue in train["dialogue"]],
+        [
+            ["Represent the Medicine dialogue for clustering:", f"dataset: {dataset} dialogue: {dialogue}"]
+            for dataset, dialogue in zip(train["dataset"], train["dialogue"])
+        ],
         show_progress_bar=True,
     )
     scores = util.cos_sim(queries, dialogues)
@@ -137,10 +143,10 @@ def main(
         predictions.append(prediction)
 
     ############################################# DO NOT CHANGE BELOW #############################################
-    if task == TASK_A:
-        raise NotImplementedError("Task A is not implemented yet.")
+    if task == TASK_B:
+        ct_output = {TEST_ID: test[ENCOUNTER_ID_COL], SYSTEM_OUTPUT: predictions}        
     else:
-        ct_output = {TEST_ID: test[ENCOUNTER_ID_COL], SYSTEM_OUTPUT: predictions}
+        raise NotImplementedError(f"Task {task} is not implemented yet.")
 
     # Save outputs to disk
     output_dir = Path(output_dir)
