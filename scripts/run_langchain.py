@@ -54,16 +54,17 @@ def fetch_in_context_examples(train, test, k: int = 3) -> List[int]:
     set. The notes for these examples will be used as the in-context examples.
     """
     embedder = INSTRUCTOR("hkunlp/instructor-large")
+    embedding_instructions = "Represent the Medicine dialogue for clustering:"
     test_dialogues = embedder.encode(
         [
-            ["Represent the Medicine dialogue for clustering:", f"dataset: {dataset} dialogue: {dialogue}"]
+            [embedding_instructions, f"dataset: {dataset} dialogue: {dialogue}"]
             for dataset, dialogue in zip(test["dataset"], test["dialogue"])
         ],
         show_progress_bar=True,
     )
     train_dialogues = embedder.encode(
         [
-            ["Represent the Medicine dialogue for clustering:", f"dataset: {dataset} dialogue: {dialogue}"]
+            [embedding_instructions, f"dataset: {dataset} dialogue: {dialogue}"]
             for dataset, dialogue in zip(train["dataset"], train["dialogue"])
         ],
         show_progress_bar=True,
