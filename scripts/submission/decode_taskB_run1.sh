@@ -20,3 +20,6 @@ python3 ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskB.yml" \
     do_train=false \
     do_eval=false \
     do_predict=true
+
+# Postprocess the output file to clean up section headers
+python3 ./scripts/postprocess_taskB.py "./outputs/taskB_wanglab_run1.csv"

@@ -12,3 +12,6 @@ python3 ./scripts/run_langchain.py "./data/MEDIQA-Chat-Training-ValidationSets-F
     --temperature 0.0 \
     --task "B" \
     --run "3"
+
+# Postprocess the output file to clean up section headers
+python3 ./scripts/postprocess_taskB.py "./outputs/taskB_wanglab_run3.csv"
