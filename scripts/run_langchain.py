@@ -77,7 +77,7 @@ def main(
     ############################################# DO NOT CHANGE ABOVE #############################################
 
     # Setup the LLM
-    llm = ChatOpenAI(model_name="gpt-4", temperature=0.1)
+    llm = ChatOpenAI(model_name="gpt-4", temperature=0.2, presence_penalty=0.5)
 
     if task == TASK_B:
         prompt = PromptTemplate(
@@ -90,13 +90,14 @@ def main(
             ],
             template="""Summarize the following patient-doctor dialogue. Include all medically relevant information, including family history, diagnosis, past medical (and surgical) history, immunizations, lab results and known allergies. Follow the format of the examples below.
 
-            Example Dialogue 1: {example_dialogue_1}
-            Example Note 1: {example_note_1}
-            Example Dialogue 2: {example_dialogue_2}
-            Example Note 2: {example_note_2}
+Example Dialogue 1: {example_dialogue_1}
+Example Note 1: {example_note_1}
 
-            Dialogue: {dialogue}
-            Note:
+Example Dialogue 2: {example_dialogue_2}
+Example Note 2: {example_note_2}
+
+Dialogue: {dialogue}
+Note:
             """,
         )
     else:
@@ -125,6 +126,17 @@ def main(
     scores = util.cos_sim(queries, dialogues)
     _, top_k_indices = torch.topk(scores, k=2, dim=1, sorted=True)
 
+    print("Example prompt:")
+    print(
+        prompt.format(
+            example_dialogue_1=train["dialogue"][top_k_indices[0][0]],
+            example_note_1=train["note"][top_k_indices[0][0]],
+            example_dialogue_2=train["dialogue"][top_k_indices[0][1]],
+            example_note_2=train["note"][top_k_indices[0][1]],
+            dialogue=test["dialogue"][0],
+        )
+    )
+
     predictions = []
     for dialogue, indices in track(
         zip(test["dialogue"], top_k_indices),
@@ -134,6 +146,7 @@ def main(
         # Grab the in-context examples
         example_dialogue_1, example_note_1 = train["dialogue"][indices[0]], train["note"][indices[0]]
         example_dialogue_2, example_note_2 = train["dialogue"][indices[1]], train["note"][indices[1]]
+
         # Run the chain
         prediction = chain.run(
             dialogue=dialogue,
