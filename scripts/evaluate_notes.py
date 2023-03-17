@@ -55,10 +55,10 @@ def extract_header_and_text(texts):
 
 def main(
     predictions_fp: str = typer.Argument(
-        "Filepath to the predictions, should be a CSV file that follows this format: https://github.com/abachaa/MEDIQA-Chat-2023#submission-instructions"
+        "Filepath (or URL) to the predictions, should be a CSV file that follows this format: https://github.com/abachaa/MEDIQA-Chat-2023#submission-instructions"
     ),
     references_fp: str = typer.Argument(
-        "Filepath to the references, should be a CSV file in the same format as the challenge data."
+        "Filepath (or URL) to the references, should be a CSV file in the same format as the challenge data."
     ),
     task: str = typer.Option(TASK_A, help=f"Task name. Should be one of {TASKS}."),
     cache_dir: str = typer.Option("Path to the directory where metrics will be cached."),
@@ -66,7 +66,9 @@ def main(
     """Evaluates the predictions against the references.
 
     Example usage:
-    python ./scripts/evaluate_notes.py "./taskB_wanglab_run1.csv" "./TaskB-ValidationSet.csv" --task "B"
+    python ./scripts/evaluate_notes.py "./outputs/taskB_wanglab_run1.csv" \
+        "./data/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskB/TaskB-ValidationSet.csv" \
+        --task "B"
     """
     if task not in TASKS:
         raise ValueError(f"Task should be one of {TASKS}.")
