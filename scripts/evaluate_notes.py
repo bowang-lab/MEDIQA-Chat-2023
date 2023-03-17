@@ -60,7 +60,7 @@ def main(
     references_fp: str = typer.Argument(
         "Filepath (or URL) to the references, should be a CSV file in the same format as the challenge data."
     ),
-    task: str = typer.Option(TASK_A, help=f"Task name. Should be one of {TASKS}."),
+    task: str = typer.Option(TASK_B, help=f"Task name. Should be one of {TASKS}."),
     cache_dir: str = typer.Option("Path to the directory where metrics will be cached."),
 ):
     """Evaluates the predictions against the references.
