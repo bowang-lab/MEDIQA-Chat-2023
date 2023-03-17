@@ -77,28 +77,20 @@ def main(
     ############################################# DO NOT CHANGE ABOVE #############################################
 
     # Setup the LLM
-    llm = ChatOpenAI(model_name="gpt-4", temperature=0.1)
+    llm = ChatOpenAI(model_name="gpt-4", temperature=0.2,max_tokens=2000,)
 
     if task == TASK_B:
         prompt = PromptTemplate(
-            input_variables=[
-                "example_dialogue_1",
-                "example_note_1",
-                "example_dialogue_2",
-                "example_note_2",
-                "dialogue",
-            ],
-            template="""Summarize the following patient-doctor dialogue. Include all medically relevant information, including family history, diagnosis, past medical (and surgical) history, immunizations, lab results and known allergies. Follow the format of the examples below.
+        input_variables=[
+            "examples",
+            "dialogue"],
+        template="""Write a clinical note reflecting this doctor-patient dialogue. Use the example notes below to decide the structure of the clinical note. Do not make up information:        
+        {examples}
 
-            Example Dialogue 1: {example_dialogue_1}
-            Example Note 1: {example_note_1}
-            Example Dialogue 2: {example_dialogue_2}
-            Example Note 2: {example_note_2}
-
-            Dialogue: {dialogue}
-            Note:
-            """,
-        )
+        DIALOGUE: {dialogue}
+        CLINICAL NOTE:
+        """
+    )
     else:
         raise NotImplementedError(f"Task {task} is not implemented yet.")
 
@@ -122,25 +114,37 @@ def main(
         ],
         show_progress_bar=True,
     )
-    scores = util.cos_sim(queries, dialogues)
-    _, top_k_indices = torch.topk(scores, k=2, dim=1, sorted=True)
-
+    def get_top_match(queries, dialogues,k=3):
+        top_k = []
+        for i in range(queries.shape[0]):
+            ds = test['dataset'][i]
+            matching_indices = [ind for ind, value in enumerate(train['dataset']) if value == ds]
+            matching_dialogues = dialogues[matching_indices]
+            scores = util.cos_sim(queries[i], matching_dialogues)
+            top_k_indices = torch.topk(scores,k=k).indices.tolist()[0]
+            original_index = [matching_indices[n] for n in top_k_indices]
+            top_k.append(original_index)
+        return top_k
+        
+    top_k_indices = get_top_match(queries,dialogues)
     predictions = []
     for dialogue, indices in track(
         zip(test["dialogue"], top_k_indices),
         description="Generating predictions with LangChain",
         total=len(test["dialogue"]),
     ):
-        # Grab the in-context examples
-        example_dialogue_1, example_note_1 = train["dialogue"][indices[0]], train["note"][indices[0]]
-        example_dialogue_2, example_note_2 = train["dialogue"][indices[1]], train["note"][indices[1]]
-        # Run the chain
+        examples =''
+        template=''
+
+        l_ = llm.get_num_tokens(examples)+llm.get_num_tokens(dialogue)+llm.get_num_tokens(template)
+        for i in indices:
+            if (l_+ llm.get_num_tokens(train['note'][i]))<6000:
+                examples+= '\nEXAMPLE NOTE:\n'+train["note"][i]
+                l_+=llm.get_num_tokens(train['note'][i])
         prediction = chain.run(
             dialogue=dialogue,
-            example_dialogue_1=example_dialogue_1,
-            example_note_1=example_note_1,
-            example_dialogue_2=example_dialogue_2,
-            example_note_2=example_note_2,
+            examples=examples,
+            template=template
         )
         predictions.append(prediction)
 
