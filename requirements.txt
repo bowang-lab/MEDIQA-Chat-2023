@@ -23,3 +23,4 @@ git+https://github.com/google-research/bleurt.git
 typer
 omegaconf
 langchain
+InstructorEmbedding
