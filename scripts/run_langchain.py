@@ -52,8 +52,8 @@ def main(
         python scripts/run_langchain.py "./data/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskB/TaskB-TrainingSet.csv" \
         "./data/MEDIQA-Chat-TestSets-March-15-2023/TaskB/taskB_testset4participants_inputConversations.csv" \
         "./outputs/wanglab/taskB/run1" \
-        --task B \
-        --run 1
+        --task "B" \
+        --run "1"
     """
 
     if task not in TASKS:
@@ -127,7 +127,9 @@ def main(
 
     predictions = []
     for dialogue, indices in track(
-        zip(test["dialogue"], top_k_indices), description="Generating predictions with LangChain"
+        zip(test["dialogue"], top_k_indices),
+        description="Generating predictions with LangChain",
+        total=len(test["dialogue"]),
     ):
         # Grab the in-context examples
         example_dialogue_1, example_note_1 = train["dialogue"][indices[0]], train["note"][indices[0]]
@@ -144,7 +146,7 @@ def main(
 
     ############################################# DO NOT CHANGE BELOW #############################################
     if task == TASK_B:
-        ct_output = {TEST_ID: test[ENCOUNTER_ID_COL], SYSTEM_OUTPUT: predictions}        
+        ct_output = {TEST_ID: test[ENCOUNTER_ID_COL], SYSTEM_OUTPUT: predictions}
     else:
         raise NotImplementedError(f"Task {task} is not implemented yet.")
 
