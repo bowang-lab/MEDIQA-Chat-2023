@@ -20,7 +20,7 @@ git+https://github.com/google-research/bleurt.git
 # Needed by us
 # peft is being updated rapidly, so install from source
 # git+https://github.com/huggingface/peft.git
-typer
+typer[all]
 omegaconf
 langchain
 InstructorEmbedding
