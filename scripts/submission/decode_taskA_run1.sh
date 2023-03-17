@@ -10,9 +10,12 @@ TEST_FP="$1"  # Provided to the script by the submission system
 # - Set the batch size to one and turn off all mixed precision to avoid errors
 python3 ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskA.yml" \
     test_file="$TEST_FP" \
+    model_name_or_path="..." \
+    summary_column="ID" \
     run="1" \
     output_dir="./outputs" \
     per_device_eval_batch_size=1 \
+    fp16=false \
     bf16=false \
     do_train=false \
     do_eval=false \
