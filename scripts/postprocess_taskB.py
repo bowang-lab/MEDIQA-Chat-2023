@@ -16,8 +16,11 @@ def main(submission_fp: str = typer.Argument("Filepath (or URL) to the submissio
     )["test"]
 
     # TODO: cleanup the headers
-    # TODO: save the resulting file (*IN THE EXACT SAME FORMAT*) to disk (*AT THE EXACT SAME FILEPATH*)
-    pass
+    # Could be easiest by writing a function and update the dataset using `.map()`
+    # See: https://huggingface.co/docs/datasets/process#map
+
+    # Save postprocessed submission file to disk
+    test.to_csv(submission_fp)
 
 
 if __name__ == "__main__":
