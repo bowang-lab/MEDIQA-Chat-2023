@@ -85,6 +85,7 @@ def main(
     train_fp: str = typer.Argument("Filepath (or URL) to the train set (should be a CSV file)."),
     test_fp: str = typer.Argument("Filepath (or URL) to the test set (should be a CSV file)."),
     output_dir: str = typer.Argument("Path to the directory where predictions will be written."),
+    temperature: float = typer.Option(0.2, help="Temperature for the LLM."),
     task: str = typer.Option(TASK_B, help=f"Task name. Should be one of {TASKS}."),
     run: str = typer.Option(RUN_1, help=f"Which challenge run to produce predictions for. Should be one of {RUNS}"),
 ):
@@ -122,7 +123,7 @@ def main(
     # Setup the LLM
     llm = ChatOpenAI(
         model_name="gpt-4",
-        temperature=0.2,
+        temperature=temperature,
         max_tokens=MAX_OUTPUT_TOKENS,
     )
 

@@ -9,6 +9,6 @@ OPENAI_API_KEY="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" \
 python3 ./scripts/run_langchain.py "./data/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskB/TaskB-TrainingSet.csv" \
     "$TEST_FP" \
     "./outputs" \
-    --temperature 0.2 \
+    --temperature 0.0 \
     --task "B" \
-    --run "2"
+    --run "3"
