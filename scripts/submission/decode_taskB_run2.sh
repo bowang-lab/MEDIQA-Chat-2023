@@ -7,6 +7,7 @@ TEST_FP="$1"  # Provided to the script by the submission system
 # - You must provide an OPENAI_API_KEY for this to work
 OPENAI_API_KEY="..." \
 python3 ./scripts/run_langchain.py "./data/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskB/TaskB-TrainingSet.csv" \
-    "$TEST_FP" "./outputs/wanglab/taskB/run2" \
+    "$TEST_FP" \
+    "./outputs" \
     --task "B" \
     --run "2"

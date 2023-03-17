@@ -13,7 +13,7 @@ python3 ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskB.yml" \
     model_name_or_path="wanglab/task-b-led-large-16384-pubmed" \
     summary_column="ID" \
     run="1" \
-    output_dir="./outputs/wanglab/taskB/run1" \
+    output_dir="./outputs" \
     per_device_eval_batch_size=1 \
     fp16=false \
     do_train=false \
