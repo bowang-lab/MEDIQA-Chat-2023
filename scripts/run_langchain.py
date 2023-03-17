@@ -2,11 +2,16 @@ import os
 from pathlib import Path
 
 import pandas as pd
+import torch
 import typer
 from datasets import load_dataset
+from InstructorEmbedding import INSTRUCTOR
 from langchain.chains import LLMChain
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
+from rich import print
+from rich.progress import track
+from sentence_transformers import util
 
 
 TASK_A = "A"
@@ -34,7 +39,8 @@ def sanitize_text(text: str, lowercase: bool = False) -> str:
 
 
 def main(
-    test_fp: str = typer.Argument("Filepath to the test set (should be a CSV file)."),
+    train_fp: str = typer.Argument("Filepath (or URL) to the train set (should be a CSV file)."),
+    test_fp: str = typer.Argument("Filepath (or URL) to the test set (should be a CSV file)."),
     output_dir: str = typer.Argument("Path to the directory where predictions will be written."),
     task: str = typer.Option(TASK_A, help=f"Task name. Should be one of {TASKS}."),
     run: str = typer.Option(RUN_1, help=f"Which challenge run to produce predictions for. Should be one of {RUNS}"),
@@ -42,7 +48,12 @@ def main(
     """Generates predictions using LangChain for the given task and run on the given test set.
 
     Example usage:
-    OPENAI_API_KEY="..." python scripts/run_langchain.py "./taskB_testset4participants_inputConversations.csv" "./outputs/wanglab/taskB/run1" --task B --run 1
+    OPENAI_API_KEY="..." \
+        python scripts/run_langchain.py "./MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskB/TaskB-TrainingSet.csv" \
+        "./MEDIQA-Chat-TestSets-March-15-2023/TaskB/taskB_testset4participants_inputConversations.csv" \
+        "./outputs/wanglab/taskB/run1" \
+        --task B \
+        --run 1
     """
 
     if task not in TASKS:
@@ -51,23 +62,40 @@ def main(
         raise ValueError(f"Run should be one of {RUNS}.")
 
     # Load the dataset
-    dataset = load_dataset(
+    train = load_dataset(
+        "csv",
+        data_files={
+            "train": train_fp,
+        },
+    )["train"]
+    test = load_dataset(
         "csv",
         data_files={
             "test": test_fp,
         },
-    )
+    )["test"]
     ############################################# DO NOT CHANGE ABOVE #############################################
 
     # Setup the LLM
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.1)
+    llm = ChatOpenAI(model_name="gpt-4", temperature=0.1)
 
     if task == TASK_A:
         raise NotImplementedError("Task A is not implemented yet.")
     else:
         prompt = PromptTemplate(
-            input_variables=["dialogue"],
-            template="""Summarize the following patient-doctor dialogue. Include all medically relevant information, including family history, diagnosis, past medical (and surgical) history, immunizations, lab results and known allergies:
+            input_variables=[
+                "example_dialogue_1",
+                "example_note_1",
+                "example_dialogue_2",
+                "example_note_2",
+                "dialogue",
+            ],
+            template="""Summarize the following patient-doctor dialogue. Include all medically relevant information, including family history, diagnosis, past medical (and surgical) history, immunizations, lab results and known allergies. Follow the format of the examples below.
+
+            Example Dialogue 1: {example_dialogue_1}
+            Example Note 1: {example_note_1}
+            Example Dialogue 2: {example_dialogue_2}
+            Example Note 2: {example_note_2}
 
             Dialogue: {dialogue}
             Note:
@@ -77,16 +105,42 @@ def main(
     # Setup the chain
     chain = LLMChain(llm=llm, prompt=prompt)
 
+    # Retrieve the top-k most similar dialogues as the in-context examples
+    print("Retrieving the top-2 most similar dialogues as the in-context examples...")
+    embedder = INSTRUCTOR("hkunlp/instructor-large")
+    queries = embedder.encode(
+        [["Represent the Medicine dialogue for clustering:", dialogue] for dialogue in test["dialogue"]],
+        show_progress_bar=True,
+    )
+    dialogues = embedder.encode(
+        [["Represent the Medicine dialogue for clustering:", dialogue] for dialogue in train["dialogue"]],
+        show_progress_bar=True,
+    )
+    scores = util.cos_sim(queries, dialogues)
+    _, top_k_indices = torch.topk(scores, k=2, dim=1, sorted=True)
+
     predictions = []
-    for dialogue in dataset["test"]["dialogue"]:
-        prediction = chain.run(dialogue=dialogue)
+    for dialogue, indices in track(
+        zip(test["dialogue"], top_k_indices), description="Generating predictions with LangChain"
+    ):
+        # Grab the in-context examples
+        example_dialogue_1, example_note_1 = train["dialogue"][indices[0]], train["note"][indices[0]]
+        example_dialogue_2, example_note_2 = train["dialogue"][indices[1]], train["note"][indices[1]]
+        # Run the chain
+        prediction = chain.run(
+            dialogue=dialogue,
+            example_dialogue_1=example_dialogue_1,
+            example_note_1=example_note_1,
+            example_dialogue_2=example_dialogue_2,
+            example_note_2=example_note_2,
+        )
         predictions.append(prediction)
 
     ############################################# DO NOT CHANGE BELOW #############################################
     if task == TASK_A:
         raise NotImplementedError("Task A is not implemented yet.")
     else:
-        ct_output = {TEST_ID: dataset["test"][ENCOUNTER_ID_COL], SYSTEM_OUTPUT: predictions}
+        ct_output = {TEST_ID: test[ENCOUNTER_ID_COL], SYSTEM_OUTPUT: predictions}
 
     # Save outputs to disk
     output_dir = Path(output_dir)
