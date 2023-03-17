@@ -130,7 +130,7 @@ def main(
     if task == TASK_B:
         prompt = PromptTemplate(
             input_variables=["examples", "dialogue"],
-            template="""Write a clinical note reflecting this doctor-patient dialogue. Use the example notes below to decide the structure of the clinical note. Do not make up information:        
+            template="""Write a clinical note reflecting this doctor-patient dialogue. Use the example notes below to decide the structure of the clinical note. Do not make up information.
 {examples}
 
 DIALOGUE: {dialogue}
@@ -144,7 +144,7 @@ CLINICAL NOTE:
     chain = LLMChain(llm=llm, prompt=prompt)
 
     # Retrieve the top-k most similar dialogues as the in-context examples
-    print(f"Retrieving the top-{MAX_IN_CONTEXT_EXAMPLES} most similar dialogues as the in-context examples...")
+    print(f"Retrieving the top-{MAX_IN_CONTEXT_EXAMPLES} most similar training examples as the in-context examples...")
     top_k_indices = fetch_in_context_examples(train, test, k=MAX_IN_CONTEXT_EXAMPLES)
 
     print("Example prompt:")
@@ -180,6 +180,7 @@ CLINICAL NOTE:
     else:
         ct_output = {
             TEST_ID: test[ID_COL],
+            # TODO: Need to provide section headers and section text
             SYSTEM_OUTPUT_1: ...,
             SYSTEM_OUTPUT_2: ...,
         }
