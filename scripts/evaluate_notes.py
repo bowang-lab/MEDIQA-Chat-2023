@@ -14,8 +14,11 @@ TASK_C = "C"
 TASKS = [TASK_A, TASK_B, TASK_C]
 
 # These are all related to the output files
+ID_COL = "ID"
 ENCOUNTER_ID_COL = "encounter_id"
 TEST_ID = "TestID"
+SYSTEM_OUTPUT_1 = "SystemOutput1"
+SYSTEM_OUTPUT_2 = "SystemOutput2"
 SYSTEM_OUTPUT = "SystemOutput"
 
 
@@ -87,8 +90,12 @@ def main(
         },
     )["train"]
 
-    if predictions[TEST_ID] != references[ENCOUNTER_ID_COL]:
-        raise ValueError(f"Prediction IDs do not match reference IDs.")
+    if task == TASK_A:
+        if predictions[TEST_ID] != references[ID_COL]:
+            raise ValueError(f"Prediction IDs do not match reference IDs.")
+    else:
+        if predictions[TEST_ID] != references[ENCOUNTER_ID_COL]:
+            raise ValueError(f"Prediction IDs do not match reference IDs.")
 
     rouge = evaluate.load("rouge", cache_dir=cache_dir)
     bertscore = evaluate.load("bertscore", cache_dir=cache_dir)
@@ -97,15 +104,17 @@ def main(
     result = {}
 
     # Lightly postprocess the text
-    predictions, references = postprocess_text(
-        predictions[SYSTEM_OUTPUT], references["section_text" if task == TASK_A else "note"]
-    )
+    if task == TASK_A:
+        predicted_headers, reference_headers = predictions[SYSTEM_OUTPUT_1], references["section_header"]
+        predictions, references = postprocess_text(predictions[SYSTEM_OUTPUT_2], references["section_text"])
+    elif task == TASK_B:
+        predictions, references = postprocess_text(predictions[SYSTEM_OUTPUT], references["note"])
+    else:
+        predictions, references = postprocess_text(predictions[SYSTEM_OUTPUT], references["dialogue"])
 
     # If this is task A, we also have to include section header prediction
     if task == TASK_A:
         exact_match = evaluate.load("exact_match")
-        predictions, predicted_headers = extract_header_and_text(predictions)
-        references, reference_headers = extract_header_and_text(references)
         result.update(exact_match.compute(predictions=predicted_headers, references=reference_headers))
 
     rouge_results = rouge.compute(predictions=predictions, references=references, use_stemmer=True)
