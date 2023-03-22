@@ -175,6 +175,9 @@ CLINICAL NOTE:
 
         # Run the chain
         prediction = chain.run(dialogue=dialogue, examples=examples)
+        # GPT sometimes makes the mistake of placing Imaging by itself, which won't be picked up by the official 
+        # evaluation script. So we prepend "RESULTS" to it here, which will be picked up.
+        prediction = re.sub(r"(?<!\nRESULTS)(\n| )Imaging(:)?", r"\1RESULTS\nImaging\2", prediction)
         predictions.append(prediction)
 
     ############################################# DO NOT CHANGE BELOW #############################################
