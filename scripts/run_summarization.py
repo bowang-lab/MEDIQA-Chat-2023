@@ -638,8 +638,8 @@ def main():
             if examples[text_column][i] and examples[summary_column][i]:
                 inputs.append(examples[text_column][i])
 
-                if data_args.task == TASK_A:
-                    # Preprocess the targets, so the model must generate the section header before the section text
+                # Preprocess the targets, so the model must generate the section header before the section text
+                if data_args.task == TASK_A and training_args.do_train:
                     target = (
                         f'Section header: {examples["section_header"][i]} Section text: {examples[summary_column][i]}'
                     )
@@ -756,20 +756,26 @@ def main():
         else None,
         cache_dir=model_args.cache_dir,
     )
-    bertscore = evaluate.load(
-        "bertscore",
-        download_config=datasets.DownloadConfig(cache_dir=model_args.cache_dir, local_files_only=True, use_etag=False)
-        if is_offline_mode()
-        else None,
-        cache_dir=model_args.cache_dir,
-    )
-    bleurt = evaluate.load(
-        "bleurt",
-        data_args.bleurt_checkpoint,
-        # Don't ask me why, but BLEURT needs a different download_config than the other metrics
-        download_config=datasets.DownloadConfig(use_etag=False) if is_offline_mode() else None,
-        cache_dir=model_args.cache_dir,
-    )
+    bertscore = None
+    if data_args.bertscore_model_type:
+        bertscore = evaluate.load(
+            "bertscore",
+            download_config=datasets.DownloadConfig(
+                cache_dir=model_args.cache_dir, local_files_only=True, use_etag=False
+            )
+            if is_offline_mode()
+            else None,
+            cache_dir=model_args.cache_dir,
+        )
+    bleurt = None
+    if data_args.bleurt_checkpoint:
+        bleurt = evaluate.load(
+            "bleurt",
+            data_args.bleurt_checkpoint,
+            # Don't ask me why, but BLEURT needs a different download_config than the other metrics
+            download_config=datasets.DownloadConfig(use_etag=False) if is_offline_mode() else None,
+            cache_dir=model_args.cache_dir,
+        )
 
     def postprocess_text(preds, labels):
         preds = [sanitize_text(pred) for pred in preds]
@@ -829,32 +835,36 @@ def main():
         result["rouge_avg"] = np.mean([result["rouge1"], result["rouge2"], result["rougeL"]]).item()
 
         # BERTScore
-        bertscore_result = bertscore.compute(
-            predictions=decoded_preds,
-            references=decoded_labels,
-            batch_size=training_args.per_device_eval_batch_size * 4,
-            device=training_args.device,
-            # These are mostly based on the recommendations in https://github.com/Tiiiger/bert_score
-            model_type=data_args.bertscore_model_type,
-            lang="en",
-            rescale_with_baseline=True,
-            use_fast_tokenizer=True,
-        )
-        result.update(
-            {
-                "bertscore_p": np.mean(bertscore_result["precision"]).item(),
-                "bertscore_r": np.mean(bertscore_result["recall"]).item(),
-                "bertscore_f1": np.mean(bertscore_result["f1"]).item(),
-            }
-        )
+        if bertscore is not None:
+            bertscore_result = bertscore.compute(
+                predictions=decoded_preds,
+                references=decoded_labels,
+                batch_size=training_args.per_device_eval_batch_size * 4,
+                device=training_args.device,
+                # These are mostly based on the recommendations in https://github.com/Tiiiger/bert_score
+                model_type=data_args.bertscore_model_type,
+                lang="en",
+                rescale_with_baseline=True,
+                use_fast_tokenizer=True,
+            )
+            result.update(
+                {
+                    "bertscore_p": np.mean(bertscore_result["precision"]).item(),
+                    "bertscore_r": np.mean(bertscore_result["recall"]).item(),
+                    "bertscore_f1": np.mean(bertscore_result["f1"]).item(),
+                }
+            )
 
         # BLEURT
-        bleurt_result = bleurt.compute(predictions=decoded_preds, references=decoded_labels)
-        result.update({"bleurt": np.mean(bleurt_result["scores"]).item()})
+        if bleurt is not None:
+            bleurt_result = bleurt.compute(predictions=decoded_preds, references=decoded_labels)
+            result.update({"bleurt": np.mean(bleurt_result["scores"]).item()})
 
         # Compute an ensemble score for the generations
         # Use ROUGE-1, following the challenge task evaluation
-        result["ensemble_gen_score"] = np.mean([result["rouge1"], result["bertscore_f1"], result["bleurt"]]).item()
+        result["ensemble_gen_score"] = (
+            sum([result["rouge1"], result.get("bertscore_f1", 0), result.get("bleurt", 0)]) / 3
+        )
         # If this is Task A, also compute an ensemble score that includes the exact match score
         if data_args.task == TASK_A and "exact_match" in result:
             result["ensemble_score"] = np.mean([result["ensemble_gen_score"], result["exact_match"]]).item()
