@@ -148,7 +148,7 @@ CLINICAL NOTE:
 
     # Retrieve the top-k most similar dialogues as the in-context examples
     print(f"Retrieving the top-{k} most similar training examples as the in-context examples...")
-    top_k_indices = fetch_in_context_examples(train, test, task=task, k=k)
+    top_k_indices = fetch_in_context_examples(train, test, k=k)
 
     print("Example prompt:")
     print(
