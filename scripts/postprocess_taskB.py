@@ -104,7 +104,9 @@ def check_complete_word(header, ground_truth):
     return False
 
 
-def main(submission_fp: str = typer.Argument("Filepath (or URL) to the submission file (should be a CSV file).")) -> None:
+def main(
+    submission_fp: str = typer.Argument("Filepath (or URL) to the submission file (should be a CSV file)."),
+) -> None:
     """Postprocesses the submission file for Task B.
 
     Example usage:
@@ -134,7 +136,7 @@ def main(submission_fp: str = typer.Argument("Filepath (or URL) to the submissio
             output = output.replace(TASK_B_SECTION_HEADER_ENCODE[true_header], f"\n\n{true_header}\n\n")
         # Replace all instances of 3 or more consecutive newlines with 2 newlines
         submission_df.at[i, SYSTEM_OUTPUT] = re.sub(r"\n{3,}", "\n\n", output.strip())
-        submission_df.at[i, SYSTEM_OUTPUT] = re.sub(r'\n:\n', "", submission_df.at[i, SYSTEM_OUTPUT])
+        submission_df.at[i, SYSTEM_OUTPUT] = re.sub(r"\n:\n", "", submission_df.at[i, SYSTEM_OUTPUT])
 
     # Save postprocessed submission file to disk
     submission_df.to_csv(submission_fp, index=False)
