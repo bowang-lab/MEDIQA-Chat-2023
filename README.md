@@ -1,5 +1,5 @@
 [![ci](https://github.com/bowang-lab/mediqa-chat-tasks-acl-2023/actions/workflows/ci.yml/badge.svg)](https://github.com/bowang-lab/mediqa-chat-tasks-acl-2023/actions/workflows/ci.yml)
- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # MEDIQA-Chat-2023-WangLab
 
