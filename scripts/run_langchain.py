@@ -1,4 +1,5 @@
 import os
+import re
 from pathlib import Path
 from typing import List
 
@@ -39,7 +40,6 @@ TEAM_NAME = "wanglab"
 # The maximum number of tokens in the input and output
 MAX_INPUT_TOKENS = 6000
 MAX_OUTPUT_TOKENS = 2000
-MAX_IN_CONTEXT_EXAMPLES = 3
 
 
 def sanitize_text(text: str, lowercase: bool = False) -> str:
@@ -53,6 +53,7 @@ def fetch_in_context_examples(train, test, k: int = 3) -> List[int]:
     """Returns the indices of the top-k most similar dialogues in the train set for each dialogue in the test
     set. The notes for these examples will be used as the in-context examples.
     """
+    # Embed the train and test dialogues
     embedder = INSTRUCTOR("hkunlp/instructor-large")
     embedding_instructions = "Represent the Medicine dialogue for clustering:"
     test_dialogues = embedder.encode(
@@ -69,6 +70,7 @@ def fetch_in_context_examples(train, test, k: int = 3) -> List[int]:
         ],
         show_progress_bar=True,
     )
+    # Get top-k most similar examples (based o their dialogues) in the train set for each example in the test set
     top_k_indices = []
     for test_dataset, test_dialogue in zip(test["dataset"], test_dialogues):
         # Get the top-k dataset matched indices
@@ -86,6 +88,7 @@ def main(
     test_fp: str = typer.Argument("Filepath (or URL) to the test set (should be a CSV file)."),
     output_dir: str = typer.Argument("Path to the directory where predictions will be written."),
     temperature: float = typer.Option(0.2, help="Temperature for the LLM."),
+    k: int = typer.Option(3, help="Maximum number of in-context examples to use."),
     task: str = typer.Option(TASK_B, help=f"Task name. Should be one of {TASKS}."),
     run: str = typer.Option(RUN_1, help=f"Which challenge run to produce predictions for. Should be one of {RUNS}"),
 ):
@@ -144,8 +147,8 @@ CLINICAL NOTE:
     chain = LLMChain(llm=llm, prompt=prompt)
 
     # Retrieve the top-k most similar dialogues as the in-context examples
-    print(f"Retrieving the top-{MAX_IN_CONTEXT_EXAMPLES} most similar training examples as the in-context examples...")
-    top_k_indices = fetch_in_context_examples(train, test, k=MAX_IN_CONTEXT_EXAMPLES)
+    print(f"Retrieving the top-{k} most similar training examples as the in-context examples...")
+    top_k_indices = fetch_in_context_examples(train, test, task=task, k=k)
 
     print("Example prompt:")
     print(
