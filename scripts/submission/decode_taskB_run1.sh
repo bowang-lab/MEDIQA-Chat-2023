@@ -11,7 +11,7 @@ TEST_FP="$1"  # Provided to the script by the submission system
 # - Set the bertscore_model_type and bleurt_checkpoint to null to avoid running them
 # - Use the run=1 argument to ensure that the output file is named correctly
 python3 ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskB.yml" output_dir="./outputs" \
-    model_name_or_path="wanglab/task-b-led-large-16384-pubmed" \
+    model_name_or_path="wanglab/task-b-led-large-16384-pubmed-run-1" \
     summary_column="dataset" \
     validation_file="$TEST_FP" \
     test_file="$TEST_FP" \
