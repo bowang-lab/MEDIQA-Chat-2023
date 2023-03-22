@@ -4,7 +4,10 @@ import pandas as pd
 import typer
 from thefuzz import process
 
+# These are all related to the output files
+SYSTEM_OUTPUT = "SystemOutput"
 
+# These are valid section headers for task B
 TASK_B_SECTION_HEADER_MAP = {
     "FAMILY HISTORY": "subjective",
     "PHYSICAL EXAMINATION": "objective_exam",
@@ -101,7 +104,7 @@ def check_complete_word(header, ground_truth):
     return False
 
 
-def main(submission_fp: str = typer.Argument("Filepath (or URL) to the submission file (should be a CSV file).")):
+def main(submission_fp: str = typer.Argument("Filepath (or URL) to the submission file (should be a CSV file).")) -> None:
     """Postprocesses the submission file for Task B.
 
     Example usage:
@@ -110,27 +113,28 @@ def main(submission_fp: str = typer.Argument("Filepath (or URL) to the submissio
     submission_df = pd.read_csv(submission_fp)
 
     similarities = []
-    for i, output in enumerate(submission_df["SystemOutput"]):
+    for i, output in enumerate(submission_df[SYSTEM_OUTPUT]):
         continuous_cap = filter(None, [x.strip() for x in re.findall(r"\b[A-Z\s]+\b", output)])
         continuous_cap_filter = [x for x in continuous_cap if len(x) > 2]
         section_headers = []
         for header in continuous_cap_filter:
-            if check_complete_word(header, TASK_B_SECTION_HEADER_MAP) == False:
+            if not check_complete_word(header, TASK_B_SECTION_HEADER_MAP):
                 processed_header, similarity = process.extractOne(header, list(TASK_B_SECTION_HEADER_MAP.keys()))
                 if similarity > 75 and similarity < 100:
                     processed_output = output.replace(header, processed_header)
                     section_headers.append(processed_header)
                     similarities.append(similarity)
                     print(f"header: {header}, processed_header: {processed_header}, similarity: {similarity}")
-                    submission_df.at[i, "SystemOutput"] = processed_output
+                    submission_df.at[i, SYSTEM_OUTPUT] = processed_output
 
-    for i, output in enumerate(submission_df["SystemOutput"]):
+    for i, output in enumerate(submission_df[SYSTEM_OUTPUT]):
         for true_header in TASK_B_HEADER:
             output = output.replace(true_header, TASK_B_SECTION_HEADER_ENCODE[true_header])
         for true_header in TASK_B_HEADER:
             output = output.replace(TASK_B_SECTION_HEADER_ENCODE[true_header], f"\n\n{true_header}\n\n")
         # Replace all instances of 3 or more consecutive newlines with 2 newlines
-        submission_df.at[i, "SystemOutput"] = re.sub(r"\n{3,}", "\n\n", output.strip())
+        submission_df.at[i, SYSTEM_OUTPUT] = re.sub(r"\n{3,}", "\n\n", output.strip())
+        submission_df.at[i, SYSTEM_OUTPUT] = re.sub(r'\n:\n', "", submission_df.at[i, SYSTEM_OUTPUT])
 
     # Save postprocessed submission file to disk
     submission_df.to_csv(submission_fp, index=False)
