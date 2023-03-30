@@ -6,15 +6,16 @@ TEST_FP="$1"  # Provided to the script by the submission system
 # Notes:
 # - The model will be downloaded from the HuggingFace model hub
 # - The script expects a summary column in the test file, but we don't have one, so use the dialogue column
-# - The script expects a validation file, but we don't have one, so use the test file
-# - Set the batch size to one and turn off all mixed precision to avoid errors
-# - Set the bertscore_model_type and bleurt_checkpoint to null to avoid running them
+# - Set the batch size to one to avoid OOM errors
+# - Turn off mixed precision to avoid errors on CPUs and some GPUs
+# - Set evaluation_strategy="'no'" and load_best_model_at_end=false to avoid evaluation
+# - Set bertscore_model_type=null and bleurt_checkpoint=null to avoid loading them
 # - Use the run=3 argument to ensure that the output file is named correctly
 python3 ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskA.yml" output_dir="./outputs" \
     model_name_or_path="wanglab/task-a-flan-t5-large-run-3" \
     summary_column="dialogue" \
     train_file=null \
-    validation_file="$TEST_FP" \
+    validation_file=null \
     test_file="$TEST_FP" \
     per_device_eval_batch_size=1 \
     fp16=false \
@@ -22,6 +23,8 @@ python3 ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskA.yml" outp
     do_train=false \
     do_eval=false \
     do_predict=true \
+    evaluation_strategy="'no'" \
+    load_best_model_at_end=false \
     bertscore_model_type=null \
     bleurt_checkpoint=null \
     run="3"
