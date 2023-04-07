@@ -73,18 +73,27 @@ Results will be automatically logged to any integrations that are _installed_ an
 
 ### Generate notes with LangChain
 
-To generate notes with a large language model (LLM) (via LangChain), run the following:
+To generate notes with a large language model (LLM) (via LangChain), use the [`run_langchain.py`](./scripts/run_langchain.py) script. To see all available options, run:
+
+```bash
+python ./scripts/run_langchain.py --help
+```
+
+To reproduce our best results for Task B, run the following:
 
 ```bash
 # Task B
 OPENAI_API_KEY="..." python scripts/run_langchain.py \
-    "./data/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskB/TaskB-TrainingSet.csv" \
-    "./taskB_testset4participants_inputConversations.csv" \
-    "./outputs" \
-    --task "B"
+    "path/to/test.csv" \
+    "path/to/outputs" \
+    --train-fp "./data/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskB/TaskB-TrainingSet.csv" \
+    --task "B" \
+    --run "1"
 ```
 
 You will need to provide your own `OPENAI_API_KEY`.
+
+> __Note__: Due to the non-deterministic nature of OpenAI's models and API, results may vary slightly from our reported results.
 
 ## Submission
 
