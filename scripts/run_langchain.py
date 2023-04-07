@@ -42,13 +42,6 @@ MAX_INPUT_TOKENS = 6192
 MAX_OUTPUT_TOKENS = 2000
 
 
-def sanitize_text(text: str, lowercase: bool = False) -> str:
-    """Cleans text by removing whitespace, newlines and tabs and (optionally) lowercasing."""
-    sanitized_text = " ".join(text.strip().split())
-    sanitized_text = sanitized_text.lower() if lowercase else sanitized_text
-    return sanitized_text
-
-
 def fetch_in_context_examples(train, test, k: int = 3) -> List[int]:
     """Returns the indices of the top-k most similar dialogues in the train set for each dialogue in the test
     set. The notes for these examples will be used as the in-context examples.
@@ -89,9 +82,15 @@ def main(
     model_name: str = typer.Option("gpt-4", help="Name of the model to use. Must be supported by LangChain."),
     temperature: float = typer.Option(0.2, help="Temperature for the LLM."),
     train_fp: str = typer.Option(
-        None, help="Filepath (or URL) to the train set (should be a CSV file). Only required if k > 0."
+        None,
+        help=(
+            "Filepath (or URL) to the train set (should be a CSV file). In-context examples will be sourced from"
+            " here. Only required if k > 0."
+        ),
     ),
-    k: int = typer.Option(3, help="Maximum number of in-context examples to use."),
+    k: int = typer.Option(
+        3, help="Maximum number of in-context examples to use. If 0, no in-context examples will be used."
+    ),
     task: str = typer.Option(TASK_B, help=f"Task name. Should be one of {TASKS}."),
     run: str = typer.Option(RUN_1, help=f"Which challenge run to produce predictions for. Should be one of {RUNS}"),
     debug: bool = typer.Option(False, help="If True, will only run for a single example of the test set."),
@@ -102,7 +101,7 @@ def main(
 
     # Without in-context examples
     OPENAI_API_KEY="..." \
-        python scripts/run_langchain.py  "MEDIQA-Chat-TestSets-March-15-2023/TaskB/taskB_testset4participants_inputConversations.csv" \
+        python scripts/run_langchain.py "MEDIQA-Chat-TestSets-March-15-2023/TaskB/taskB_testset4participants_inputConversations.csv" \
         "./outputs/wanglab/taskB/run1" \
         --k 0 \
         --task "B" \
@@ -174,13 +173,11 @@ CLINICAL NOTE:
         print(f"Retrieving the top-{k} most similar training examples as the in-context examples...")
         top_k_indices = fetch_in_context_examples(train, test, k=k)
 
-    print("Example prompt:")
-    print(
-        prompt.format(
-            examples=f'\nEXAMPLE NOTE:\n{train["note"][top_k_indices[0][0]]}' if k > 0 else "",
-            dialogue=test["dialogue"][0],
-        )
+    example_prompt = prompt.format(
+        examples=f'\nEXAMPLE NOTE:\n{train["note"][top_k_indices[0][0]]}' if k > 0 else "",
+        dialogue=test["dialogue"][0],
     )
+    print(f"[blue]Example prompt: {example_prompt}[/blue]")
 
     # Run the chain to generate predictions
     predictions = []
@@ -209,7 +206,6 @@ CLINICAL NOTE:
 
         predictions.append(prediction)
 
-    ############################################# DO NOT CHANGE BELOW #############################################
     if task == TASK_B:
         ct_output = {TEST_ID: test[ENCOUNTER_ID_COL], SYSTEM_OUTPUT: predictions}
     else:
