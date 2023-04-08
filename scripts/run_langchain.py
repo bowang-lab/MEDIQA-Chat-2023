@@ -1,4 +1,5 @@
 import os
+import random
 import re
 from pathlib import Path
 from typing import List
@@ -16,6 +17,14 @@ from rich import print
 from rich.progress import track
 from sentence_transformers import util
 
+# The maximum number of tokens in the input and output
+MAX_INPUT_TOKENS = 6192
+MAX_OUTPUT_TOKENS = 2000
+
+# The valid stategies for selecting in-context examples
+SIMILAR = "similar"
+RANDOM = "random"
+STRATEGIES = [SIMILAR, RANDOM]
 
 # These are all related to the submission
 TASK_A = "A"
@@ -37,42 +46,42 @@ SYSTEM_OUTPUT_2 = "SystemOutput2"
 SYSTEM_OUTPUT = "SystemOutput"
 TEAM_NAME = "wanglab"
 
-# The maximum number of tokens in the input and output
-MAX_INPUT_TOKENS = 6192
-MAX_OUTPUT_TOKENS = 2000
 
-
-def fetch_in_context_examples(train, test, k: int = 3) -> List[int]:
-    """Returns the indices of the top-k most similar dialogues in the train set for each dialogue in the test
-    set. The notes for these examples will be used as the in-context examples.
+def _fetch_in_context_examples(train, test, k: int = 3, strategy: str = SIMILAR) -> List[int]:
+    """Fetches the indices of k in-context examples from the train set to use for each example in the test set.
+    If strategy is "similar", then examples are chosen based on similarity to the test example. Otherwise, examples
+    are chosen randomly.
     """
-    # Embed the train and test dialogues
-    embedder = INSTRUCTOR("hkunlp/instructor-large")
-    embedding_instructions = "Represent the Medicine dialogue for clustering:"
-    test_dialogues = embedder.encode(
-        [
-            [embedding_instructions, f"dataset: {dataset} dialogue: {dialogue}"]
-            for dataset, dialogue in zip(test["dataset"], test["dialogue"])
-        ],
-        show_progress_bar=True,
-    )
-    train_dialogues = embedder.encode(
-        [
-            [embedding_instructions, f"dataset: {dataset} dialogue: {dialogue}"]
-            for dataset, dialogue in zip(train["dataset"], train["dialogue"])
-        ],
-        show_progress_bar=True,
-    )
+    if strategy == SIMILAR:
+        # Embed the train and test dialogues
+        embedder = INSTRUCTOR("hkunlp/instructor-large")
+        embedding_instructions = "Represent the Medicine dialogue for clustering:"
+        test_dialogues = embedder.encode(
+            [
+                [embedding_instructions, f"dataset: {dataset} dialogue: {dialogue}"]
+                for dataset, dialogue in zip(test["dataset"], test["dialogue"])
+            ],
+            show_progress_bar=True,
+        )
+        train_dialogues = embedder.encode(
+            [
+                [embedding_instructions, f"dataset: {dataset} dialogue: {dialogue}"]
+                for dataset, dialogue in zip(train["dataset"], train["dialogue"])
+            ],
+            show_progress_bar=True,
+        )
     # Get top-k most similar examples in the train set for each example in the test set
     top_k_indices = []
-    for test_dataset, test_dialogue in zip(test["dataset"], test_dialogues):
+    for i, test_dataset in enumerate(test["dataset"]):
         # Get the top-k dataset matched indices
         ds_matched_indices = [j for j, train_ds in enumerate(train["dataset"]) if train_ds == test_dataset]
-        scores = util.cos_sim(np.expand_dims(test_dialogue, 0), train_dialogues[ds_matched_indices])
-        top_k_indices_ds = torch.topk(scores, k=min(k, len(scores))).indices.flatten().tolist()
-        # Map these back to the original indices
-        top_k_indices_org = [ds_matched_indices[idx] for idx in top_k_indices_ds]
-        top_k_indices.append(top_k_indices_org)
+        if strategy == SIMILAR:
+            scores = util.cos_sim(np.expand_dims(test_dialogues[i], 0), train_dialogues[ds_matched_indices])
+            top_k_indices_ds = torch.topk(scores, k=min(k, len(scores))).indices.flatten().tolist()
+            # Map these back to the original indices
+            top_k_indices.append([ds_matched_indices[idx] for idx in top_k_indices_ds])
+        else:
+            top_k_indices.append(random.sample(range(len(ds_matched_indices)), k=min(k, len(ds_matched_indices))))
     return top_k_indices
 
 
@@ -91,7 +100,10 @@ def main(
     k: int = typer.Option(
         3, help="Maximum number of in-context examples to use. If 0, no in-context examples will be used."
     ),
-    task: str = typer.Option(TASK_B, help=f"Task name. Should be one of {TASKS}."),
+    strategy: str = typer.Option(
+        "similar", help=f"Strategy for choosing in-context examples. Should be one of {STRATEGIES}"
+    ),
+    task: str = typer.Option(TASK_B, help=f"Task name. Should be one of {TASKS}"),
     run: str = typer.Option(RUN_1, help=f"Which challenge run to produce predictions for. Should be one of {RUNS}"),
     debug: bool = typer.Option(False, help="If True, will only run for a single example of the test set."),
 ):
@@ -117,13 +129,15 @@ def main(
     """
     # Error handling
     if k < 0:
-        raise ValueError(f"k should be non-negative. Got {k}.")
+        raise ValueError(f"k should be non-negative. Got: {k}")
     if k > 0 and not train_fp:
         raise ValueError("If k > 0, train_fp should be provided.")
+    if strategy not in STRATEGIES:
+        raise ValueError(f"Strategy should be one of {STRATEGIES}. Got: '{strategy}'")
     if task not in TASKS:
-        raise ValueError(f"Task should be one of {TASKS}.")
+        raise ValueError(f"Task should be one of {TASKS}. Got: '{task}'")
     if run not in RUNS:
-        raise ValueError(f"Run should be one of {RUNS}.")
+        raise ValueError(f"Run should be one of {RUNS}. Got: '{run}'")
 
     # Load the dataset
     if k > 0:
@@ -170,8 +184,8 @@ CLINICAL NOTE:
 
     # Optionally, retrieve the top-k most similar dialogues as the in-context examples
     if k > 0:
-        print(f"Retrieving the top-{k} most similar training examples as the in-context examples...")
-        top_k_indices = fetch_in_context_examples(train, test, k=k)
+        print(f"Retrieving {k} in-context examples with strategy '{strategy}'...")
+        top_k_indices = _fetch_in_context_examples(train, test, k=k, strategy=strategy)
 
     example_prompt = prompt.format(
         examples=f'\nEXAMPLE NOTE:\n{train["note"][top_k_indices[0][0]]}' if k > 0 else "",
