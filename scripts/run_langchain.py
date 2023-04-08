@@ -17,6 +17,7 @@ from rich import print
 from rich.progress import track
 from sentence_transformers import util
 
+
 # The maximum number of tokens in the input and output
 MAX_INPUT_TOKENS = 6192
 MAX_OUTPUT_TOKENS = 2000
