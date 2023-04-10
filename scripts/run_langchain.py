@@ -76,7 +76,7 @@ def _fetch_in_context_examples(train, test, k: int = 3, strategy: str = SIMILAR,
     for i, test_dataset in enumerate(test["dataset"]):
         # If filtered, restrict to example of the same dataset type
         if filtered:
-            train_indices = [j for j, train_ds in enumerate(train["dataset"]) if train_ds == test_dataset]
+            train_indices = [j for j, train_dataset in enumerate(train["dataset"]) if train_dataset == test_dataset]
         else:
             train_indices = list(range(len(train["dataset"])))
         # If strategy is "similar", then we select examples based on similarity to the test example
