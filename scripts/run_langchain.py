@@ -48,10 +48,10 @@ SYSTEM_OUTPUT = "SystemOutput"
 TEAM_NAME = "wanglab"
 
 
-def _fetch_in_context_examples(train, test, k: int = 3, strategy: str = SIMILAR) -> List[int]:
+def _fetch_in_context_examples(train, test, k: int = 3, strategy: str = SIMILAR, filtered: bool = False) -> List[int]:
     """Fetches the indices of k in-context examples from the train set to use for each example in the test set.
     If strategy is "similar", then examples are chosen based on similarity to the test example. Otherwise, examples
-    are chosen randomly.
+    are chosen randomly. If filtered is True, only examples from the same dataset as the test example will be used.
     """
     if strategy == SIMILAR:
         # Embed the train and test dialogues
@@ -74,15 +74,19 @@ def _fetch_in_context_examples(train, test, k: int = 3, strategy: str = SIMILAR)
     # Get top-k most similar examples in the train set for each example in the test set
     top_k_indices = []
     for i, test_dataset in enumerate(test["dataset"]):
-        # Get the top-k dataset matched indices
-        ds_matched_indices = [j for j, train_ds in enumerate(train["dataset"]) if train_ds == test_dataset]
+        # If filtered, restrict to example of the same dataset type
+        if filtered:
+            train_indices = [j for j, train_dataset in enumerate(train["dataset"]) if train_dataset == test_dataset]
+        else:
+            train_indices = list(range(len(train["dataset"])))
+        # If strategy is "similar", then we select examples based on similarity to the test example
         if strategy == SIMILAR:
-            scores = util.cos_sim(np.expand_dims(test_dialogues[i], 0), train_dialogues[ds_matched_indices])
+            scores = util.cos_sim(np.expand_dims(test_dialogues[i], 0), train_dialogues[train_indices])
             top_k_indices_ds = torch.topk(scores, k=min(k, len(scores))).indices.flatten().tolist()
             # Map these back to the original indices
-            top_k_indices.append([ds_matched_indices[idx] for idx in top_k_indices_ds])
+            top_k_indices.append([train_indices[idx] for idx in top_k_indices_ds])
         else:
-            top_k_indices.append(random.sample(range(len(ds_matched_indices)), k=min(k, len(ds_matched_indices))))
+            top_k_indices.append(random.sample(range(len(train_indices)), k=min(k, len(train_indices))))
     return top_k_indices
 
 
@@ -95,14 +99,18 @@ def main(
         None,
         help=(
             "Filepath (or URL) to the train set (should be a CSV file). In-context examples will be sourced from"
-            " here. Only required if k > 0."
+            " here. Required if k > 0."
         ),
     ),
     k: int = typer.Option(
         3, help="Maximum number of in-context examples to use. If 0, no in-context examples will be used."
     ),
     strategy: str = typer.Option(
-        "similar", help=f"Strategy for choosing in-context examples. Should be one of {STRATEGIES}"
+        "similar",
+        help=f"Strategy for choosing in-context examples. Should be one of {STRATEGIES}. Has no effect if k=0.",
+    ),
+    filtered: bool = typer.Option(
+        True, help="If True, will only use in-context examples from the same dataset. Has no effect if k=0."
     ),
     task: str = typer.Option(TASK_B, help=f"Task name. Should be one of {TASKS}"),
     run: str = typer.Option(RUN_1, help=f"Which challenge run to produce predictions for. Should be one of {RUNS}"),
@@ -185,8 +193,8 @@ CLINICAL NOTE:
 
     # Optionally, retrieve the top-k most similar dialogues as the in-context examples
     if k > 0:
-        print(f"Retrieving {k} in-context examples with strategy '{strategy}'...")
-        top_k_indices = _fetch_in_context_examples(train, test, k=k, strategy=strategy)
+        print(f"Retrieving {k} in-context examples with strategy '{strategy}'. Dataset filtering set to {filtered}...")
+        top_k_indices = _fetch_in_context_examples(train, test, k=k, strategy=strategy, filtered=filtered)
 
     example_prompt = prompt.format(
         examples=f'\nEXAMPLE NOTE:\n{train["note"][top_k_indices[0][0]]}' if k > 0 else "",
