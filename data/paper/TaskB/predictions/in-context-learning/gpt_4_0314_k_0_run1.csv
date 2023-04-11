@@ -1,0 +1,552 @@
+TestID,SystemOutput
+D2N068,"Date: [Enter date of visit]
+
+Subjective:
+58-year-old male with a past medical history of congestive heart failure and hypertension presents for follow-up of chronic problems. Patient reports feeling out of sorts, fatigued, and lightheaded for approximately five weeks. He also experiences bloating and occasional cramps in the chest. Patient has been adhering to medications and monitoring blood pressure at home. Diet has been off due to kitchen construction, leading to eating out more frequently. Patient denies fever, chills, nausea, vomiting, and diarrhea.
+
+Objective:
+Vital signs: Blood pressure, heart rate, and oxygenation within normal limits.
+Physical exam: Jugular venous distention to 8 cm, 3/6 systolic ejection murmur, fine crackles at lung bases bilaterally, 1+ pitting edema in lower extremities.
+Chest X-ray: Fluid in lungs.
+Echocardiogram (4 months ago): Pumping function reduced at 45%, mitral regurgitation present.
+
+Assessment and Plan:
+1. Congestive heart failure: Patient appears to be retaining fluid. Increase Lasix to 80 mg once daily. Instruct patient to weigh daily and call if weight gain or shortness of breath occurs. Order another echocardiogram.
+2. Hypertension: Well-managed at this time. Continue lisinopril 20 mg daily. Patient to continue recording blood pressures at home and report any elevations via patient portal.
+
+Follow-up:
+Will be in touch with the patient after test results are received."
+D2N069,"Date: [Enter date of visit]
+
+Patient: Ms. Thompson
+Age: 43
+Sex: Female
+
+Chief Complaint: Right knee pain
+
+History of Present Illness: Patient reports falling from a ladder while changing a light bulb yesterday. She twisted her knee while trying to catch her fall. Pain is localized to the inside of her right knee. She has been using ice and taking ibuprofen, but it has not provided significant relief.
+
+Past Medical History: Atrial fibrillation
+Current Medications: Digoxin
+
+Past Surgical History: Rhinoplasty
+
+Physical Examination:
+- Tenderness over the medial portion of the right knee, specifically over the medial meniscus area
+- Pain with flexion and valgus stress
+- Normal sensation in lower extremities
+- No pain or tenderness in calves
+
+RESULTS
+Imaging: X-ray of the right knee showed no fractures or dislocations. A small amount of fluid was present, but alignment appeared normal.
+
+Assessment: Acute medial meniscus sprain or strain of the right knee
+
+Plan:
+1. Prescribe a knee brace and crutches for temporary use
+2. Schedule a follow-up appointment in one week
+3. If no improvement, consider MRI
+4. Prescribe Motrin 800 mg every six hours with food for two weeks
+
+Orders: Medications and procedures as discussed
+
+Follow-up: In one week or as needed"
+D2N070,"Date: [Current Date]
+
+Subjective:
+58-year-old male patient, Logan, with a past medical history significant for diabetes type 2, hypertension, and osteoarthritis, presents today with lower back pain. Patient reports lifting heavy boxes too quickly on Saturday, hearing a pop, and experiencing pain and stiffness since then. He has tried Tylenol, ibuprofen, and icy heat with minimal relief. Patient also reports tingling in the toes of his right foot, which resolved on Sunday. He finds lying on his right side somewhat helpful for the pain. Patient admits to a less than ideal diet recently and struggles with monitoring blood pressure on weekends.
+
+Objective:
+BP: Elevated in office
+Heart: 2/6 systolic heart murmur (stable)
+Lungs: Clear
+Back: Pain to palpation of lumbar spine, pain with flexion and extension, negative straight leg raise
+Hemoglobin A1C: 8 (elevated)
+Back X-ray: Normal, good bony alignment, no fracture
+
+Assessment & Plan:
+1. Back pain: Lumbar strain from lifting. Prescribe meloxicam 15 mg once a day, continue icing, avoid strenuous activity, and refer to physical therapy.
+2. Diabetes: Slightly uncontrolled. Increase metformin to 1000 mg twice a day and repeat hemoglobin A1C in 6 months.
+3. Hypertension: Increase lisinopril from 10 mg to 20 mg daily for better control.
+4. Osteoarthritis: Patient is managing well, no further workup needed at this time.
+
+Follow-up:
+Schedule a follow-up appointment in 6 months to monitor progress and repeat hemoglobin A1C."
+D2N071,"Date: [Enter date]
+
+Subjective:
+- 62-year-old male with a past medical history significant for depression, prior lobectomy, and hypertension presents for his annual exam
+- Patient reports a tough spring due to pollen and moving his daughter into college
+- Patient has been taking Prozac for depression and reports no recent incidents
+- Patient has been struggling with hypertension, taking Norvasc regularly during the business week but sometimes forgetting on weekends
+- Patient experiences shortness of breath with exertion during morning runs, especially in humid conditions
+
+Objective:
+- Blood pressure: 120/80
+- Physical exam: Slight 2/6 systolic ejection murmur, clear lungs, no lower extremity edema, pain to palpation of sinuses
+- EKG: Normal
+- Chest X-ray: Normal, no concerns related to prior lobectomy
+
+Assessment:
+1. Depression: Stable, continue Prozac 20 mg daily
+2. Prior lobectomy: No further workup needed, patient exercising and breathing function is fine
+3. Hypertension: Controlled, continue Norvasc
+
+Plan:
+1. Refill Prozac 20 mg daily
+2. Discontinue follow-up with surgeon for lobectomy
+3. Order echocardiogram for murmur
+4. Order routine blood work
+5. Follow up with patient through the patient portal regarding test results
+
+[Doctor's name and signature]"
+D2N072,"Date: [Current Date]
+Subjective:
+Ms. Sharon Brooks, a 48-year-old female, presents with right index finger pain. The patient reports that the pain began after a skiing accident four days ago, in which her finger was bent backward while going over a mogul. She has tried icing the finger and taking ibuprofen, but the pain persists, particularly with movement. The patient also reports a history of constipation and is currently taking Miralax. She has a past surgical history of an appendectomy at age 18.
+
+Objective:
+On physical examination, the patient has tenderness over the distal phalanx of the right index finger, with pain on flexion. There is no tenderness over the proximal joint or metacarpophalangeal joint. The patient is able to bend and extend the finger and touch her thumb with it. X-rays of the finger show no fractures and everything appears to be in alignment.
+
+Assessment:
+Right index finger contusion without fracture.
+
+Plan:
+1. Prescribe an aluminum foam splint for the affected finger.
+2. Prescribe Motrin 600 mg every six hours for pain relief, to be taken for one week.
+3. Instruct the patient to call and return for a follow-up appointment if the pain does not improve within a week.
+
+The patient has no further questions and agrees with the plan. Medications and procedures have been ordered. The patient will be escorted to the checkout area for sign-out."
+D2N073,"Date: [Current Date]
+Subject: Christina Cooper
+DOB: 07/01/1954
+Referring Physician: Diane Nelson
+
+Chief Complaint: Long-standing iron deficiency anemia
+
+History of Present Illness:
+Ms. Cooper is a 65-year-old female who has been dealing with anemia since she was 13 years old. She was unable to donate blood in December 2019 due to her anemia. She has been experiencing fatigue, feverishness, chills, shortness of breath, wheezing, and headaches. She also reports increased sensitivity to cold and worsening anxiety and depression.
+
+Past Medical History:
+- Hysterectomy in 1996
+- Colonoscopy 5-6 years ago with no polyps found
+
+Medications:
+- Ferrous sulfate 25 mg tablets, twice daily
+- Over-the-counter Vitamin B12
+
+Physical Exam:
+- Heart and lungs: normal
+- Abdomen: no tenderness
+
+Assessment and Plan:
+1. Schedule upper endoscopy and colonoscopy to assess for potential sources of anemia or GI bleed. If inconclusive, consider capsule endoscopy.
+2. Continue ferrous sulfate 25 mg twice daily with orange juice for better absorption for the next 8-12 weeks.
+3. Recheck CBC, iron, ferritin, B12, and folate in 12 weeks.
+4. Referral to hematologist (Dr. Flores) for further evaluation and management.
+
+Follow-up:
+Ms. Cooper will follow up after her upper endoscopy and colonoscopy, and after her appointment with the hematologist. She is advised to call the office if she has any questions or worsening symptoms.
+
+[Doctor's Name and Signature]"
+D2N074,"Patient: Bruce Ward
+DOB: 5/21/1969
+Age: 52
+Sex: Male
+Date of Consultation: 3/1/21
+Referring Physician: Dr. Henry Howard
+
+Chief Complaint: Worsening headaches over the past few months
+
+History of Present Illness:
+Mr. Ward presented to his primary care provider, Dr. Howard, with worsening headaches over the past few months. He denied any trouble with headaches in the past. His past clinical history is unremarkable. Workup for headaches was initiated with brain MRI and serology, where a pituitary lesion was incidentally discovered. Labs dated 3/3/21, including CBC, UNES, UH, coagulation, and CRP, were normal. Pituitary hormone profile demonstrates a low TSH, all other results were normal. MRI of the brain with contrast from 3/4/21 reveals a pituitary lesion with elevation and compression of the optic chiasm. The ventricles are normal in size and no other abnormalities are noted.
+
+Physical Examination:
+The patient is alert, oriented to time, place, and person. Affect is appropriate and speech is fluent. Cranial nerve examination is grossly intact. No focal, motor, or sensory deficit in the upper or lower extremities. Visual acuity and eye movements are normal. Pupils are equal and reactive. Visual field testing reveals bitemporal hemianopia. Color vision is normal.
+
+Assessment:
+Pituitary adenoma
+
+Plan:
+1. Refer the patient to an eye doctor for a full exam and visual field test to map peripheral vision prior to surgery.
+2. Schedule transsphenoidal surgery to excise and decompress the pituitary fossa.
+3. Monitor patient's vision and headache symptoms post-surgery.
+
+Summary:
+Mr. Ward is a very pleasant 52-year-old male who has a benign-appearing pituitary adenoma, incidentally discovered during workup for worsening headaches. He is symptomatic with clinical and radiographical evidence of optic chiasmal compression, therefore surgical intervention to excise and decompress the pituitary fossa is indicated."
+D2N075,"Date: [Current Date]
+Patient: Betty Hill
+DOB: 2/21/1968
+Chief Complaint: Chest pain (resolved)
+
+History of Present Illness:
+Ms. Hill is a 52-year-old female with a past medical history of uterine fibroids, anemia, and gallbladder removal. She presents today with a referral from the ER for esophagitis. She reports having chest pain for four days in early October 2020, which has since resolved. The pain was located in the center of her chest, behind her breastbone, and was sharp in nature. The pain was worse with eating and she experienced difficulty swallowing during that time. She denies any current chest pain or swallowing difficulty. She has no recent history of heartburn or indigestion. ER workup, including EKG and blood tests, was normal.
+
+Past Medical History:
+- Uterine fibroids
+- Anemia
+- Gallbladder removal
+
+Physical Exam:
+- Mild tenderness to light palpation in the upper abdominal quadrants
+- No pain or tenderness in the lower abdomen
+- Overall normal exam
+
+Assessment:
+Ms. Hill's history suggests possible etiologies for her chest pain, including GERD, dyspepsia, esophagitis, musculoskeletal causes, and anxiety. It is suspected that she may have had an anxiety attack related to her job transition, with possible contribution from musculoskeletal etiologies.
+
+Plan:
+1. Discussed the option of EGD vs. monitoring for symptoms. The patient elected to self-monitor her symptoms and will call with any recurrence or change.
+2. Encourage the patient to follow up as needed for any other GI complaints.
+3. Continue to monitor weight loss efforts and overall health.
+
+Dr. Sanders"
+D2N076,"Date: [Enter date of visit]
+
+Patient: Katherine [Last name]
+
+DOB: [Enter date of birth]
+
+Age: 22 months
+
+Chief Complaint: Smith-Magenis Syndrome, Kidney Evaluation
+
+History of Present Illness:
+Katherine is a 22-month-old female with a history of Smith-Magenis Syndrome, a rare genetic disorder. She is a former 34-week and 3-day gestation twin, born at 4 pounds, 8 ounces. She has had issues with feeding, temperature regulation, and developmental delays. She is currently in feeding therapy, occupational therapy, physical therapy, and will begin speech therapy soon. Katherine has seen multiple specialists, including a GI doctor, allergist, neurologist, orthopedic, ophthalmologist, and audiologist. The patient's mother reports that Katherine has 8-10 wet diapers per day and drinks a combination of pea protein milk, water, and diluted juice.
+
+Physical Exam:
+- Well-nourished female, slightly fussy when examined
+- Eyes: small appearing
+- Mild hypotonia of the lower extremities and arms
+- Normal external female genitalia
+
+Assessment and Plan:
+Katherine is a 22-month-old former 34 and 3-week-old twin with Smith-Magenis Syndrome. Several organ systems can be affected by this chromosomal deletion syndrome, including congenital anomalies of the kidney and urinary tract. We will obtain a screening of the kidneys by ultrasound today. If there are abnormalities on the kidney ultrasound, we will determine next steps and future follow-up. The family lives in Dallas, Georgia, so her follow-up should be at the town center location.
+
+Follow-up:
+- Kidney ultrasound today
+- Follow-up appointment if needed at town center location
+
+End of note."
+D2N077,"Date: [Date of visit]
+
+Subjective:
+- Patient: Diana, female
+- Chief complaint: Right wrist pain and swelling
+- History of present illness: Patient reports falling while carrying a laundry basket down the stairs yesterday morning. She tried to catch herself with her arms, resulting in immediate pain and swelling in her right wrist. She has not injured this arm before. Pain severity is 9/10. She has tried ice, an ACE wrap, and ibuprofen for pain relief with minimal success. She reports some tingling in her fingers but no other pain radiation.
+
+Objective:
+- Vital signs: BP 140/70, HR 80, Temp 97.2, RR 20
+- Physical exam: No adenopathy, thyromegaly, or carotid bruit. Heart without murmur, rub, or gallop. Lungs clear to auscultation bilaterally. Lower legs with palpable pulses, no edema. Upper extremities with normal range of movement except for right wrist.
+- Right wrist exam: Pain on palpation of both the inside and outside of the wrist. Pain on flexion, extension, radial deviation, and lateral deviation. Able to make a fist but not tightly. Metacarpals intact, obvious swelling and bruising, tenderness on palpation, and evidence of potential fracture with bony crepitus.
+- X-ray: Positive for a Colles' fracture
+
+Assessment:
+- Primary diagnosis: Colles' fracture of the right wrist
+
+Plan:
+- Treatment: Brace the right wrist with a thumb spica for six weeks
+- Surgery: Schedule as soon as possible for surgical intervention to ensure proper healing
+- Medication: Prescribe 50 mg of Ultram every six hours for pain management
+- Physical therapy: Begin a few weeks after surgery, with an assessment to determine frequency (tentatively three times per week)
+- Follow-up: Schedule a one-month follow-up appointment to assess healing progress and discuss the patient's upcoming vacation plans
+
+Note: The fracture appears extra-articular and usually proximal to the radial ulnar joint. Dorsal angulation of the distal fracture fragment is present to a variable degree. If dorsal angulation is severe, presenting with a dinner fork deformity, ulnar styloid fracture may be present."
+D2N078,"Date: [Insert date]
+
+Subjective:
+Patient: Philip
+Chief Complaint: Right knee pain
+History of Present Illness: Patient reports slipping and falling while working on his property a week ago. He felt a pop in his knee and has been experiencing pain, particularly during flexion and extension. Pain score is 4/10 during mobility. Patient has been taking ibuprofen for swelling.
+Past Medical History: Hypertension, currently on 20 mg Lisinopril
+Diet: High sodium intake, patient acknowledges needing help with dietary changes
+
+Objective:
+Blood Pressure: 150/70
+Heart: Grade 2/6 systolic ejection murmur
+Lungs: Clear bilaterally, no wheezes or crackles
+Right Knee: Pain to palpation on the medial aspect, pain with flexion and extension, edema, and effusion present. X-ray showed no fractures or bony abnormalities.
+
+Assessment:
+1. Right knee MCL strain
+2. Hypertension
+
+Plan:
+1. Right knee MCL strain:
+   - Prescribe ibuprofen 800 mg twice daily for pain and swelling
+   - Provide knee brace for support and healing
+   - Ice knee for 20 minutes, 3-4 times a day
+   - Elevate and rest leg as needed
+2. Hypertension:
+   - Continue 20 mg Lisinopril
+   - Referral to nutritionist for dietary guidance and sodium reduction
+   - Monitor blood pressure and adjust treatment as needed
+
+Follow-up: Schedule a follow-up appointment to assess knee healing and blood pressure management."
+D2N079,"Date: [Enter date]
+
+Subjective:
+- Chief complaint: Left shoulder pain for approximately 3 weeks
+- No specific injury recalled, patient has been active and working in the basement
+- Pain worsens with reaching, lifting objects, and lying on the shoulder
+- No previous significant shoulder pain
+- No numbness or tingling in arms or hands
+- Taking extra strength Tylenol every 6-8 hours, provides some relief but pain persists
+
+Objective:
+- Vitals: Reviewed and within normal limits
+- Left shoulder exam: Limited active and passive range of motion, tenderness of the greater tuberosity of the humerus, no tenderness at the sternoclavicular or acromioclavicular joints, good hand grips
+- Neurovascular exam: Capillary refill <3 seconds, sensation intact to light touch
+- X-ray results: No fractures
+
+Assessment:
+- Left shoulder pain, likely due to rotator cuff tendinopathy
+
+Plan:
+1. Order MRI for left shoulder to rule out other issues
+2. Refer to physical therapy for 6-8 weeks
+3. Continue taking Tylenol as needed for pain relief
+4. Consider steroid injection if symptoms do not improve after physical therapy
+5. Schedule follow-up visit after completion of physical therapy
+6. Provide patient with educational materials on physical therapy and expectations
+
+Follow-up:
+- Schedule follow-up appointment after completion of physical therapy"
+D2N080,"Date: [Enter date]
+
+Subjective:
+- Chief complaint: Left knee pain
+- Patient reports occasional left knee pain while walking, causing the knee to feel like it's giving out
+- No history of injury or trauma to the knee
+- Pain is not persistent and does not require medication
+- Patient has a trip planned with potential for increased walking and dancing, concerned about knee pain during activities
+- Patient has a history of hypertension and diabetes, currently taking medications as prescribed
+- Blood pressure has been stable, blood sugar has been slightly elevated in the mornings
+
+Objective:
+- Vital signs: T 98.2, P 72, R 16, BP 122/70
+- Heart exam: Regular rate and rhythm, 2/6 systolic ejection murmur at left base
+- Lung exam: Clear to auscultation bilaterally
+- Left knee exam: No ecchymosis, edema, effusion, or pain to palpation; no decreased range of motion; negative varus and valgus test
+- Left knee x-ray: No evidence of fracture or bony abnormality
+
+Assessment:
+1. Left knee pain - likely arthritis
+2. Hypertension - stable on medication
+3. Diabetes mellitus - slightly elevated morning blood sugars
+
+Plan:
+1. For left knee pain, prescribe meloxicam 15 mg daily and consider physical therapy to strengthen surrounding muscles
+2. Continue lisinopril 20 mg daily for hypertension, order echocardiogram to evaluate heart murmur
+3. Order hemoglobin A1c and lipid panel to assess diabetes management and potential adjustments to metformin
+
+Follow-up:
+- Schedule echocardiogram and lab tests
+- Follow up in clinic as needed for results and further management
+
+[Doctor's name and signature]"
+D2N081,"Date: [Enter date of visit]
+
+Subjective:
+53-year-old female with a recent diagnosis of stage three nonsmall cell lung cancer presents for follow-up during neo-adjuvant chemotherapy. Patient was diagnosed with a 4.4 cm left upper lobe nodule, biopsy positive for adenocarcinoma. Molecular testing is pending. Patient reports minimal cough, sore throat, and mild fatigue. No nausea or vomiting. No shortness of breath. Dry cough and sore throat are persistent but manageable. Patient has good support from family, friends, and nursing staff.
+
+Objective:
+Vitals: Stable and within normal limits
+Oxygen saturation: Good
+Neck exam: No cervical lymphadenopathy or supraclavicular adenopathy
+Heart exam: Regular rate and rhythm, no murmurs
+Lung exam: Crackles bilaterally
+Skin exam: Erythema on the anterior side of the chest on the left side, possibly related to radiation
+Lower extremities: No edema
+Chest X-ray: Mild radiation pneumonitis
+
+Assessment and Plan:
+1. Lung cancer: Continue current chemotherapy regimen (cisplatin and etoposide) and radiation at 45 Gy. Repeat imaging after completion of radiation to assess tumor shrinkage and potential for surgical removal.
+2. Radiation pneumonitis: Prescribe low-dose prednisone (40 mg daily for 5 days) to reduce inflammation and improve cough and shortness of breath.
+3. Painful swallowing: Prescribe lidocaine swish and swallow (4 times daily) to manage pain and facilitate eating and drinking.
+
+Follow-up: Schedule next visit after completion of radiation therapy.
+
+Patient education: Provided information on managing side effects of chemotherapy and radiation, as well as the importance of maintaining hydration and nutrition during treatment. Encouraged patient to continue seeking support from family, friends, and healthcare providers."
+D2N082,"Date: [Enter Date]
+
+Subjective:
+- Patient reports recent abnormal lab work and referral for low immunoglobulin A (IgA) level
+- Patient has a history of frequent colds, particularly in the winter, and lingering symptoms
+- No recent abdominal infections or diarrhea
+- No known family history of immune deficiencies
+- Patient recently diagnosed with type 2 diabetes and started on metformin
+- No history of blood transfusions or blood products
+- Recent international travel to Zambia
+
+Objective:
+- Vital signs: stable, no fever
+- Heart exam: regular rate and rhythm, no murmurs
+- Lung exam: clear, no wheezes, rales, or rhonchi
+- Neck exam: no lymphadenopathy
+- Abdominal exam: soft, non-tender
+- Lab work: consistent with IgA deficiency
+
+Assessment:
+- IgA deficiency: common immunodeficiency, patient's body has slightly lower than normal IgA levels
+- Low likelihood of other immunodeficiencies, but additional blood work will be ordered to check other antibodies
+- Type 2 diabetes: patient recently started on metformin
+
+Plan:
+1. Order additional blood work to check other antibodies
+2. Monitor for any infections that do not resolve or are difficult to control, as well as any significant changes in abdominal symptoms
+3. Instruct patient to inform healthcare providers of IgA deficiency if they require blood products in the future
+4. Follow up appointment to review lab results and discuss any further concerns
+
+Education:
+- Explained the nature of IgA deficiency and its potential impact on the patient's health
+- Advised patient to watch for persistent infections or significant changes in abdominal symptoms
+- Informed patient of the importance of disclosing IgA deficiency if they require blood products in the future
+
+Patient questions/concerns addressed."
+D2N083,"Date: [Enter date of visit]
+
+Subjective:
+Chief Complaint: Right elbow pain
+History of Present Illness: The patient is a [age] year-old [gender] who presents with right elbow pain for the past 4 days. The patient reports that the pain started after engaging in pottery activities during the pandemic. The pain is located on the inside of the right elbow and sometimes radiates down into the forearm. The patient rates the pain as a 6/10 and states that it interferes with daily activities and sleep. No history of trauma or previous injury to the right elbow. The patient has tried ibuprofen for pain relief with minimal success.
+
+Objective:
+Vitals: [Enter vitals]
+Physical Exam: Focused exam of the right elbow reveals moderate tenderness to palpation over the medial epicondyle. Pain is present with pronation of the forearm and with resistance against flexion of the wrist. No pain with supination of the forearm. No visible swelling or deformity. X-ray of the right elbow shows no fracture or bony abnormality.
+
+Assessment:
+1. Right elbow pain - likely medial epicondylitis
+
+Plan:
+1. Rest and immobilization: The patient is advised to wear a sling while awake for the next couple of weeks and to avoid pottery activities.
+2. Ice: Apply ice to the elbow for 20 minutes, three times a day.
+3. Medication: Ibuprofen 600 mg q.6 h. with food for one week.
+4. Follow-up: Schedule a follow-up appointment in one week to assess progress.
+
+The patient understands the plan and agrees to follow the recommendations. The nurse will provide the patient with a sling."
+D2N084,"Date: [Enter date of consultation]
+
+Subjective:
+Patient: David
+Chief Complaint: Recent fall, chest pain, shortness of breath, and ankle swelling
+
+History of Present Illness:
+David reports a recent fall while walking outside. He experienced chest pain and shortness of breath but did not think much of it. He admits to not consistently taking his prescribed medications for hypertension (Bumex, Cozaar, and Norvasc) and not following a strict diet. David also reports occasional chest pain, which he thought was heartburn.
+
+Past Medical History:
+- Hypertension
+- Smoking (mostly quit, occasional cigarette)
+
+Objective:
+Vital Signs: Blood pressure 128/72, other vital signs within normal limits
+Neck Exam: No jugular venous distention
+Heart Exam: 2/6 systolic ejection murmur (stable)
+Lung Exam: Clear bilaterally
+Lower Extremities: Trace edema
+
+Assessment:
+1. Uncontrolled hypertension
+2. Congestive heart failure (CHF) likely due to dietary indiscretion and uncontrolled hypertension
+3. Mild to moderate mitral regurgitation
+
+Plan:
+1. Continue Bumex 2 mg once daily
+2. Continue Cozaar 100 mg daily
+3. Continue Norvasc 5 mg once daily
+4. Consult with nutritionist for dietary advice
+5. Obtain a blood pressure cuff and monitor blood pressure at home
+6. Obtain a scale and weigh daily; call if weight gain of 3 lbs in 2 days
+7. Order renal artery ultrasound
+8. Encourage patient to take medications consistently and follow a heart-healthy diet
+9. Follow up with patient to monitor progress and address any concerns
+
+Patient Education:
+- Importance of taking medications consistently
+- Monitoring blood pressure and weight at home
+- Following a heart-healthy diet and avoiding salty foods
+- Seeking help from a nutritionist for dietary advice"
+D2N085,"Date: [Enter date]
+
+Subjective:
+Patient: Russell
+Chief Complaint: Sharp pain on the right side of abdomen below ribs for the last several days
+History of Present Illness: Patient reports pain moving to lower abdomen and into groin. Pain comes and goes, and is severe when present. Patient experiences burning sensation during urination and dark-colored urine. Tylenol has not been effective for pain relief. Patient feels nauseated but has not vomited. Family history of kidney stones, and patient has had kidney stones in the past.
+
+Objective:
+Physical Examination: Abdominal exam shows no tenderness to palpation, no rebound or guarding, and no peritoneal signs. Positive CVA tenderness on the right flank.
+RESULTS
+Imaging: CT scan of abdomen shows a 0.5 cm kidney stone in the proximal right ureter. No evidence of hydronephrosis.
+
+Assessment:
+Diagnosis: Acute nephrolithiasis (kidney stone)
+
+Plan:
+1. Encourage increased fluid intake to facilitate urination and stone passage.
+2. Prescribe oxycodone 5 mg every 6-8 hours as needed for pain, alternating with Tylenol.
+3. Provide urine strainer for stone collection and testing.
+4. Order basic metabolic panel, urinalysis, and urine culture.
+5. Schedule follow-up appointment in 1-2 weeks.
+6. Discuss further treatment options (lithotripsy or ureteroscopy) if symptoms persist or worsen.
+
+Follow-up:
+Instruct patient to contact the office if symptoms worsen or do not improve within the next week."
+D2N086,"Date: [Enter date]
+
+Subjective:
+- Patient: Nicholas
+- Chief Complaint: Nonhealing foot ulcer on right foot
+- Duration: 6 weeks
+- Initial presentation: Blister on the pad of the bottom of the foot around the heel, caused by tight shoes
+- Current presentation: Unroofed blister with thick, soft, mushy skin, foul smell, and yellow drainage; blackened area around the wound; cramping in calf muscle; red streak along the inside portion of the calf muscle; area is hot to touch
+- Antibiotics: On day 6 or 7 of a 10-day course
+- Pain: Throbbing, fire poker-like sensation in the bottom of the foot; calf muscle hard and painful when pressed
+- Other symptoms: Coughing, difficulty catching breath when walking
+- Diabetes: A1C 6.7, well-controlled; recent blood sugars trending in the 300-400 range with one spike at 500-600
+
+Objective:
+- Vital signs: Slight fever, otherwise stable
+- Foot exam: Necrotic wound on heel (2x2 cm), sloughing tissue, cellulitis, erythemia, foul odor; no bony exposure
+- Vascular exam: Bilateral palpable pulses femorally and popliteal; non-palpable dorsalis pedis and posterior tibial pulses, but present via Doppler
+- Pain response: No pain when pressing on the affected area of the wound
+- Right foot X-ray: No evidence of osteomyelitis
+
+Assessment:
+- Nonhealing diabetic foot ulcer
+- Possible cellulitis and/or infection
+
+Plan:
+1. Order test to check blood supply for the wound
+2. Perform debridement in the office
+3. Obtain culture and consider different antibiotic therapy based on results
+4. Monitor redness, swelling, and pain in the calf closely
+5. Follow-up appointment in 7 days
+6. Encourage patient to follow up with endocrinologist for diabetes management and maintain A1C below 7
+7. Continue current antibiotic therapy until culture results are available, then reassess
+
+Additional Notes:
+- Patient has been compliant with diabetic shoe and insert recommendations
+- Patient has been hiking recently, which may have contributed to the ulcer development"
+D2N087,"Date: [Insert Date]
+
+Subjective:
+Patient: Richard
+Chief Complaint: Tick bite around the knee, burning sensation, and general discomfort for over a week. No fever or chills. No joint pain other than typical arthritic pain. Patient spends time outdoors, recently went hunting. No previous diagnosis of Lyme disease. Patient reports feeling generally unwell and having a headache since the tick bite. No other symptoms such as cough, shortness of breath, or dizziness.
+
+Past Medical History:
+- Hypertension: Patient has been checking blood pressure periodically and taking Lisinopril, no side effects reported.
+- Diabetes: Patient watches sugar intake, takes Metformin most days, and checks blood sugars regularly. Blood sugars running below 150, usually around 120.
+
+Objective:
+Vital Signs: BP 122/70, HR 67, Temp 98.4 F
+Physical Exam:
+- Heart: Regular rate and rhythm, no murmur, rub, or gallop
+- Lungs: Clear to auscultation bilaterally
+- Right Knee: Erythema, edema, area of fluctuance over right patella, pain to palpation, full range of motion
+- Skin: Bull's-eye rash over the right knee
+
+Assessment & Plan:
+1. Tick bite with concern for Lyme disease: Start Doxycycline 100mg twice a day for three weeks. Order Lyme titer and Western blot to confirm diagnosis. Monitor patient for any complications and consider IV antibiotics if necessary.
+2. Hypertension: Continue Lisinopril 20mg once a day. Order lipid panel to assess cholesterol levels.
+3. Diabetes: Order Hemoglobin A1c and continue Metformin 1000mg twice a day. Blood sugars running in the 120s, no adjustments needed at this time. Patient inquired about kidney function, order basic metabolic panel to assess kidney function.
+
+Follow-up:
+Schedule follow-up appointment to review blood test results and assess response to Doxycycline treatment. Address any additional concerns or symptoms at that time."

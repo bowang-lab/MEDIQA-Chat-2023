@@ -1,0 +1,21 @@
+clinical note A	clinical note B	clinical note C
+in-context learning model	ground truth	fine-tuned model
+in-context learning model	fine-tuned model	ground truth
+ground truth	in-context learning model	fine-tuned model
+in-context learning model	ground truth	fine-tuned model
+ground truth	in-context learning model	fine-tuned model
+ground truth	in-context learning model	fine-tuned model
+in-context learning model	ground truth	fine-tuned model
+ground truth	fine-tuned model	in-context learning model
+ground truth	in-context learning model	fine-tuned model
+fine-tuned model	in-context learning model	ground truth
+ground truth	fine-tuned model	in-context learning model
+ground truth	fine-tuned model	in-context learning model
+fine-tuned model	in-context learning model	ground truth
+ground truth	fine-tuned model	in-context learning model
+fine-tuned model	ground truth	in-context learning model
+in-context learning model	fine-tuned model	ground truth
+in-context learning model	ground truth	fine-tuned model
+in-context learning model	ground truth	fine-tuned model
+ground truth	in-context learning model	fine-tuned model
+fine-tuned model	in-context learning model	ground truth
