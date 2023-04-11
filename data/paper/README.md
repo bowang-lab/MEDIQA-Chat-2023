@@ -1,8 +1,8 @@
 # Data Artifacts
 
-This directory contains all model predictions and evaluations. 
+This directory contains all model predictions and evaluations. Results for all experiments and runs are also available in a Google Sheet [here](https://docs.google.com/spreadsheets/d/1u6vwZduDYfLOKsE1IJQheEGa37jvL-hMIhpU7SNvl5M/edit?usp=sharing).
 
-At the top level, the directory structure is divided into tasks `TaskA` and `TaskB`.
+At the top level, this directory is divided into tasks `TaskA` and `TaskB`.
 
 ## TaskA
 
