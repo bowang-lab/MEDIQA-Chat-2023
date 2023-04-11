@@ -5,6 +5,17 @@
 
 A repository organizing our submission to the MEDIQA-Chat Tasks @ ACL-ClinicalNLP 2023
 
+## Table of contents
+
+- [MEDIQA-Chat-2023-WangLab](#mediqa-chat-2023-wanglab)
+  - [Table of contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Fine-tuning a model on the challenge data](#fine-tuning-a-model-on-the-challenge-data)
+    - [Generate notes with LangChain](#generate-notes-with-langchain)
+  - [Pre-trained models, outputs and results](#pre-trained-models-outputs-and-results)
+  - [Submission](#submission)
+
 ## Installation
 
 Requires python>=3.8. First, create and activate a virtual environment, then install the requirements:
@@ -97,7 +108,7 @@ You will need to provide your own `OPENAI_API_KEY`.
 
 ## Pre-trained models, outputs and results
 
-All model outputs and results are available in the [data/paper](./data/paper) directory.
+All model outputs and results reported in our paper are available in the [data/paper](./data/paper) directory.
 
 ## Submission
 
