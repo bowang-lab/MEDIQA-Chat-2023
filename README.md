@@ -95,9 +95,13 @@ You will need to provide your own `OPENAI_API_KEY`.
 
 > __Note__: Due to the non-deterministic nature of OpenAI's models and API, results may vary slightly from our reported results.
 
+## Pre-trained models, outputs and results
+
+All model outputs and results are available in the [data/paper](./data/paper) directory.
+
 ## Submission
 
-To submit, run the following
+To submit a run to the shared task, run the following
 
 ```bash
 ./scripts/submission/install.sh
