@@ -968,7 +968,7 @@ def main():
                 if data_args.task == TASK_A:
                     text_preds, header_preds = extract_header_and_text(predictions)
                     ct_output = {
-                        TEST_ID: raw_datasets["test"][ID_COL],
+                        TEST_ID: [f"taskA{id_}" for id_ in raw_datasets["test"][ID_COL]],
                         SYSTEM_OUTPUT_1: header_preds,
                         SYSTEM_OUTPUT_2: text_preds,
                     }
