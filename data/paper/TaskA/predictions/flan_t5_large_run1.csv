@@ -1,0 +1,101 @@
+TestID,SystemOutput1,SystemOutput2
+taskA0,GENHX,The patient is a 26-year-old female who has had low back pain for about eight years after falling in an ABC store. She was referred to physical therapy only once or twice in the last eight years. She has had varying degrees of pain over the last eight years. She had a son in August 2008 and has had back pain since giving birth. She fell four to five days ago while mopping the floor and landed on her low back again right on her tailbone. She has seen Dr. X on 01/10/09 and has a followup appointment scheduled for 02/10/09.
+taskA1,CC,Upper extremity rash.
+taskA2,PASTMEDICALHX,Essentially unchanged from my visit of 04/15/2005.
+taskA3,MEDICATIONS,Accutane.
+taskA4,ROS,"No headaches. No visual, hearing, or swallowing difficulties. No changes in bowel or urinary habits."
+taskA5,GENHX,"The patient was born at 32 weeks' gestation at 4 pounds 11 ounces. He was placed in an incubator for 3 weeks. He had jaundice, but was not treated."
+taskA6,PASTSURGICAL,Negative.
+taskA7,CC,Back pain after a fall.
+taskA8,FAM/SOCHX,The patient is on methadone maintenance. He is being treated for IV drug abuse as well as depression. He lives with a room-mate.
+taskA9,GENHX,"This is a 57-year-old female who works in the hospital and has bunion deformity of the second and third toes of her left foot. She had bunion surgery 13 years ago to remove the bunion. Since that time, the bunion has slowly been returning. The patient also has deformity of the second toe in the MTP joint of her right foot. The patient also has deformity of the second toe in the MTP joint of her left foot. The patient works in the hospital and has to be on her feet all day. The patient has been using orthotics to alleviate her pain, but is still in so much pain."
+taskA10,GENHX,This is a patient who was born at the Women's Hospital. She was born spontaneous and normal. She weighed 7 pounds 3 ounces. No complications. She cleared all screening tests.
+taskA11,FAM/SOCHX,He is a nonsmoker and nondrinker. He works as a data operator for an IT company.
+taskA12,FAM/SOCHX,She is going home with her son.
+taskA13,FAM/SOCHX,"He moved to the United States from the Philippines in 1984. He has a green card. He lives alone. He is not married. He has no children. He has a high school education. He works. He smokes cigarettes, but not alcohol. He used to use illicit drugs, but not anymore. He has a case manager, Mr. XYZ, who is forcing him to attend counseling. He has no CP."
+taskA14,GENHX,"The patient is a 62-year-old African-American male who has a history of diabetes, hypertension, and a stroke in 2002. He has right-sided weakness and numbness since that time. He has had a pacemaker placed since six months ago. Since that time, he has had numbness and burning in his hands and above his knees. He states that this has never gone away. He states that his primary concern is the burning and numbness. He states that for the last six months, he has not been able to feel anything hot in his hands. Things slip out of his hands. He denies any weakness. He has had a lot of sensation. He has had jerking in his shoulders and both hands. It has been going on for a long time but now he is noticing it more than before. He denies any tremors. He denies any neck pain. He has been using a walker because he does not feel safe walking. He has tried different medications and only oxycodone has given him some relief. He has not had any sleep problems for many years. He was transferred to a nursing home six months ago after the heart attack and pacemaker was placed. He has not had any back pain. He has not had any change in bathroom routine. He has not had any accidents or injuries before this started."
+taskA15,CC,Followup.
+taskA16,ROS,"The patient has a history of left hip pain and shoulder pain. She also has a history of leg swelling for the last couple of weeks. She denies any new skin lesions. She denies any chest pain, shortness of breath, hormonal imbalances, vision and hearing problems, chronic depression, headaches, and thyroid dysfunction."
+taskA17,FAM/SOCHX,"lives with both parents. In 4th grade, in public school, no special education."
+taskA18,GENHX,"The patient presents today complaining of lightheadedness and balance problems. He denies vertigo. He states that he has had it in the past when he has had vertigo. He states that he is shaky and weak when he is trying to change his position. He states that sitting down usually helps, but it is not completely gone for 15 to 30 minutes. He states that he has been taking lorazepam, but that does not seem to help. His blood pressure has been elevated and they have increased his dose of metoprolol and they think all of these symptoms are because of the increased dose."
+taskA19,MEDICATIONS,Amoxicillin.
+taskA20,PASTMEDICALHX,"Anemic, bipolar disorder, anxiety, history of tubal ligation, and anemic."
+taskA21,FAM/SOCHX,No smoking or drinking. No children. Works as a payroll representative. He used to do work in the jewelry business with chemical.
+taskA22,ASSESSMENT,Migraine.
+taskA23,MEDICATIONS,Cipro and Flagyl.
+taskA24,GENHX,The patient is a 51-year-old female with a history of right thumb pain. The patient states that her right thumb is stenosing tendinosis. The patient states that she cannot move it. The patient states that it does not stay locked. The patient states that she has seen a specialist for this in the past. The patient states that she was diagnosed with stenosing tendinosis. The patient states that she would like to proceed with releasing the A1 pulley. The patient states that the risks and benefits of the surgery were discussed and the patient has agreed to the above plan.
+taskA25,GENHX,"The patient has a history of obesity. She has been keeping a food journal and measuring her calorie intake at 26 to 30 calorie per day. She is exercising regularly and she is a member of Overeaters Anonymous. Her sponsor has advised her to think about snacks that can help with her diabetes. She is feeling a lot better and has lost weight, but she does not have any information on diabetic exchanges."
+taskA26,FAM/SOCHX,Noncontributory.
+taskA27,PASTSURGICAL,"Appendectomy, glaucoma surgery, cholecystectomy 10 years ago, partial colon resection in 1961 due to colon cancer. No recurrent colon cancer."
+taskA28,PASTSURGICAL,cataract surgery and left knee replacement.
+taskA29,FAM/SOCHX,"Strong for heart disease, hypertension, and diabetes mellitus, but also for cerebrovascular disease."
+taskA30,GENHX,"Mr. Jones is a 52-year-old male who returns in followup after a long history of alcohol abuse and now on heroin. The patient states that he has done some cocaine as well. The patient states that the heroin is going to kill him. The patient states that he used to abuse alcohol, but now he has switched to drugs."
+taskA31,FAM/SOCHX,Noncontributory.
+taskA32,FAM/SOCHX,His father died at the age of 52 from color cancer and thyroid cancer. He has 7 siblings. One brother died from stomach cancer at the age of 53 and another brother committed suicide. He has no other significant past medical history.
+taskA33,DISPOSITION,"The patient is being referred to physical therapy, occupational therapy, and speech therapy. The patient coordinator at Siskin Rehab Hospital will give the patient a call within two days to see up her appointments. The patient will need to continue the Cipro for an additional two days only, which will take care of the urinary tract infection."
+taskA34,FAM/SOCHX,Mother died age 59 of stomach cancer. Father died age 91.
+taskA35,PASTMEDICALHX,Noncontributory.
+taskA36,LABS,"Basically normal other than the abnormalities of sodium, creatinine, and thyroid. She has had a negative pregnancy test and her EKG shows a higher heart rate of 132 per minute."
+taskA37,GENHX,"The patient is here today for followup. She is here for followup because she had a ureteral stent placed. She has a lot of back pain and less urine output. She has a burning sensation when she goes to the bathroom. She was diagnosed with kidney stones. She knew something was wrong, but she started having fever. She went to the hospital and they said it was an infection. She is feeling better. The burning sensation is gone. The pain has subsided. She is here for followup. Dr. XYZ did operate on her. She has a ureteral stent placed. She is not feeling very well. She still feels sick. She does not feel like having a stent. She does not feel like having one. She does not feel like having one. She does not know. She has not set up an appointment with Dr. F. She does not know if Dr. XYZ needs a followup. She does not feel like having a stent. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one. She does not feel like having one"
+taskA38,FAM/SOCHX,"Her father died at the age of 85 and her mother died at the age of 89. She has a son, age 58, who suffers from glaucoma, hypertension, and RA. Her eldest brother died at the age of 92 from ""old age"" and her two younger brothers followed in their 70s after a long battle with Parkinson disease. Her mother and father died at the age of 85 and 89, respectively."
+taskA39,GENHX,"The patient is a 41-year-old male who works as a cook in a coffee shop. Hot oil splashed onto his arm. The patient does not know how the oil splashed, but the burn is on the medial aspect of his hand. The patient was referred to the emergency department for treatment. The patient has a worker's compensation injury."
+taskA40,DISPOSITION,The patient will be home with his family.
+taskA41,ASSESSMENT,1. Left shoulder pain. 2. Lower back pain. 3. Urology. 4. Infection.
+taskA42,PLAN,As tolerated.
+taskA43,GENHX,"The patient is a 29-year-old white male who was stung by a Yellow Jacket Wasp yesterday. He usually sees Dr. XYZ, but he was not available. He has been stung by a wasp before. He has been stung by a wasp since his early 20s. He has had a lot of swelling. He has had no anaphylaxis type reactions. He has had no shortness of breath or throat closing up. He has not had anxiety or a fast heart beat after he has been stung. He has only had swelling in the areas he has been stung."
+taskA44,MEDICATIONS,Dilaudid 4 mg intravenous.
+taskA45,FAM/SOCHX,The patient does not smoke cigarettes. He does smoke marijuana.
+taskA46,FAM/SOCHX,The patient is still a smoker. He quit smoking about a half pack a day after starting Chantix. He smoked two to three packs a day when he was 10 years old.
+taskA47,MEDICATIONS,Flagyl 500 mg q.i.d. and Levaquin 500 mg q.i.d.
+taskA48,ROS,"GASTROINTESTINAL: Negative hearing, negative swallowing, negative double vision, negative blurred vision, negative headache, negative bowel urgency, negative frequency."
+taskA49,EXAM,SYSTEMS: Otherwise reviewed and noted.
+taskA50,PLAN,To apply Acticoat dressing daily and spend at least 8 hours out of the chair for pressure relief. Reevaluation in a week.
+taskA51,FAM/SOCHX,The patient is being referred to a substance abuse clinic.
+taskA52,FAM/SOCHX,Negative for Tobacco/ETOH/illicit drug use.
+taskA53,GENHX,"Ms. G is a 49-year-old female who presents to the office complaining of left-sided ear pain and headache. The pain is better than before, but she still wants to get it checked. The patient states that she has been having difficulty hearing and feeling pressure on the left side of her sinus causing tooth pain. She went to her dentist yesterday, but her teeth are okay. The patient states that she does not have headache now, just ear pain and jaw pain on the left side. The patient denies any fever, cough, sore throat, or any cold symptoms, but she does have a sinus problem and she suffers from chronic left-sided headache. The patient states that she is currently using Cutivate for her eczema, and she does need a refill for it."
+taskA54,EDCOURSE,Psychiatric evaluation.
+taskA55,GENHX,This is a 57-year-old female who presents to the office complaining of headaches for the last 6 months.
+taskA56,FAM/SOCHX,"Her mother died of lung cancer. Her father had gout and perhaps had thrombosis. She has a brother with asthma and uses an inhaler. She has a sister with tumors in the stomach. She is not sure whether her mother talked about some of her family's medical problems with hypertension, hypercholesterolemia, or a stroke."
+taskA57,MEDICATIONS,None.
+taskA58,FAM/SOCHX,Noncontributory.
+taskA59,GENHX,"The patient is a 53-year-old male complaining of multiple medical problems including hernia, lower extremity pain, nausea and vomiting, and questionable hematemesis. The patient has a history of multiple CVA, peripheral vascular disease, heart failure, and multiple bowel ischemia. The patient is currently taking Coumadin for atrial fibrillation, which is subtherapeutic."
+taskA60,PASTSURGICAL,"Back and shoulder surgery (3-4 years ago), and appendectomy as a teenager."
+taskA61,GENHX,"The patient has allergies, eczema, sinus problems, and hives. She has no history of melanoma, skin cancer, or psoriasis. Her mother had mouth cancer. She does not smoke. She has been sunburned in the past. She is on benzoyl peroxide and Daypro. She has not brought in a blood test."
+taskA62,GENHX,"Ms. ABC is here for followup regarding her cervical spinal stenosis. She was seen by me on 06/19/92. She had an exacerbated symptom on 06/04/92 when she lifted many objects and experienced paresthesia, weakness, and pain in her upper extremities on the right side more than the left since then. She was referred for a cervical spine MRI. She continues to have all those things like pain and weakness, and she believes that everything is coming down from her neck. She has done some physical therapy which has helped her with her neck pain, but her right hand is still feeling weak. It is difficult at times to open jars and open doors. Many times, she drops items. The right side is giving her more problems than the left. Sometimes when she is sleeping in the night, she has this sharp shooting pain and weakness that goes down her left upper hand and she feels scared after that. She is seeing Dr. X for that, and she says his methods are good and it is helping her with her neck pain, but not her hand. She has no bowel problems, back pain, or leg pain. She is not having any problems with walking or stability."
+taskA63,DIAGNOSIS,Focal radiculopathy of the cervical nerves lateral and back. No other systemic complaints.
+taskA64,PASTSURGICAL,Significant for trauma surgery.
+taskA65,GENHX,"This is a 19-year-old male who was in a fight and punched another man in the face or mouth. He then punched a glass, which broke and spilled his drink, and he thinks he got a cut. It was clean and looked like somebody tried to fix the cut. He remembers a navy corpsman cleaning the cut with tap water. He also tried to close it up with gauze and superglue, but nothing helped. He was in emergency."
+taskA66,GENHX,"The patient has a history of allergic rhinitis, eczema, sinus problems, and hives. Her mother had a history of mouth cancer. She has been screened for cancer. She does not have melanoma, skin cancers, or psoriasis. She is currently taking benzoyl peroxide and Daypro. She is a nonsmoker."
+taskA67,PASTSURGICAL,Unknown.
+taskA68,PASTSURGICAL,Cholecystectomy.
+taskA69,ROS,"No fever, chills, cough, or cold symptoms. No bowel or bladder problems. No neck, head, or foot pain."
+taskA70,ALLERGY,No known drug allergies.
+taskA71,ROS,The patient has been having headaches for two days. They havelasted about two hours. No nausea or vomiting. No changes in vision. No medications. She has had some dizziness. She has never had headaches like this before. No chest pains. No irregular heart beat. No numbness or tingling. No urine or feces. No blood or diarrhea.
+taskA72,PASTMEDICALHX,"Include hypertension, depression, and osteoporosis."
+taskA73,FAM/SOCHX,She lives with her husband. She is a 12th grader at school and did not enroll in college. She denies any tobacco use and has two to three alcoholic drinks daily.
+taskA74,PASTMEDICALHX,"She has been missing her periods, is not sexually active, and does not bleed. She has had bilateral ovaries, a uterus, and a cervix. She is not taking any hormonal therapies."
+taskA75,ASSESSMENT,1. Left ear pain. 2. Serous otitis. 3. Atopic dermatitis.
+taskA76,FAM/SOCHX,"Negative for heart disease, stroke, cancer, or hypertension. She has type II diabetes mellitus."
+taskA77,FAM/SOCHX,Unknown.
+taskA78,FAM/SOCHX,"He used to smoke and drink, but quit in 1992. He smoked approximately 30 packs per year."
+taskA79,MEDICATIONS,"Loratadine, Beclomethasone nasal fluticasone, Salmeterol Inhaled Montelukast Cephalexin Hydrocode."
+taskA80,PASTSURGICAL,None.
+taskA81,GENHX,The patient is a 58-year-old white female with a right knee pain for many years. She has had two arthroscopies. She has been conservatively treated. She has had complete collapse and wear of the lateral compartment and degenerative changes noted to the femoral sulcus. There is some laxity bilaterally in the knee.
+taskA82,EXAM,ALLERGY: Stable.
+taskA83,MEDICATIONS,"Norflex 60 mg, Zofran 4 mg, morphine sulfate 4 mg."
+taskA84,CC,"Diarrhea, vomiting, and abdominal pain this morning."
+taskA85,FAM/SOCHX,Unknown.
+taskA86,ROS,"The patient states that she has had thoughts of not wanting to be alive anymore, but has no plans to hurt herself or others. She denies any chest pain, shortness of breath, nausea or vomiting, numbness, weakness, or tingling. She has not been seen by a therapist or psychiatrist for this."
+taskA87,CC,Nonhealing left thigh wound from surgery.
+taskA88,ALLERGY,No known drug allergies.
+taskA89,GENHX,"This is a 17-year-old male who was in Juvenile Hall for a fight and he hurt his left elbow. He also has pain in his left ankle, but he is able to walk. He has had some knee pain in the past, but that is in the past. He denies being knocked out, but he did get hit in the head. His neck does not hurt from the fight, just his elbow and ankle. He denies any chest or abdominal pain."
+taskA90,FAM/SOCHX,No tobacco or alcohol.
+taskA91,EXAM,CHEST: Normal AP diameter and normal contour.
+taskA92,PASTMEDICALHX,Migraine.
+taskA93,MEDICATIONS,Remeron and Ziac.
+taskA94,PASTMEDICALHX,Otherwise reviewed and noted.
+taskA95,EDCOURSE,PLAN: Permanent pacemaker and removal of the temporary pacemaker.
+taskA96,ROS,"The patient has been doing well until yesterday when he threw up at night and has been nauseated. He has not had any prior abdominal problems. His appetite is low. He has no fever, chills, or weakness. He has no coughing, sore throat, chest pain or trouble breathing. He has no changes in his urination, maybe in color, or skin color."
+taskA97,EXAM,EKG shows sinus tachycardia. No ST changes.
+taskA98,IMMUNIZATIONS,Up-to-date.
+taskA99,MEDICATIONS,Aspirin and Nexium.
