@@ -1,0 +1,72 @@
+{
+    "all": {
+        "rouge1": 0.6037140228819811,
+        "rouge2": 0.34852542452843915,
+        "rougeL": 0.4323303233790936,
+        "rougeLsum": 0.5597620679577657,
+        "bertscore_precision": 0.7569674402475357,
+        "bertscore_recall": 0.7538712412118912,
+        "bertscore_f1": 0.7553098678588868,
+        "bleurt": 0.45362803190946577
+    },
+    "dataset-0": {
+        "rouge1": 0.6037140228819811,
+        "rouge2": 0.34852542452843915,
+        "rougeL": 0.4323303233790936,
+        "rougeLsum": 0.5597620679577657,
+        "bertscore_precision": 0.7569674402475357,
+        "bertscore_recall": 0.7538712412118912,
+        "bertscore_f1": 0.7553098678588868,
+        "bleurt": 0.45362803190946577
+    },
+    "division-subjective": {
+        "rouge1": 0.575187082472551,
+        "rouge2": 0.37391519088198405,
+        "rougeL": 0.45334623029116494,
+        "rougeLsum": 0.45334623029116494,
+        "bertscore_precision": 0.8018790483474731,
+        "bertscore_recall": 0.7732854604721069,
+        "bertscore_f1": 0.7857382088899613,
+        "bleurt": 0.5036835968494415
+    },
+    "division-objective_exam": {
+        "rouge1": 0.637264653259219,
+        "rouge2": 0.4828130038326243,
+        "rougeL": 0.5765373724244529,
+        "rougeLsum": 0.5765373724244529,
+        "bertscore_precision": 0.7926997452974319,
+        "bertscore_recall": 0.7905332371592522,
+        "bertscore_f1": 0.7895278662443161,
+        "bleurt": 0.5584147717803717
+    },
+    "division-objective_results": {
+        "rouge1": 0.6059120176389058,
+        "rouge2": 0.3857029720296693,
+        "rougeL": 0.58058533377359,
+        "rougeLsum": 0.58058533377359,
+        "bertscore_precision": 0.8437597125768661,
+        "bertscore_recall": 0.8046809375286103,
+        "bertscore_f1": 0.8214831739664078,
+        "bleurt": 0.6221274301409722
+    },
+    "division-assessment_and_plan": {
+        "rouge1": 0.576852139803884,
+        "rouge2": 0.35796565736307817,
+        "rougeL": 0.43855691621089354,
+        "rougeLsum": 0.43855691621089354,
+        "bertscore_precision": 0.8010846108198166,
+        "bertscore_recall": 0.7568898111581802,
+        "bertscore_f1": 0.7775562047958374,
+        "bleurt": 0.5528778046369552
+    },
+    "longer-src": {
+        "rouge1": 0.6037140228819811,
+        "rouge2": 0.34852542452843915,
+        "rougeL": 0.4323303233790936,
+        "rougeLsum": 0.5597620679577657,
+        "bertscore_precision": 0.7569674402475357,
+        "bertscore_recall": 0.7538712412118912,
+        "bertscore_f1": 0.7553098678588868,
+        "bleurt": 0.45362803190946577
+    }
+}
