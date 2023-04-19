@@ -51,7 +51,7 @@ python ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskA.yml" \
     output_dir="./output/taskA"
 ```
 
-```
+```bash
 # Task B (train)
 python ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskB.yml" \
     output_dir="./output/taskB"
@@ -72,7 +72,7 @@ python ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskA.yml" \
     do_eval=True
 ```
 
-```
+```bash
 # Task B
 python ./scripts/run_summarization.py "./conf/base.yml" "./conf/taskB.yml" \
     output_dir="./output/taskB/fine_tune" \
