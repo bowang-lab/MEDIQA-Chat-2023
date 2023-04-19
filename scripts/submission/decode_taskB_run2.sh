@@ -3,6 +3,9 @@
 
 TEST_FP="$1"  # Provided to the script by the submission system
 
+OUTPUT_DIR="./output"
+RUN="2"
+
 # Notes:
 # - You must provide an OPENAI_API_KEY for this to work
 OPENAI_API_KEY="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" \
@@ -11,7 +14,7 @@ python3 ./scripts/run_langchain.py "./data/MEDIQA-Chat-Training-ValidationSets-F
     "./outputs" \
     --temperature 0.0 \
     --task "B" \
-    --run "2"
+    --run "$RUN"
 
 # Validate submission
-python3 ./scripts/submission_checker.py "./outputs/taskB_wanglab_run2.csv"
+python3 ./scripts/submission_checker.py "$OUTPUT_DIR/taskB_wanglab_run$RUN.csv"
