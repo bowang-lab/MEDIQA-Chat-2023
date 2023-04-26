@@ -8,7 +8,7 @@ def main(
     input_fp: str = typer.Argument(
         "Filepath (or URL) to the original subtask A train, validation or test set (should be a CSV file)."
     ),
-):
+) -> None:
     """Prints the random and majority baselines for section header prediction on subtask A.
 
     Example usage:

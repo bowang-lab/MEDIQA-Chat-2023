@@ -1,4 +1,5 @@
 import re
+from typing import List, Tuple
 
 import evaluate
 import nltk
@@ -29,7 +30,7 @@ def sanitize_text(text: str, lowercase: bool = False) -> str:
     return sanitized_text
 
 
-def postprocess_text(preds, labels):
+def postprocess_text(preds, labels) -> Tuple[List[str], List[str]]:
     preds = [sanitize_text(pred) for pred in preds]
     labels = [sanitize_text(label) for label in labels]
 
@@ -40,7 +41,7 @@ def postprocess_text(preds, labels):
     return preds, labels
 
 
-def extract_header_and_text(texts):
+def extract_header_and_text(texts) -> Tuple[List[str], List[str]]:
     """Extracts section header and section text predictions from model outputs and targets."""
     section_headers, section_texts = [], []
     for text in texts:
@@ -65,7 +66,7 @@ def main(
     ),
     task: str = typer.Option(TASK_B, help=f"Task name. Should be one of {TASKS}."),
     cache_dir: str = typer.Option("Path to the directory where metrics will be cached."),
-):
+) -> None:
     """Evaluates the predictions against the references.
 
     Example usage:

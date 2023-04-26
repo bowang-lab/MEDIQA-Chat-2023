@@ -23,7 +23,7 @@ def main(
     shared_task_train_val_dir: str = typer.Argument("Path to the directory containing the shared task data"),
     output_dir: str = typer.Argument("Path to the directory to save the token counts CSV file and resulting plot."),
     model: str = typer.Option("gpt-4", help="We use the tokenizer of this OpenAI model compute token counts"),
-):
+) -> None:
     """Computes the number of tokens in the dialogues and notes for each example in the shared task subtasks. Saves
     a resulting CSV and plot to the specified output directory.
 

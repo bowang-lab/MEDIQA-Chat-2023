@@ -93,7 +93,7 @@ TASK_B_HEADER = [
 ]
 
 
-def check_complete_word(header, ground_truth):
+def check_complete_word(header, ground_truth) -> bool:
     for true_header in ground_truth:
         if true_header in header:
             if len(header) > len(true_header):

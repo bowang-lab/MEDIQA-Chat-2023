@@ -7,7 +7,7 @@ from rich.status import Status
 def main(
     model_name_or_path: str = typer.Argument(..., help="Path to the model directory."),
     hf_hub_name: str = typer.Argument(..., help="Name of the model once pushed to the Hugging Face Hub."),
-):
+) -> None:
     """Pushes the model at `model_name_or_path` to the Hugging Face Hub as `hf_hub_name`. Must be logged in to the Hub."""
     with Status(f"Loading model and tokenizer from {model_name_or_path}"):
         tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
