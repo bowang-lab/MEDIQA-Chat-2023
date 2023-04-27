@@ -28,6 +28,13 @@ def main(
     """Builds the human evaluation file and systems key for the shared task. Requires the validation set, the
     fine-tuned model outputs and the in-context learning model outputs. Saves the human evaluation file and the
     systems key to the specified output directory.
+
+    Example usage:
+
+    python scripts/prepare_human_eval.py "MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskB/TaskB-ValidationSet.csv" \
+        "data/paper/TaskB/human_eval/led_large_pubmed_run1_postprocess.csv" \
+        "data/paper/TaskB/human_eval/gpt_4_0314_k_3_run3.csv" \
+        "data/paper/TaskB/human_eval"
     """
 
     val_df = pd.read_csv(validation_fp)
@@ -41,11 +48,22 @@ def main(
     if not val_df.encounter_id.equals(ft_df.TestID) or not val_df.encounter_id.equals(icl_df.TestID):
         raise ValueError("Test IDs in the validation set and the model outputs do not match.")
 
-    human_eval = {"doctor-patient dialogue": [], "clinical note A": [], "clinical note B": [], "clinical note C": []}
-    systems_key = {"clinical note A": [], "clinical note B": [], "clinical note C": []}
+    human_eval = {
+        "example_id": val_df.encounter_id.tolist(),
+        "doctor-patient dialogue": val_df.dialogue.tolist(),
+        "clinical note A": [],
+        "clinical note B": [],
+        "clinical note C": [],
+    }
+    systems_key = {
+        "example_id": val_df.encounter_id.tolist(),
+        "clinical note A": [],
+        "clinical note B": [],
+        "clinical note C": [],
+    }
     rng = random.Random(RANDOM_SEED)
-    for dialogue, gt_note, ft_note, icl_note in track(
-        zip(val_df.dialogue, val_df.note, ft_df.SystemOutput, icl_df.SystemOutput),
+    for gt_note, ft_note, icl_note in track(
+        zip(val_df.note, ft_df.SystemOutput, icl_df.SystemOutput),
         description="Building human evaluation file and systems key",
         total=len(val_df),
     ):
@@ -53,7 +71,6 @@ def main(
         # Shuffle the order of the clinical notes
         indices = rng.sample(range(3), k=3)
         # Build up the human evaluation file
-        human_eval["doctor-patient dialogue"].append(dialogue)
         human_eval["clinical note A"].append(notes[indices[0]])
         human_eval["clinical note B"].append(notes[indices[1]])
         human_eval["clinical note C"].append(notes[indices[2]])
