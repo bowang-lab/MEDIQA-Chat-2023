@@ -2,7 +2,7 @@ import os
 import random
 import re
 from pathlib import Path
-from typing import List
+from typing import Any, Dict, List
 
 import numpy as np
 import pandas as pd
@@ -48,12 +48,14 @@ SYSTEM_OUTPUT = "SystemOutput"
 TEAM_NAME = "wanglab"
 
 
-def _fetch_in_context_examples(train, test, k: int = 3, strategy: str = SIMILAR, filtered: bool = False) -> List[int]:
+def _fetch_in_context_examples(
+    train, test, k: int = 3, retrieve_similar: bool = True, filter_by_dataset: bool = False
+) -> List[int]:
     """Fetches the indices of k in-context examples from the train set to use for each example in the test set.
     If strategy is "similar", then examples are chosen based on similarity to the test example. Otherwise, examples
-    are chosen randomly. If filtered is True, only examples from the same dataset as the test example will be used.
+    are chosen randomly. If filter_by_dataset is True, only examples from the same dataset as the test example will be used.
     """
-    if strategy == SIMILAR:
+    if retrieve_similar:
         # Embed the train and test dialogues
         embedder = INSTRUCTOR("hkunlp/instructor-large")
         embedding_instructions = "Represent the Medicine dialogue for clustering:"
@@ -74,13 +76,13 @@ def _fetch_in_context_examples(train, test, k: int = 3, strategy: str = SIMILAR,
     # Get top-k most similar examples in the train set for each example in the test set
     top_k_indices = []
     for i, test_dataset in enumerate(test["dataset"]):
-        # If filtered, restrict to example of the same dataset type
-        if filtered:
+        # If filter_by_dataset, restrict to example of the same dataset type
+        if filter_by_dataset:
             train_indices = [j for j, train_dataset in enumerate(train["dataset"]) if train_dataset == test_dataset]
         else:
             train_indices = list(range(len(train["dataset"])))
         # If strategy is "similar", then we select examples based on similarity to the test example
-        if strategy == SIMILAR:
+        if retrieve_similar:
             scores = util.cos_sim(np.expand_dims(test_dialogues[i], 0), train_dialogues[train_indices])
             top_k_indices_ds = torch.topk(scores, k=min(k, len(scores))).indices.flatten().tolist()
             # Map these back to the original indices
@@ -88,6 +90,14 @@ def _fetch_in_context_examples(train, test, k: int = 3, strategy: str = SIMILAR,
         else:
             top_k_indices.append(random.sample(range(len(train_indices)), k=min(k, len(train_indices))))
     return top_k_indices
+
+
+def _format_in_context_example(train: Dict[str, Any], idx: int, include_dialogue: bool = False) -> str:
+    example = ""
+    if include_dialogue:
+        example += f'\nEXAMPLE DIALOGUE:\n{train["dialogue"][idx].strip()}'
+    example += f'\nEXAMPLE NOTE:\n{train["note"][idx].strip()}'
+    return example
 
 
 def main(
@@ -105,17 +115,20 @@ def main(
     k: int = typer.Option(
         3, help="Maximum number of in-context examples to use. If 0, no in-context examples will be used."
     ),
-    strategy: str = typer.Option(
-        "similar",
-        help=f"Strategy for choosing in-context examples. Should be one of {STRATEGIES}. Has no effect if k=0.",
+    retrieve_similar: bool = typer.Option(
+        True,
+        help="If True, in-context examples will be selected by retrieving examples from the train set with similar dialogues to the input dialogue. Has no effect if k=0.",
     ),
-    filtered: bool = typer.Option(
+    include_dialogue: bool = typer.Option(
+        False, help="If True, will include the dialogue in the in-context examples."
+    ),
+    filter_by_dataset: bool = typer.Option(
         True, help="If True, will only use in-context examples from the same dataset. Has no effect if k=0."
     ),
     task: str = typer.Option(TASK_B, help=f"Task name. Should be one of {TASKS}"),
     run: str = typer.Option(RUN_1, help=f"Which challenge run to produce predictions for. Should be one of {RUNS}"),
     debug: bool = typer.Option(False, help="If True, will only run for a single example of the test set."),
-):
+) -> None:
     """Generates predictions using LangChain for the given task and run on the given test set.
 
     Example usage:
@@ -141,8 +154,6 @@ def main(
         raise ValueError(f"k should be non-negative. Got: {k}")
     if k > 0 and not train_fp:
         raise ValueError("If k > 0, train_fp should be provided.")
-    if strategy not in STRATEGIES:
-        raise ValueError(f"Strategy should be one of {STRATEGIES}. Got: '{strategy}'")
     if task not in TASKS:
         raise ValueError(f"Task should be one of {TASKS}. Got: '{task}'")
     if run not in RUNS:
@@ -193,11 +204,20 @@ CLINICAL NOTE:
 
     # Optionally, retrieve the top-k most similar dialogues as the in-context examples
     if k > 0:
-        print(f"Retrieving {k} in-context examples with strategy '{strategy}'. Dataset filtering set to {filtered}...")
-        top_k_indices = _fetch_in_context_examples(train, test, k=k, strategy=strategy, filtered=filtered)
+        print(
+            f"Retrieving {k} in-context examples with the following strategy:\n"
+            f"- retrieve similar: {retrieve_similar}\n"
+            f"- include dialogue {include_dialogue}\n"
+            f"- dataset filtering {filter_by_dataset}"
+        )
+        top_k_indices = _fetch_in_context_examples(
+            train, test, k=k, retrieve_similar=retrieve_similar, filter_by_dataset=filter_by_dataset
+        )
 
     example_prompt = prompt.format(
-        examples=f'\nEXAMPLE NOTE:\n{train["note"][top_k_indices[0][0]]}' if k > 0 else "",
+        examples=_format_in_context_example(train, idx=top_k_indices[0][0], include_dialogue=include_dialogue)
+        if k > 0
+        else "",
         dialogue=test["dialogue"][0],
     )
     print(f"[blue]Example prompt: {example_prompt}[/blue]")
@@ -215,9 +235,10 @@ CLINICAL NOTE:
             # Collect as many in-context examples as we can fit within the max input tokens
             prompt_length = llm.get_num_tokens(prompt.format(dialogue=dialogue, examples=""))
             for top_k_idx in top_k_indices[i]:
-                if (prompt_length + llm.get_num_tokens(train["note"][top_k_idx])) < MAX_INPUT_TOKENS:
-                    examples += f'\nEXAMPLE NOTE:\n{train["note"][top_k_idx]}'
-                    prompt_length += llm.get_num_tokens(train["note"][top_k_idx])
+                example = _format_in_context_example(train, idx=top_k_idx, include_dialogue=include_dialogue)
+                if (prompt_length + llm.get_num_tokens(example)) < MAX_INPUT_TOKENS:
+                    examples += example
+                    prompt_length += llm.get_num_tokens(example)
 
         prediction = chain.run(dialogue=dialogue, examples=examples)
 
@@ -247,6 +268,8 @@ CLINICAL NOTE:
     ct_fn = f"task{task}_{TEAM_NAME}_run{run}.csv"
     ct_fp = os.path.join(output_dir, ct_fn)
     pd.DataFrame.from_dict(ct_output).to_csv(ct_fp, index=False)
+
+    print(f"[green]Predictions saved to {output_dir}[/green]")
 
 
 if __name__ == "__main__":
