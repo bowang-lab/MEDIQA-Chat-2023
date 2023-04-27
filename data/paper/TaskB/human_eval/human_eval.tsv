@@ -1,5 +1,5 @@
-doctor-patient dialogue	clinical note A	clinical note B	clinical note C
-"[doctor] hi , brian . how are you ?
+example_id	doctor-patient dialogue	clinical note A	clinical note B	clinical note C
+D2N068	"[doctor] hi , brian . how are you ?
 [patient] hi , good to see you .
 [doctor] it's good to see you too . so , i know the nurse told you a little bit about dax .
 [patient] mm-hmm .
@@ -184,7 +184,7 @@ RESULTS
 ASSESSMENT AND PLAN
 
  The patient presents today with a history of congestiveHeart failure. • Medical Reasoning: He is retaining fluid. • Additional Testing: We will order an echococardogram. • Patient Education and Counseling: I encouraged the patient to monitor his blood pressure at home and report them to me in the patient portal if his readings are elevated. He was advised to weigh himself every day and to call me if he is gaining more weight. • Other symptoms: Shortness of breath. • medical Treatment: Increase lasix to 80 mg once a day. Continue lisinopril 20 mg daily. Patient Agreements: The patient understands and agrees with the recommended medical treatment plan."
-"[doctor] hi , ms. thompson . i'm dr. moore . how are you ?
+D2N069	"[doctor] hi , ms. thompson . i'm dr. moore . how are you ?
 [patient] hi , dr. moore .
 [doctor] hi .
 [patient] i'm doing okay except for my knee .
@@ -314,7 +314,7 @@ PLAN
 
 At this point, I discussed the diagnosis and treatment options with the patient. I have recommended a knee brace. She will take Motrin 800 mg, every 6 hours with food, for two weeks. She will use crutches for the next couple of days. She will follow up with me in 1 week for a repeat evaluation. If she is not better at that time, we will obtain an MRI. All questions were answered.
 "
-"[doctor] hi logan . how are you ?
+D2N070	"[doctor] hi logan . how are you ?
 [patient] hey , good to see you .
 [doctor] it's good to see you as well .
 [doctor] so i know the nurse told you about dax .
@@ -556,7 +556,7 @@ RESULTS
 ASSESSMENT AND PLAN
 
  1. Lumbar strain from lifting. • Medical Reasoning: I think this is due to lumbar pain. • Additional Testing: We will order a repeat hemoglobin A1c. • Patient Education and Counseling: We discussed treatment options today including meloxicam 15 mg once a day, avoidance of strenuous activity, and referral to physical therapy. 2. Hypertension. • medical Reasonings: This has been under control for the most part. I think it is a little under control. I want to increase the metformin to 1000 mg twice a day. 3. Diabetes. •medical Reasoning; This is under control, but I would like to see a better result. I have prescribed Lisinopril 20 mg daily, and I have also ordered a hemoglobin a1c to be repeated in 6 months. 4. Osteoarththritis. •Medical Reasoning): I think he was doing a really good job in terms of monitoring his knee. • additional Testing: I did not order any further work at this time. Patient Agreements: The patient understands and agrees with the recommended medical treatment plan."
-"[doctor] i know the nurse told you about dax .
+D2N071	"[doctor] i know the nurse told you about dax .
 [patient] mm-hmm
 [doctor] i'd like to tell dax a little bit about you , okay ?
 [patient] sure .
@@ -735,7 +735,7 @@ ASSESSMENT AND PLAN
 INSTRUCTIONS
 
  The patient will follow-up with me as needed."
-"[doctor] hi , ms. brooks . i'm dr. baker . how are you ?
+D2N072	"[doctor] hi , ms. brooks . i'm dr. baker . how are you ?
 [patient] hi , dr. baker .
 [doctor] is your , is your right finger hurting ?
 [patient] yes .
@@ -874,7 +874,7 @@ IMPRESSION
 PLAN
 
  At this point, I discussed the diagnosis and treatment options with the patient. I have recommended we get her a foam foam splint and give her 600 mg aluminum aluminum foil every 6 hours for about a week. If she does not improve, we will call her back at that point."
-"[doctor] today i'm seeing christina cooper . her date of birth is 07/01/1954 . uh , ms. cooper is a new patient who was referred by diane nelson for a long-standing iron deficiency anemia .
+D2N073	"[doctor] today i'm seeing christina cooper . her date of birth is 07/01/1954 . uh , ms. cooper is a new patient who was referred by diane nelson for a long-standing iron deficiency anemia .
 [doctor] hello , how are you ?
 [patient] i'm good , thank you .
 [doctor] so tell me what brings you in today .
@@ -1048,7 +1048,7 @@ ASSESSMENT AND PLAN
 INSTRUCTIONS
 
  The patient will follow up with me if she has any worsening symptoms."
-"[doctor] patient , bruce ward . date of birth 5/21/1969 . please use my neuro consult template . this is a 52-year-old male with dia- newly diagnosed pituitary lesion . the patient is seen in consultation at the request of dr. henry howard for possible surgical intervention . mr . ward presented to his primary care provider , dr. howard , on 3/1/21 complaining of worsening headaches over the past few months . he denied any trouble with headaches in the past . his past clinical history is unremarkable .
+D2N074	"[doctor] patient , bruce ward . date of birth 5/21/1969 . please use my neuro consult template . this is a 52-year-old male with dia- newly diagnosed pituitary lesion . the patient is seen in consultation at the request of dr. henry howard for possible surgical intervention . mr . ward presented to his primary care provider , dr. howard , on 3/1/21 complaining of worsening headaches over the past few months . he denied any trouble with headaches in the past . his past clinical history is unremarkable .
 [doctor] worked out for worsening headaches was initiated with brain mri and serology where pituitary lesion was incidentally discovered . i personally reviewed the labs dated 3/3/21 including cbc , unes , uh , coagulation , and crp . all were normal . pituitary hormone profile demonstrates a low tsh , all other results were normal . um , i personally reviewed pertinent radiology studies including mri for the brain with contrast from 3/4/21 . the mri reveals a pituitary lesion with elevation and compression of the optic chiasm . the ventricles are normal in size and no other abnormalities are lo- are noted .
 [doctor] hello , mr . ward . nice to meet you . i'm dr. flores .
 [patient] hi , doc . nice to meet you .
@@ -1224,7 +1224,7 @@ ASSESSMENT AND PLAN
 INSTRUCTIONS
 
  The patient will call if he has any questions."
-"[doctor] next is betty hill , uh , date of birth is 2/21/1968 . she has a past medical history of uterine fibroids and anemia . she's a new patient with a referral from the er of esophagitis . um , i reviewed our records from the er , including the normal cardiac workup , and we're about to go in and see her now . good morning . you miss hill ?
+D2N075	"[doctor] next is betty hill , uh , date of birth is 2/21/1968 . she has a past medical history of uterine fibroids and anemia . she's a new patient with a referral from the er of esophagitis . um , i reviewed our records from the er , including the normal cardiac workup , and we're about to go in and see her now . good morning . you miss hill ?
 [patient] good morning . yes . that's me .
 [doctor] hey , i'm dr. sanders . it's nice to meet you .
 [patient] nice to meet you too .
@@ -1410,7 +1410,7 @@ PLAN
 
 1. Discussed the option of EGD (upper endoscopy) versus monitoring for symptoms. The patient elected to self-monitor her symptoms and will call with any recurrence or change.
 2. The patient will follow up as needed for any other GI complaints."
-"[doctor] hello .
+D2N076	"[doctor] hello .
 [patient_guest] hi .
 [doctor] i'm dr. evelyn , one of the kidney doctors . it's good to meet you guys .
 [patient_guest] it's nice to meet you also .
@@ -1603,7 +1603,7 @@ RESULTS
 ASSESSMENT AND PLAN
 
 atherine is a 2-year-old female, twin, with sm Smith magenIS syndrome. Several organ systems can be affected by this chromosomal deletion syndrome. congenital anomalies of the kidney and urinary tract have been reported in the literature. • Medical Reasoning: We will obtain the screening of the kidneys by ultrasound today. If there are abnormalities on the kidney ultrasound, we will determine next steps and future follow-ups. • Patient Education and Counseling: I explained the syndrome to the patient. I explained that we are looking for continual- congenital anomaly wi- of the renal and urinary tracts. I also explained that the only way to know that is to do a kidney ultrasound. • Additional Testing: We are going to order an ultrasound for further evaluation. Patient Agreements: The patient understands and agrees with the recommended medical treatment plan."
-"[doctor] hey diana it's good to see you in here so i see that you injured your wrist could you tell me a bit about what happened
+D2N077	"[doctor] hey diana it's good to see you in here so i see that you injured your wrist could you tell me a bit about what happened
 [patient] yeah i was walking up and down the stairs i was doing my laundry and i slipped and i tried to catch myself and i put my arms out to catch myself and then all of a sudden i just my wrist started to hurt real bad and it got real swollen
 [doctor] wow okay so which wrist are we talking about left or right
 [patient] it's my right one of course
@@ -1808,7 +1808,7 @@ INSTRUCTIONS
 
 The patient will follow up with me in 4 weeks status post surgery to discuss her progress.
 "
-"[doctor] hey philip good to see you today so take a look here at my notes i see you're coming in for some right knee pain and you have a past medical history of hypertension and we will take a look at that so can you tell me what happened to your knee
+D2N078	"[doctor] hey philip good to see you today so take a look here at my notes i see you're coming in for some right knee pain and you have a past medical history of hypertension and we will take a look at that so can you tell me what happened to your knee
 [patient] yeah i was you know i was just doing some work on my property and i i accidentally slipped and fell down and i just still having some knee issues
 [doctor] okay well that that's not good do you
 [patient] no
@@ -1969,7 +1969,7 @@ Patient Agreements: The patient understands and agrees with the recommended medi
 INSTRUCTIONS
 
 The patient will follow up as needed."
-"[doctor] hi wayne how're you today
+D2N079	"[doctor] hi wayne how're you today
 [patient] i'm doing okay aside from this left shoulder pain that i've been having
 [doctor] okay and how long have you had this pain
 [patient] about i want to say a few weeks i think it's been about three weeks now
@@ -2108,7 +2108,7 @@ After reviewing the patient's examination and radiographic findings today, I hav
 INSTRUCTIONS
 
 The patient will follow up with me once the MRI results are available for review and further discussion."
-"[doctor] okay hi andrea well i
+D2N080	"[doctor] okay hi andrea well i
 [patient] hello
 [doctor] i understand you're you've come in with some right knee pain can you tell me about it what's going on
 [patient] it it's not the right knee it's the left knee
@@ -2299,7 +2299,7 @@ After reviewing the patients x-rays, I believe there is some arthritis in the kn
 Her hypertension is well controlled with her current medication regimen. She can continue with lisinopril 20 mg once daily. I'm also going to order an echocardiogram for further evaluation of the murmur heard on exam.
 
 She has been compliant with metformin as prescribed, but her blood glucose levels have been slightly elevated recently. I'm going to order a lipid panel, as well as a hemoglobin A1c to determine if any adjustments need to be made to her dose of metformin."
-"[doctor] so beverly is a 53 -year-old female with a recent diagnosis of stage three nonsmile cell lung cancer who presents for follow-up during neo agit chemotherapy she was diagnosed with a four . four centimeter left upper lobe nodule biopsy was positive for adenocarcinoma molecular testing is pending at this time alright hello beverly how are you
+D2N081	"[doctor] so beverly is a 53 -year-old female with a recent diagnosis of stage three nonsmile cell lung cancer who presents for follow-up during neo agit chemotherapy she was diagnosed with a four . four centimeter left upper lobe nodule biopsy was positive for adenocarcinoma molecular testing is pending at this time alright hello beverly how are you
 [patient] i'm good today
 [doctor] you're good today yeah you've been going through a lot lately i know you just had your treatment how how are your symptoms
 [patient] my symptoms are pretty good today i just kind of have a minimal cough and a sore throat
@@ -2493,7 +2493,7 @@ ASSESSMENT AND PLAN
 - Medical Treatment: Prescribe lidocaine swish and swallow, to be used four times a day, to help with pain relief and improve ability to eat and drink.
 
 Patient Agreements: The patient understands and agrees with the recommended medical treatment plan."
-"[doctor] alright
+D2N082	"[doctor] alright
 [patient] you're ready just
 [doctor] ready
 [patient] hi kyle how are you today
@@ -2667,7 +2667,7 @@ ASSESSMENT AND PLAN
 - Medical Treatment: Continue metformin as prescribed by primary care physician. Encourage patient to maintain a healthy diet and monitor blood sugar levels.
 
 Patient Agreements: The patient understands and agrees with the recommended medical treatment plan."
-"[doctor] hey lawrence how're you doing
+D2N083	"[doctor] hey lawrence how're you doing
 [patient] i'm doing alright aside from this elbow pain
 [doctor] so it looks like here that you came in to see us today for an evaluation of that right elbow pain can you tell me can you can you tell me well first of all what do you think has been causing that pain
 [patient] so i really during this pandemic i really got into ceramics and doing pottery so i've been doing a lot of pottery and over the past week i then started to develop this elbow pain
@@ -2814,7 +2814,7 @@ The patient and I discussed his diagnosis in detail, and I explained that his sy
 INSTRUCTIONS
 
 The patient will follow up in 1 week."
-"[doctor] alright david so you were just in the emergency department hopefully you can hear me okay through the zoom meeting what happened
+D2N084	"[doctor] alright david so you were just in the emergency department hopefully you can hear me okay through the zoom meeting what happened
 [patient] well it seems that i was outside and i fell down i was walking a bit and i did have a pain in my chest but i did n't think anything of it and i just kept on going and then all of a sudden i'm here
 [doctor] hmmm my gosh so it looks like you you went into the er and looks like they said that your ankles were swelling a little bit too and did you have some shortness of breath
 [patient] i did but i did n't think anything of it
@@ -3002,7 +3002,7 @@ ASSESSMENT AND PLAN
 INSTRUCTIONS
 
  The patient will continue to take Cozaar 100 mg daily and Norvasc 5 mg once daily."
-"[doctor] hi russell how are you what's been going on
+D2N085	"[doctor] hi russell how are you what's been going on
 [patient] well i've been having this sharp pain on the right side of my abdomen below my ribs for the last several days
 [doctor] i saw my doctor and they ordered a cat scan and said i had a kidney stone and sent me to see a urologist okay well does the pain move or or or go anywhere or does it stay right in that same spot yeah it feels like it goes to my lower abdomen in into my groin okay and is the pain constant or does it come and go it comes and goes when it comes it's it's pretty it's pretty bad i feel like i ca n't find a comfortable position okay and do you notice any any pain when you urinate or when you pee
 [patient] yeah it kinda burns a little bit
@@ -3122,7 +3122,7 @@ ASSESSMENT AND PLAN
 INSTRUCTIONS
 
  The patient will follow up with me in 1 to 2 weeks."
-"[doctor] hey nicholas nice to see you today your pcp looks like he sent you over for a nonhealing foot ulcer on your right foot can you tell me about how long you've had that
+D2N086	"[doctor] hey nicholas nice to see you today your pcp looks like he sent you over for a nonhealing foot ulcer on your right foot can you tell me about how long you've had that
 [patient] yeah i've had the boot for about six weeks i first noticed it when i put on a pair of shoes that were little bit too tight i felt some burning and some stinging and looked down and saw a blister i did n't think too much of it because it was on the pad of the bottom of my foot around my heel and i just had been walking on the front part of my foot i started to notice a foul smell and my wife mentioned something to me the other day and i noticed my dog was also smelling my socks a lot and so we looked and saw that the blister had become unroofed or the the top part of the skin of the blister became undone and then underneath it was just this really thick soft mushy skin that had a bad smell with some yellow drainage and so and barbara called the primary care doctor who then got me in to see you he started me on some antibiotics about six days ago and i never had any nausea or vomiting but my wife checked my temperature it was about ninety nine point seven and then at one point i had to put on an extra blanket in bed because i had some chills and when i started the antibiotics it started to feel pretty good but we've now noticed that it has turned black around the outside of the wound and i'm getting some cramping in my calf muscle as well and so there was a red streak also that was coming up the front part of my my ankle along the inside portion of my calf muscle and it's super super hot and so they wanted me to take a have have you look at it
 [doctor] okay thank you for sharing that history with me and did you complete that course of antibiotics
 [patient] i think he called in ten days' worth and i'm on day six or seven right now i know i've got about two or three days left
@@ -3273,7 +3273,7 @@ RESULTS
 ASSESSMENT AND PLAN
 
  Nicolas Perez non- hematochezia, non- diabetic neuropathy, diabetic foot Ulcer. - Medical Reasoning: The patient's blood sugars have been trending in the 3 to 4 hundreds over the past 2 weeks. His A1c has been 6 point 7, which is well-controlled. - Patient Education and Counseling: We discussed the nature of the diagnosis and treatment options today. I explained to the patient that his diabetes is well controlled and that we will continue to closely monitor his blood sugars since we are going to be doing medication therapy with antibiotics and potentially some other medications. We also discussed that he should follow up with his endocrinologist and make sure that his hemoglobin a1c is below 7. - Additional Testing: We will order a test to check blood supply for the wound. We will also perform a debridement today in the office. We may have to perform a culture and we may need to look at different antibiotic therapy. I am concerned about the redness that is moving up his leg and the swelling and pain that he have in his calf. I want to see him again in 7 days. Patient Agreements: He understands and agrees with the recommended treatment plan."
-"[doctor] hi richard how are you the medical assistant told me that you have a tick bite is that what happened
+D2N087	"[doctor] hi richard how are you the medical assistant told me that you have a tick bite is that what happened
 [patient] i really do n't know where i got it but i i had i do get out in the woods and i do spend a lot of time out in the yard but yeah i've got a tick bite around my knee and and it's been it's been over a week and and just it just burns and just quite annoying
 [doctor] okay and have you had any fever or chills
 [patient] i have not at this point it just feels warm on that spot

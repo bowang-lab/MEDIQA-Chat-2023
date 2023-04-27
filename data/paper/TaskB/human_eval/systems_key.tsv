@@ -1,21 +1,21 @@
-clinical note A	clinical note B	clinical note C
-in-context learning model	ground truth	fine-tuned model
-in-context learning model	fine-tuned model	ground truth
-ground truth	in-context learning model	fine-tuned model
-in-context learning model	ground truth	fine-tuned model
-ground truth	in-context learning model	fine-tuned model
-ground truth	in-context learning model	fine-tuned model
-in-context learning model	ground truth	fine-tuned model
-ground truth	fine-tuned model	in-context learning model
-ground truth	in-context learning model	fine-tuned model
-fine-tuned model	in-context learning model	ground truth
-ground truth	fine-tuned model	in-context learning model
-ground truth	fine-tuned model	in-context learning model
-fine-tuned model	in-context learning model	ground truth
-ground truth	fine-tuned model	in-context learning model
-fine-tuned model	ground truth	in-context learning model
-in-context learning model	fine-tuned model	ground truth
-in-context learning model	ground truth	fine-tuned model
-in-context learning model	ground truth	fine-tuned model
-ground truth	in-context learning model	fine-tuned model
-fine-tuned model	in-context learning model	ground truth
+example_id	clinical note A	clinical note B	clinical note C
+D2N068	ICL	GT	FT
+D2N069	ICL	FT	GT
+D2N070	GT	ICL	FT
+D2N071	ICL	GT	FT
+D2N072	GT	ICL	FT
+D2N073	GT	ICL	FT
+D2N074	ICL	GT	FT
+D2N075	GT	FT	ICL
+D2N076	GT	ICL	FT
+D2N077	FT	ICL	GT
+D2N078	GT	FT	ICL
+D2N079	GT	FT	ICL
+D2N080	FT	ICL	GT
+D2N081	GT	FT	ICL
+D2N082	FT	GT	ICL
+D2N083	ICL	FT	GT
+D2N084	ICL	GT	FT
+D2N085	ICL	GT	FT
+D2N086	GT	ICL	FT
+D2N087	FT	ICL	GT
