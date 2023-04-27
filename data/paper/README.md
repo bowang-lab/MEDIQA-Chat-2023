@@ -18,3 +18,7 @@ At the top level, this directory is divided into tasks `TaskA` and `TaskB`.
 - `predictions` and `results` are further divided by approach, into `fine-tuning` and `in-context-learning`
 - `in-context-learning` is further divided according to the ablation into `filtered` and `unfiltered` and then `random` and `similar`, and finally `note_only` and `dialogue_note`
 - `human_eval` contains all the resources used in the human evaluation (see `human_eval/README.md` for more details)
+
+## token_lengths
+
+- Contains raw token length counts and histograms for the training and validation sets of all tasks. Further divided by tokenizer used (`"gpt-4"` in `openai` or `"google/flan-t5-large"` in `huggingface`). Can be re-generated with `scripts/count_and_plot_tokens.py`.
