@@ -1,6 +1,6 @@
 # Human Evaluation
 
-This directory contains all the resources used in the human evaluation.
+This directory contains all the resources used in the human evaluation. Results for the human eval are also available in a Google sheet [here](https://docs.google.com/spreadsheets/d/1hDb5rvEGZnkHgYoXJFxtGqTswwCoxxH9kVZ3WcQadR8/edit?usp=sharing).
 
 Two files contain the model predictions from the best-performing model on the validation set, one for the fine-tuning-based approach and one for the in-context learning-based approach:
 
