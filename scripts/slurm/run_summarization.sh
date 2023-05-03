@@ -46,7 +46,7 @@ OUTPUT_DIR="$2"       # The path on disk to save the output to
 WANDB_MODE=offline \
 TRANSFORMERS_OFFLINE=1 \
 HF_DATASETS_OFFLINE=1 \
+HF_EVALUATE_OFFLINE=1 \
 python ./scripts/run_summarization.py "./conf/base.yml" "$CONFIG_FILEPATH" output_dir="$OUTPUT_DIR" \
-    cache_dir="$SCRATCH/.cache/huggingface" overwrite_output_dir=true
-
+    cache_dir="$SCRATCH/.cache/huggingface" overwrite_output_dir=true bleurt_checkpoint=null \
 exit
