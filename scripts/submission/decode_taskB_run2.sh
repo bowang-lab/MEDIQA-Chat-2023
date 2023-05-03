@@ -8,7 +8,7 @@ RUN="2"
 
 # Notes:
 # - You must provide an OPENAI_API_KEY for this to work
-OPENAI_API_KEY="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" \
+OPENAI_API_KEY="" \
 python3 ./scripts/run_langchain.py "./data/MEDIQA-Chat-Training-ValidationSets-Feb-10-2023/TaskB/TaskB-TrainingSet.csv" \
     "$TEST_FP" \
     "./outputs" \
