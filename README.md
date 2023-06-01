@@ -133,3 +133,17 @@ To submit a run to the shared task we used the following commands:
 ```
 
 The submission scripts also demonstrate how to make predictions on the test set using a trained model.
+
+## Citing
+
+If you use our model in your work, please consider citing our paper:
+
+```
+@article{Giorgi2023ClinicalNG,
+	title        = {Clinical Note Generation from Doctor-Patient Conversations using Large Language Models: Insights from MEDIQA-Chat},
+	author       = {John Giorgi and Augustin Toma and Ronald Xie and Sondra Chen and Kevin R. An and Grace X. Zheng and Bo Wang},
+	year         = 2023,
+	journal      = {ArXiv},
+	volume       = {abs/2305.02220}
+}
+```
