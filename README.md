@@ -139,11 +139,16 @@ The submission scripts also demonstrate how to make predictions on the test set 
 If you use our model in your work, please consider citing our paper:
 
 ```
-@article{Giorgi2023ClinicalNG,
-	title        = {Clinical Note Generation from Doctor-Patient Conversations using Large Language Models: Insights from MEDIQA-Chat},
-	author       = {John Giorgi and Augustin Toma and Ronald Xie and Sondra Chen and Kevin R. An and Grace X. Zheng and Bo Wang},
+@inproceedings{giorgi-etal-2023-wanglab,
+	title        = {{W}ang{L}ab at {MEDIQA}-Chat 2023: Clinical Note Generation from Doctor-Patient Conversations using Large Language Models},
+	author       = {Giorgi, John  and Toma, Augustin  and Xie, Ronald  and Chen, Sondra  and An, Kevin  and Zheng, Grace  and Wang, Bo},
 	year         = 2023,
-	journal      = {ArXiv},
-	volume       = {abs/2305.02220}
+	month        = jul,
+	booktitle    = {Proceedings of the 5th Clinical Natural Language Processing Workshop},
+	publisher    = {Association for Computational Linguistics},
+	address      = {Toronto, Canada},
+	pages        = {323--334},
+	url          = {https://aclanthology.org/2023.clinicalnlp-1.36},
+	abstract     = {This paper describes our submission to the MEDIQA-Chat 2023 shared task for automatic clinical note generation from doctor-patient conversations. We report results for two approaches: the first fine-tunes a pre-trained language model (PLM) on the shared task data, and the second uses few-shot in-context learning (ICL) with a large language model (LLM). Both achieve high performance as measured by automatic metrics (e.g. ROUGE, BERTScore) and ranked second and first, respectively, of all submissions to the shared task. Expert human scrutiny indicates that notes generated via the ICL-based approach with GPT-4 are preferred about as often as human-written notes, making it a promising path toward automated note generation from doctor-patient conversations.}
 }
 ```
